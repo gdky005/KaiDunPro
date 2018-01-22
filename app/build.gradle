@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        applicationId "pro.kaidun.com.kaidunpro"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary= true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Support libraries
+    implementation deps.support.design
+    implementation deps.constraint_layout
+
+
+    // retrofit2
+    implementation deps.retrofit2
+    implementation deps.retrofit2_gson
+
+    // butterknife
+    implementation deps.butterknife
+    annotationProcessor deps.butterknife_compiler
+
+    implementation deps.zk_fresco
+    implementation deps.okhttp
+    implementation deps.fresco
+
+    implementation deps.okhttp_interceptor
+
+    implementation deps.stetho
+    implementation deps.stetho_okhttp3
+
+    implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.0.0'
+
+
+    testImplementation deps.junit
+
+    androidTestImplementation espresso.core
+    androidTestImplementation deps.runner
+
+}
