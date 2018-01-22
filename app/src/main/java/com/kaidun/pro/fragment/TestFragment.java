@@ -1,10 +1,11 @@
-package pro.kaidun.com.kaidunpro.fragment;
+package com.kaidun.pro.fragment;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import pro.kaidun.com.kaidunpro.R;
+import com.kaidun.pro.R;
+
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**

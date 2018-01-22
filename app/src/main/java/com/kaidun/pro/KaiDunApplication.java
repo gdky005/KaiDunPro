@@ -1,4 +1,4 @@
-package pro.kaidun.com.kaidunpro;
+package com.kaidun.pro;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,8 +9,8 @@ import com.facebook.stetho.Stetho;
 import com.facebook.stetho.dumpapp.DumperPlugin;
 import com.facebook.stetho.dumpapp.plugins.HprofDumperPlugin;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.kaidun.pro.managers.KDConnectionManager;
 
-import pro.kaidun.com.kaidunpro.managers.KDConnectionManager;
 import team.zhuoke.sdk.ZKBase;
 
 /**

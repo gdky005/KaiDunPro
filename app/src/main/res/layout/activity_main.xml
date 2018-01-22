@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pro.kaidun.com.kaidunpro.MainActivity">
+    tools:context="com.kaidun.pro.kaidunpro.MainActivity">
 
     <TextView
         android:id="@+id/message"

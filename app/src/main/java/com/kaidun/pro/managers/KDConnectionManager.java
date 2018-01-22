@@ -1,16 +1,16 @@
-package pro.kaidun.com.kaidunpro.managers;
+package com.kaidun.pro.managers;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kaidun.pro.Constant;
+import com.kaidun.pro.api.KDApi;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import pro.kaidun.com.kaidunpro.Constant;
-import pro.kaidun.com.kaidunpro.api.KDApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import team.zhuoke.sdk.ZKBase;

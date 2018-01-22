@@ -1,4 +1,4 @@
-package pro.kaidun.com.kaidunpro.api;
+package com.kaidun.pro.api;
 
 /**
  * ZKService retrofit2

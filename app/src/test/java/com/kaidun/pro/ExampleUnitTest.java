@@ -1,4 +1,4 @@
-package pro.kaidun.com.kaidunpro;
+package com.kaidun.pro;
 
 import org.junit.Test;
 

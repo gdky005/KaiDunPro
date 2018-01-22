@@ -1,4 +1,4 @@
-package pro.kaidun.com.kaidunpro;
+package com.kaidun.pro;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.fragment.TestFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pro.kaidun.com.kaidunpro.fragment.TestFragment;
 import team.zhuoke.sdk.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {

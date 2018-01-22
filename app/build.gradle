@@ -5,7 +5,7 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "pro.kaidun.com.kaidunpro"
+        applicationId "com.kaidun.pro"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
