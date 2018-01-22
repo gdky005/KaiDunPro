@@ -2,6 +2,7 @@ package com.kaidun.pro;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -15,10 +16,12 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.fragment.TestFragment;
+import com.kaidun.pro.home.StandInsideLetterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team.zhuoke.sdk.base.BaseActivity;
+import team.zhuoke.sdk.utils.ZKPageCtrl;
 
 public class MainActivity extends BaseActivity {
 
@@ -78,6 +81,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 case NAV_TYPE_MESSAGE:
                     itemId = R.id.navigation_message;
+                    startActivity(new Intent(MainActivity.this, StandInsideLetterActivity.class));
                     break;
             }
 
