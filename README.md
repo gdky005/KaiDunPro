@@ -9,3 +9,5 @@ KaiDunPro
 
 项目原型图地址：https://modao.cc/app/02Nb9re4p9G66Fc8PaCdGLmTRnvjnru 
 
+项目接口Excel格式：https://shimo.im/sheet/ZfGsRl1WWSAlwQB2/KyqDv/ 「家长端接口文档 」
+
