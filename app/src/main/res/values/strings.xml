@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">KaiDunPro</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="nav_title_main">主页</string>
+    <string name="nav_title_video">视频</string>
+    <string name="nav_title_picture">图片</string>
+    <string name="nav_title_parent_notebook">家联本</string>
+    <string name="nav_title_message">消息</string>
 </resources>
