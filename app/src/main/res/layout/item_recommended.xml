@@ -21,8 +21,9 @@
             android:id="@+id/iv_parents_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="9dp"
-            android:layout_marginRight="9dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_launcher_round" />
 
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/iv_parents_avatar"
             android:layout_toRightOf="@id/iv_parents_avatar"
-            android:textColor="#333"
+            android:textColor="@color/text_main"
             android:textSize="16sp"
             tools:text="推送消息" />
 
@@ -41,10 +42,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_parents_name"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/iv_parents_avatar"
             android:layout_toRightOf="@id/iv_parents_avatar"
-            android:textColor="#666"
+            android:textColor="@color/text_second"
+            android:textSize="14sp"
             tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。" />
 
         <TextView
@@ -53,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:textColor="#999"
+            android:textColor="@color/text_third"
+            android:textSize="14sp"
             tools:ignore="RelativeOverlap"
             tools:text="2017/12/26" />
 
