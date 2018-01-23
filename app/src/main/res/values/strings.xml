@@ -15,4 +15,6 @@
     <string name="course_speak">说</string>
     <string name="course_read">读</string>
     <string name="course_write">写</string>
+    <string name="hint_input_account">请输入学员学号</string>
+    <string name="hint_input_pwd">请输入密码</string>
 </resources>
