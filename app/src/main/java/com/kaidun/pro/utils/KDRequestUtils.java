@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.blankj.utilcode.util.PhoneUtils;
 import com.kaidun.pro.Constant;
+import com.kaidun.pro.managers.KDAccountManager;
 
 import org.json.JSONObject;
 
@@ -21,6 +22,7 @@ public class KDRequestUtils {
 
     /**
      * 获取通用的请求 Header
+     *
      * @return headerMaps
      */
     public static Map<String, String> getHeaderMaps() {
@@ -36,11 +38,19 @@ public class KDRequestUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        String token = KDAccountManager.getInstance().getToken();
+
+        if (!TextUtils.isEmpty(token)) {
+            headerMaps.put("Authorization", token);
+        }
+
         if (TextUtils.isEmpty(deviceId)) {
             deviceId = "asdas2342";
         }
-
         headerMaps.put("machineCode", deviceId);
+
         headerMaps.put("Content-Type", Constant.MEDIA_TYPE);
 
         return headerMaps;

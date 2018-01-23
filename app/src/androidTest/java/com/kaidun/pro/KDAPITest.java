@@ -7,8 +7,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
@@ -20,6 +22,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * KDAPITest
@@ -56,8 +62,12 @@ public class KDAPITest {
             kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                         @Override
                         public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
+                            if (result != null) {
+                                String token = result.getToken();
 
-                            Log.d(TAG, "onResponse: " + result.toString());
+                                Log.d(TAG, "onResponse: " + result.toString());
+                            }
+
 
                             countDownLatch.countDown();
                         }
@@ -81,6 +91,61 @@ public class KDAPITest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testSelectFamilyRole() {
+
+        // TODO: 2018/1/23  为了获取到 token
+        KDAccountManager.getInstance().defaultLogin();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("userCode", "10007027");
+            jsonObject.put("areaCode", "1001");
+
+            kdApi.selectFamilyRole(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<FamilyRoleBean>() {
+                @Override
+                public void onResponse(Call<FamilyRoleBean> call, Response<FamilyRoleBean> response) {
+
+                    FamilyRoleBean familyRoleBean = response.body();
+
+                    if (familyRoleBean != null && familyRoleBean.getStatusCode() == 100) {
+                        Log.d(TAG, "onResponse: " + familyRoleBean.toString());
+                    }
+
+
+                    countDownLatch.countDown();
+                }
+
+                @Override
+                public void onFailure(Call<FamilyRoleBean> call, Throwable throwable) {
+                    Log.d(TAG, "onFailure: " + throwable.getMessage());
+                    countDownLatch.countDown();
+
+                    Assert.assertTrue(throwable.getMessage(), false);
+                }
+
+
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
