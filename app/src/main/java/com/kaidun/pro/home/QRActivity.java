@@ -1,6 +1,5 @@
 package com.kaidun.pro.home;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import team.zhuoke.sdk.base.BaseActivity;
  */
 
 public class QRActivity extends BaseActivity {
-    @BindView(R.id.tv_toolbar_title)
+    @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;

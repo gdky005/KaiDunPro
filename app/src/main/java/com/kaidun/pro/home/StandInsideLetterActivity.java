@@ -20,7 +20,7 @@ import team.zhuoke.sdk.base.BaseActivity;
  */
 
 public class StandInsideLetterActivity extends BaseActivity {
-    @BindView(R.id.tv_toolbar_title)
+    @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;

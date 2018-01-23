@@ -32,6 +32,9 @@
         <activity
             android:name=".home.QRActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".notebook.NoteBookActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
