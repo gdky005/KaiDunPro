@@ -31,4 +31,9 @@ public interface KDApi {
     @POST("selectFamilyRole")
     Call<FamilyRoleBean> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
+    /**
+     * 引导页角色查询
+     */
+    @POST("selectFamilyInfo")
+    Call<Object> selectFamilyInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 }

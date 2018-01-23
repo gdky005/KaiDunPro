@@ -73,7 +73,7 @@ public class HomeHolder extends ZKViewHolder {
 
     private void realSetPercentage(FrameLayout layout, double progress) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
-        //measure方法的参数值都设为0即可
+        //  measure方法的参数值都设为0即可
         layout.measure(0, 0);
         params.width = (int) (layout.getWidth() * progress);
         layout.setLayoutParams(params);

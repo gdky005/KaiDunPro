@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +18,27 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
+import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.home.adapter.HomeAdapter;
 import com.kaidun.pro.home.bean.Home;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.utils.KDRequestUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
@@ -101,6 +113,39 @@ public class HomeFragment extends BaseFragment {
         mHomes.add(home);
         mHomes.add(home);
         mAdapter.notifyDataSetChanged();
+
+//        try {
+//            getData();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private void getData() throws Exception {
+        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userCode", "10007027");
+        jsonObject.put("areaCode", "1002");
+        kdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.errorBody() != null) {
+                    try {
+                        ToastUtils.showShort(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.e("TAG", "");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
