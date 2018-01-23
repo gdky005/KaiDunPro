@@ -23,7 +23,6 @@ import com.kaidun.pro.home.StandInsideLetterActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team.zhuoke.sdk.base.BaseActivity;
-import team.zhuoke.sdk.utils.ZKPageCtrl;
 
 public class MainActivity extends BaseActivity {
 
@@ -57,6 +56,7 @@ public class MainActivity extends BaseActivity {
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_NETWORK_STATE};
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {

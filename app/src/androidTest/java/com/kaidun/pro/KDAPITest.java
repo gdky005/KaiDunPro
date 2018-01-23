@@ -11,6 +11,7 @@ import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
+import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -18,12 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 /**
  * KDAPITest
@@ -51,19 +47,13 @@ public class KDAPITest {
 //        测试账号有：10007027，10009010， 账号和密码都相同
 
         try {
-            Map<String, String> headerMaps = new HashMap<>();
-            headerMaps.put("Content-Type", "application/json");
-            headerMaps.put("machineCode", "asdas2342");
-
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", "10007027");
             jsonObject.put("passWord", "10007027");
             jsonObject.put("areaCode", "1001");
             jsonObject.put("loginType", "003");
 
-            RequestBody body = RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
-
-            kdApi.login(headerMaps, body).enqueue(new KDCallback<LoginBean>() {
+            kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                         @Override
                         public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
 

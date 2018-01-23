@@ -24,9 +24,4 @@ public interface KDApi {
     @POST("login")
     Call<KDBaseBean<LoginBean>> login(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
-//    @Headers({"Content-Type: application/json"})
-//    @POST("datamanage.php/Admin/AppInterface/addpersonbaseinfo")
-//    Call<ZHBaseBean> update31Data(@Body RequestBody requestBody);
-
-
 }
