@@ -22,4 +22,10 @@ public class RecommendedAdapter extends ZKAdapter<Recommended, RecommendedHolder
     protected void convert(RecommendedHolder helper, Recommended item) {
         helper.setData(item);
     }
+
+    @Override
+    public void onBindViewHolder(RecommendedHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        holder.showOrHide(position);
+    }
 }

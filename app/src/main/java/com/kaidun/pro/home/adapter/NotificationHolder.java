@@ -21,6 +21,8 @@ public class NotificationHolder extends ZKViewHolder {
     TextView mNotificationDate;
     @BindView(R.id.tv_notification_type)
     TextView mNotificationType;
+    @BindView(R.id.vi_first_line)
+    View mLine;
 
     public NotificationHolder(View view) {
         super(view);
@@ -31,5 +33,13 @@ public class NotificationHolder extends ZKViewHolder {
         mNotificationDate.setText(notification.date);
         mNotificationContent.setText(notification.content);
         mNotificationType.setText(notification.contentType);
+    }
+
+    public void showOrHide(int position) {
+        if (position == 0) {
+            mLine.setVisibility(View.VISIBLE);
+        } else {
+            mLine.setVisibility(View.GONE);
+        }
     }
 }

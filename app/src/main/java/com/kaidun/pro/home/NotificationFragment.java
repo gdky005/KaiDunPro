@@ -1,6 +1,8 @@
 package com.kaidun.pro.home;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,7 +51,11 @@ public class NotificationFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         mShowNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new NotificationAdapter(R.layout.item_notification, mNotifications);
+        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
         mShowNotification.setAdapter(mAdapter);
+        mShowNotification.addItemDecoration(divider);
     }
 
     @Override

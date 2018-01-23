@@ -1,6 +1,8 @@
 package com.kaidun.pro.home;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,7 +52,11 @@ public class RecommendedFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         mShowRecommended.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new RecommendedAdapter(R.layout.item_recommended, mRecommendeds);
+        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
         mShowRecommended.setAdapter(mAdapter);
+        mShowRecommended.addItemDecoration(divider);
     }
 
     @Override

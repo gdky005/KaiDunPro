@@ -25,6 +25,8 @@ public class RecommendedHolder extends ZKViewHolder {
     TextView mRecommendedContent;
     @BindView(R.id.tv_recommended_date)
     TextView mRecommendedDate;
+    @BindView(R.id.vi_first_line)
+    View mLine;
 
     public RecommendedHolder(View view) {
         super(view);
@@ -35,5 +37,13 @@ public class RecommendedHolder extends ZKViewHolder {
         mParentsName.setText(recommended.name);
         mRecommendedContent.setText(recommended.content);
         mRecommendedDate.setText(recommended.date);
+    }
+
+    public void showOrHide(int position) {
+        if (position == 0) {
+            mLine.setVisibility(View.VISIBLE);
+        } else {
+            mLine.setVisibility(View.GONE);
+        }
     }
 }

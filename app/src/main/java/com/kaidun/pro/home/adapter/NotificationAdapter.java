@@ -24,4 +24,10 @@ public class NotificationAdapter extends ZKAdapter<Notification, NotificationHol
     protected void convert(NotificationHolder helper, Notification item) {
         helper.setData(item);
     }
+
+    @Override
+    public void onBindViewHolder(NotificationHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        holder.showOrHide(position);
+    }
 }

@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_notification_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#333"
-        android:textSize="16sp"
-        tools:text="推送消息" />
+    <View
+        android:id="@+id/vi_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@drawable/bg_line" />
 
-    <TextView
-        android:id="@+id/tv_notification_content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_notification_type"
-        android:layout_marginTop="9dp"
-        android:textColor="#666"
-        tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。" />
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_notification_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:textColor="#999"
-        tools:ignore="RelativeOverlap"
-        tools:text="2017/12/26" />
+        <TextView
+            android:id="@+id/tv_notification_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333"
+            android:textSize="16sp"
+            tools:text="推送消息" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_notification_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_notification_type"
+            android:layout_marginTop="9dp"
+            android:textColor="#666"
+            tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。" />
+
+        <TextView
+            android:id="@+id/tv_notification_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#999"
+            tools:ignore="RelativeOverlap"
+            tools:text="2017/12/26" />
+
+    </RelativeLayout>
+
+</LinearLayout>
