@@ -55,8 +55,8 @@ public class RecommendedFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-        Recommended recommended = new Recommended(null, "家长",
-                "2017/12/26", "推荐了 Jam 小朋友加入凯顿幼儿英语。");
+        Recommended recommended = new Recommended(null, "2017/12/26",
+                "家长", "推荐了 Jam 小朋友加入凯顿幼儿英语。");
         mRecommendeds.add(recommended);
         mRecommendeds.add(recommended);
         mRecommendeds.add(recommended);

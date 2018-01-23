@@ -1,5 +1,7 @@
 package com.kaidun.pro.home;
 
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,6 +26,9 @@ public class StandInsideLetterActivity extends BaseActivity {
     Toolbar mToolbar;
     @BindView(R.id.vp_inside_letter)
     ViewPager mInsideLetter;
+    @BindView(R.id.tl_letter_type_tab)
+    TabLayout mLetterTypeTab;
+    private String[] mLetterTypeTabTitle = new String[2];
 
     @Override
     protected int getLayoutId() {
@@ -32,10 +37,13 @@ public class StandInsideLetterActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mLetterTypeTabTitle[0] = "通知";
+        mLetterTypeTabTitle[1] = "推荐";
         ButterKnife.bind(this);
         mInsideLetter.setAdapter(new InsideLetterAdapter(getSupportFragmentManager()));
         initToolbar();
         mToolbarTitle.setText("站内信");
+        mLetterTypeTab.setupWithViewPager(mInsideLetter);
     }
 
     @Override
@@ -65,6 +73,11 @@ public class StandInsideLetterActivity extends BaseActivity {
         @Override
         public int getCount() {
             return mFragments.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mLetterTypeTabTitle[position];
         }
     }
 }
