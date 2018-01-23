@@ -31,7 +31,6 @@ public class NoteBookActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mNoteBookList = findViewById(R.id.note_book_list);
-        //mTitle = findViewById(R.id.tv_toolbar_title);
     }
 
     @Override
