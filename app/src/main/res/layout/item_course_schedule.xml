@@ -44,14 +44,14 @@
 
         <TextView
             android:id="@+id/tv_listen_percentage"
-            android:layout_width="40dp"
+            android:layout_width="39dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:gravity="end"
             android:textColor="#433d2e"
             android:textSize="16sp"
-            tools:text="10%" />
+            tools:text="10%"/>
 
     </LinearLayout>
 
@@ -89,7 +89,7 @@
 
         <TextView
             android:id="@+id/tv_speak_percentage"
-            android:layout_width="40dp"
+            android:layout_width="39dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
@@ -135,7 +135,7 @@
 
         <TextView
             android:id="@+id/tv_read_percentage"
-            android:layout_width="40dp"
+            android:layout_width="39dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
