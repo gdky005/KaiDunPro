@@ -8,4 +8,11 @@
     <string name="please_input_number">请输入手机号</string>
     <string name="please_input_parents_name">请输入家长姓名</string>
     <string name="please_input_child_name">请输入学生姓名</string>
+    <string name="school_notice">校内通知</string>
+    <string name="course_assignments">课程作业情况</string>
+    <string name="teacher_evaluation">老师评语</string>
+    <string name="course_listen">听</string>
+    <string name="course_speak">说</string>
+    <string name="course_read">读</string>
+    <string name="course_write">写</string>
 </resources>

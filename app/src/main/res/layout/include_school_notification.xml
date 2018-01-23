@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f4f3ee"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xqtz_bg_home"
+        android:paddingBottom="17dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="17dp">
+
+        <LinearLayout
+            android:id="@+id/ll_tz_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_tz_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/tz_icon_home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="@string/school_notice"
+                android:textColor="@color/text_main"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_school_notice_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_tz_icon"
+            android:layout_marginTop="15dp"
+            android:textColor="#433d2e"
+            android:textSize="15sp"
+            tools:text="        下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。" />
+
+        <TextView
+            android:id="@+id/tv_school_notice_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_school_notice_content"
+            android:layout_marginTop="18dp"
+            tools:text="2017年9月6日 by Zola" />
+
+    </RelativeLayout>
+
+</FrameLayout>

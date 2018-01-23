@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/ll_course_assignments_icon"
+    android:layout_marginLeft="15dp"
+    android:layout_marginStart="15dp"
+    android:layout_toEndOf="@id/ll_course_select"
+    android:layout_toRightOf="@id/ll_course_select"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/listen_icon_home"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/listen_icon_home"
+            android:text="@string/course_listen"
+            android:textColor="#433d2e"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:id="@+id/fl_listen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/progress_home_lower">
+
+            <FrameLayout
+                android:id="@+id/fl_listen_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/progress_home_higher" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_listen_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="#433d2e"
+            android:textSize="16sp"
+            tools:text="100%" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/speak_icon_home"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/speak_icon_home"
+            android:text="@string/course_speak"
+            android:textColor="#433d2e"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/progress_home_lower">
+
+            <FrameLayout
+                android:id="@+id/fl_speak_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/progress_home_higher" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_speak_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="#433d2e"
+            android:textSize="16sp"
+            tools:text="100%" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/read_icon_home"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/read_icon_home"
+            android:text="@string/course_read"
+            android:textColor="#433d2e"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/progress_home_lower">
+
+            <FrameLayout
+                android:id="@+id/fl_read_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/progress_home_higher" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_read_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="#433d2e"
+            android:textSize="16sp"
+            tools:text="100%" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/write_icon_home"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/write_icon_home"
+            android:text="@string/course_write"
+            android:textColor="#433d2e"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/progress_home_lower">
+
+            <FrameLayout
+                android:id="@+id/fl_write_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/progress_home_higher" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_write_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="#433d2e"
+            android:textSize="16sp"
+            tools:text="100%" />
+
+    </LinearLayout>
+
+</LinearLayout>
