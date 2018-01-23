@@ -9,7 +9,8 @@ KaiDunPro
 
 项目原型图地址：https://modao.cc/app/02Nb9re4p9G66Fc8PaCdGLmTRnvjnru 
 
-项目接口Excel格式：https://shimo.im/sheet/ZfGsRl1WWSAlwQB2/KyqDv/ 「家长端接口文档 」
+项目接口 Excel 格式：https://shimo.im/sheet/ZfGsRl1WWSAlwQB2/KyqDv/ 「家长端接口文档 」
+项目接口 Word 格式：https://shimo.im/docs/DLf2pijEmBMrmJSt
 
 项目中缺少 UI 的文档：https://shimo.im/docs/9GUI0pVzMtoqU97i 『缺失文件』
 
