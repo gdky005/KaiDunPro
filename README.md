@@ -11,3 +11,5 @@ KaiDunPro
 
 项目接口Excel格式：https://shimo.im/sheet/ZfGsRl1WWSAlwQB2/KyqDv/ 「家长端接口文档 」
 
+项目中缺少 UI 的文档：https://shimo.im/docs/9GUI0pVzMtoqU97i 『缺失文件』
+
