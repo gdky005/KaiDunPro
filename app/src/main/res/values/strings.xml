@@ -5,4 +5,7 @@
     <string name="nav_title_picture">图片</string>
     <string name="nav_title_parent_notebook">家联本</string>
     <string name="nav_title_message">消息</string>
+    <string name="please_input_number">请输入手机号</string>
+    <string name="please_input_parents_name">请输入家长姓名</string>
+    <string name="please_input_child_name">请输入学生姓名</string>
 </resources>

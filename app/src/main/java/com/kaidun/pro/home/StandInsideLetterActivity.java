@@ -42,6 +42,7 @@ public class StandInsideLetterActivity extends BaseActivity {
         ButterKnife.bind(this);
         mInsideLetter.setAdapter(new InsideLetterAdapter(getSupportFragmentManager()));
         initToolbar();
+        mToolbar.setNavigationIcon(R.drawable.return_icon_home);
         mToolbarTitle.setText("站内信");
         mLetterTypeTab.setupWithViewPager(mInsideLetter);
     }

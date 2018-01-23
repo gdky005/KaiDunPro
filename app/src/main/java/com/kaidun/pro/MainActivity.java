@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.fragment.TestFragment;
+import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.home.QRActivity;
 import com.kaidun.pro.home.StandInsideLetterActivity;
 
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity {
 
 
     private static Fragment[] TABLE_FRAGMENT = new Fragment[]{
-            TestFragment.newInstance(NAV_TYPE_MAIN),
+            HomeFragment.newInstance(),
             TestFragment.newInstance(NAV_TYPE_VIDEO),
             TestFragment.newInstance(NAV_TYPE_PICTURE),
             TestFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
@@ -79,11 +80,9 @@ public class MainActivity extends BaseActivity {
                     break;
                 case NAV_TYPE_PARENT_NOTEBOOK:
                     itemId = R.id.navigation_parent_notebook;
-                    startActivity(new Intent(MainActivity.this, QRActivity.class));
                     break;
                 case NAV_TYPE_MESSAGE:
                     itemId = R.id.navigation_message;
-                    startActivity(new Intent(MainActivity.this, StandInsideLetterActivity.class));
                     break;
             }
 

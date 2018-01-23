@@ -37,6 +37,7 @@ public class QRActivity extends BaseActivity {
         ButterKnife.bind(this);
         mQrName.setText("Durian_");
         initToolbar();
+        mToolbar.setNavigationIcon(R.drawable.return_icon_home);
         mToolbarTitle.setText("二维码");
     }
 
