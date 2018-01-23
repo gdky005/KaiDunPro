@@ -7,5 +7,8 @@ package com.kaidun.pro;
 
 public class Constant {
 
-    public static final String KAIDUN_API_URL = "http://0.0.0.0:8100/";
+    public static final String KAIDUN_API_URL = "http://211.152.60.253:8080/kd_app/";
+
+    public static final String CHARSET_NAME = "UTF-8";
+    public static final String MEDIA_TYPE = "application/json";
 }
