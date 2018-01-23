@@ -75,6 +75,10 @@ public class HomeHolder extends ZKViewHolder {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
         //  measure方法的参数值都设为0即可
         layout.measure(0, 0);
+        Log.e("TAG", "getMeasuredWidth = " + layout.getMeasuredWidth());
+        Log.e("TAG", "getWidth = " + layout.getWidth());
+        Log.e("TAG", "getMeasuredWidthAndState = " + layout.getMeasuredWidthAndState());
+        Log.e("TAG", "params.width = " + params.width);
         params.width = (int) (layout.getWidth() * progress);
         layout.setLayoutParams(params);
     }

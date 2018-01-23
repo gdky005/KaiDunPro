@@ -1,6 +1,7 @@
 package com.kaidun.pro.home.adapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.kaidun.pro.home.bean.Home;
 
@@ -21,5 +22,6 @@ public class HomeAdapter extends ZKAdapter<Home, HomeHolder> {
     @Override
     protected void convert(HomeHolder helper, Home item) {
         helper.setData(item);
+        Log.e("TAG", "getItemCount()" + getItemCount());
     }
 }

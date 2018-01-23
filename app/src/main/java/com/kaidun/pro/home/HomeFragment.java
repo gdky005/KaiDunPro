@@ -110,6 +110,7 @@ public class HomeFragment extends BaseFragment {
                 0.8, 0.5, 0.3,
                 "          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。",
                 "2017年9月6日 by Zola");
+        mHomes.clear();
         mHomes.add(home);
         mHomes.add(home);
         mAdapter.notifyDataSetChanged();
