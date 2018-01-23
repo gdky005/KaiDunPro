@@ -34,7 +34,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  */
 
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.tv_toolbar_title)
+    @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;

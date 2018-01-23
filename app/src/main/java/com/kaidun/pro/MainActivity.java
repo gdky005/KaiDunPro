@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.fragment.TestFragment;
-import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.home.QRActivity;
 import com.kaidun.pro.home.StandInsideLetterActivity;
+import com.kaidun.pro.notebook.NoteBookFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,10 +43,10 @@ public class MainActivity extends BaseActivity {
 
 
     private static Fragment[] TABLE_FRAGMENT = new Fragment[]{
-            HomeFragment.newInstance(),
+            TestFragment.newInstance(NAV_TYPE_MAIN),
             TestFragment.newInstance(NAV_TYPE_VIDEO),
             TestFragment.newInstance(NAV_TYPE_PICTURE),
-            TestFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
+            NoteBookFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
             TestFragment.newInstance(NAV_TYPE_MESSAGE)};
 
     public static int[] NAV_TYPE = new int[]{NAV_TYPE_MAIN, NAV_TYPE_VIDEO, NAV_TYPE_PICTURE, NAV_TYPE_PARENT_NOTEBOOK, NAV_TYPE_MESSAGE};
@@ -80,9 +80,11 @@ public class MainActivity extends BaseActivity {
                     break;
                 case NAV_TYPE_PARENT_NOTEBOOK:
                     itemId = R.id.navigation_parent_notebook;
+                    //startActivity(new Intent(MainActivity.this, QRActivity.class));
                     break;
                 case NAV_TYPE_MESSAGE:
                     itemId = R.id.navigation_message;
+                    startActivity(new Intent(MainActivity.this, StandInsideLetterActivity.class));
                     break;
             }
 
