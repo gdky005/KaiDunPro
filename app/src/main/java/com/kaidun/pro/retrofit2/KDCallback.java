@@ -19,8 +19,7 @@ public abstract class KDCallback<T> implements Callback<KDBaseBean<T>> {
 
         if (baseBean != null) {
             T results = baseBean.getResult();
-
-            if (results != null) {
+            if (baseBean.getStatusCode() == 100) {
                 onResponse(baseBean, results);
             } else {
                 onFailure(new Throwable(baseBean.getMessage()));
