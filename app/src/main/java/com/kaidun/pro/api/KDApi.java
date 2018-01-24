@@ -3,6 +3,7 @@ package com.kaidun.pro.api;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.home.bean.SchoolNotification;
 
 import java.util.Map;
 
@@ -32,8 +33,8 @@ public interface KDApi {
     Call<FamilyRoleBean> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
-     * 引导页角色查询
+     * 家长端主页面校区通知，老师评语
      */
     @POST("selectFamilyInfo")
-    Call<Object> selectFamilyInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<SchoolNotification> selectFamilyInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 }

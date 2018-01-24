@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+   <!-- <View
+        android:id="@+id/vi_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@drawable/bg_line" />-->
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_parents_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/tv_parents_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/iv_parents_avatar"
+            android:layout_toLeftOf="@id/iv_parents_avatar"
+            android:textColor="@color/text_main"
+            android:textSize="16sp"
+            tools:text="推送消息" />
+
+
+        <TextView
+            android:id="@+id/tv_recommended_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/iv_parents_avatar"
+            android:layout_toLeftOf="@id/iv_parents_avatar"
+            android:layout_below="@id/tv_parents_name"
+            android:textColor="@color/text_third"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap"
+            tools:text="2017/12/26" />
+
+
+        <TextView
+            android:id="@+id/tv_recommended_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_recommended_date"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@id/iv_parents_avatar"
+            android:layout_toLeftOf="@id/iv_parents_avatar"
+            android:textColor="@color/text_main"
+            android:textSize="14sp"
+            tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验欢迎各位家长带孩子来体验，活动免费开放四天。" />
+
+
+
+    </RelativeLayout>

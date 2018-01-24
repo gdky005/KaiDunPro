@@ -9,24 +9,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.home.adapter.HomeAdapter;
 import com.kaidun.pro.home.bean.Home;
+import com.kaidun.pro.home.bean.SchoolNotification;
+import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.utils.KDRequestUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,13 +43,13 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by Administrator on 2018/1/22.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements KDAccountManager.LoginFinish {
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.iv_parents_avatar)
-    ImageView mParentsAvatar;
+    SimpleDraweeView mParentsAvatar;
     @BindView(R.id.tv_parents_name)
     TextView mParentsName;
     @BindView(R.id.tv_parents_nick)
@@ -116,23 +114,20 @@ public class HomeFragment extends BaseFragment {
         mHomes.add(home);
         mAdapter.notifyDataSetChanged();
 
-//        try {
-//            getData();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        KDAccountManager.getInstance().setLoginFinish(this);
+        KDAccountManager.getInstance().login("10007027", "10007027", "1001", "003");
     }
 
-    private void getData() throws Exception {
+    private void getFamilyInfo() throws Exception {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userCode", "10007027");
-        jsonObject.put("areaCode", "1002");
+        jsonObject.put("areaCode", "1001");
         kdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<Object>() {
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<SchoolNotification>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
                 if (response.errorBody() != null) {
                     try {
                         ToastUtils.showShort(response.errorBody().string());
@@ -144,7 +139,7 @@ public class HomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<SchoolNotification> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -168,6 +163,18 @@ public class HomeFragment extends BaseFragment {
             case R.id.ll_show_qr:
                 startActivity(new Intent(getActivity(), QRActivity.class));
                 break;
+        }
+    }
+
+    @Override
+    public void loginFinish(LoginBean login) {
+        try {
+            getFamilyInfo();
+            mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+            mParentsNick.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+            mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

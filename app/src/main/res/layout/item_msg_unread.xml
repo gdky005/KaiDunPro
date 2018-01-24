@@ -10,13 +10,42 @@
         android:id="@+id/content"
         />
 
-    <Button
+    
+    <RelativeLayout
+        android:layout_width="81dp"
+        android:layout_height="match_parent"
+        android:id="@+id/btnDelete"
+        android:background="@color/colorPrimary"
+        >
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_icon_message"
+            android:layout_centerInParent="true"
+            android:id="@+id/delete_icon"
+            />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28px"
+            android:layout_centerHorizontal="true"
+            android:text="@string/msg_delete"
+            android:layout_below="@id/delete_icon"
+            android:textColor="#1b1a16"
+            />
+        
+    </RelativeLayout>
+    
+   <!-- <Button
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:text="删除"
+        
         android:textColor="@android:color/white"
-        />
+        />-->
 
 </com.kaidun.pro.views.SwipeMenuLayout>

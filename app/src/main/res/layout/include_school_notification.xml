@@ -5,11 +5,13 @@
     android:layout_height="wrap_content"
     android:background="#f4f3ee"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="170dp"
         android:background="@drawable/xqtz_bg_home"
         android:paddingBottom="17dp"
         android:paddingLeft="25dp"
@@ -56,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/tv_school_notice_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="18dp"
             tools:text="2017年9月6日 by Zola" />
 
