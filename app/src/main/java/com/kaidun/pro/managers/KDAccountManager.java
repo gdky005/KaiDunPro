@@ -43,6 +43,7 @@ public class KDAccountManager {
 
     private String token;
     private LoginBean.DataBean userInfoBean;
+    private LoginFinish loginFinish;
 
     public void defaultLogin() {
         login("10007027", "10007027", "1001", "003");
@@ -78,6 +79,10 @@ public class KDAccountManager {
                         }
 
                         setToken(result.getToken());
+
+                        if (loginFinish != null) {
+                            loginFinish.loginFinish(result);
+                        }
 
                         L.d("onResponse: " + result.toString());
                     }
@@ -128,5 +133,14 @@ public class KDAccountManager {
 
         setUserCode(userInfoBean.getUserCode());
         setAreaCode(userInfoBean.getAreaCode());
+    }
+
+    public void setLoginFinish(LoginFinish loginFinish) {
+        this.loginFinish = loginFinish;
+    }
+
+    public interface LoginFinish {
+
+        void loginFinish(LoginBean login);
     }
 }
