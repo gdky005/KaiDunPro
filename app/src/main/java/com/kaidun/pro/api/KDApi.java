@@ -4,6 +4,7 @@ import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -29,7 +30,12 @@ public interface KDApi {
      * 引导页角色查询
      */
     @POST("selectFamilyRole")
-    Call<FamilyRoleBean> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<KDBaseBean<List<FamilyRoleBean>>> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    /**
+     * 引导页角色查询
+     */
+    @POST("updateFamilyRole")
+    Call<KDBaseBean<String>> updateFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 引导页角色查询
