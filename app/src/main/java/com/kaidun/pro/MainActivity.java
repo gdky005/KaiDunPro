@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.TestFragment;
 import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
@@ -43,7 +44,7 @@ public class MainActivity extends BaseActivity {
     private static Fragment[] TABLE_FRAGMENT = new Fragment[]{
             HomeFragment.newInstance(),
             VideoFragment.newInstance(NAV_TYPE_VIDEO),
-            TestFragment.newInstance(NAV_TYPE_PICTURE),
+            PicFragment.newInstance(),
             NoteBookFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
             TestFragment.newInstance(NAV_TYPE_MESSAGE)};
 

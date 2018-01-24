@@ -5,10 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.MessageAdapter;
 import com.kaidun.pro.bean.SwipeBean;
-import com.kaidun.pro.utils.CommonUtils;
 import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -53,7 +53,8 @@ public class MsgReadFragment extends BaseFragment {
         messageAdapter = new MessageAdapter(getContext(), getSampleData(),MessageAdapter.READ);
        /* DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL);*/
-        RecDividerItemDecoration decoration = new RecDividerItemDecoration(getResources().getColor(R.color.bg_color), CommonUtils.dip2px(getActivity(), 12));
+        RecDividerItemDecoration decoration = new RecDividerItemDecoration(
+                getResources().getColor(R.color.bg_color), DensityUtil.dipToPixels(mContext, 12));
         //divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
        msg_read_recler.addItemDecoration(decoration);
         msg_read_recler.setLayoutManager(new LinearLayoutManager(getContext()));
