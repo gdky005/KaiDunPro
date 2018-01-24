@@ -3,6 +3,7 @@ package com.kaidun.pro.api;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.SchoolNotification;
 
 import java.util.Map;
@@ -37,4 +38,10 @@ public interface KDApi {
      */
     @POST("selectFamilyInfo")
     Call<SchoolNotification> selectFamilyInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 获取所有视频
+     */
+    @POST("selectBookCode")
+    Call<VideoBean> getAllVideo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 }

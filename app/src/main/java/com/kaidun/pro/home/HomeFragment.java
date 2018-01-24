@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -168,6 +167,7 @@ public class HomeFragment extends BaseFragment implements KDAccountManager.Login
 
     @Override
     public void loginFinish(LoginBean login) {
+        KDAccountManager.getInstance().setUserInfoBean(login.getData());
         try {
             getFamilyInfo();
             mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());

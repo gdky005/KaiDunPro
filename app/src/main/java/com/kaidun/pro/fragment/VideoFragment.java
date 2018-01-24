@@ -5,20 +5,35 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.VideoFragmentAdapter;
+import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.bean.VideoBean;
+import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.utils.KDRequestUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VideoFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
+public class VideoFragment extends BaseFragment implements KDAccountManager.LoginFinish {
 
     private TabLayout tabPackage;
     private ViewPager vpVideo;
+    private TextView tvTitle;
     public static final String KEY = "key";
 
 
@@ -31,6 +46,8 @@ public class VideoFragment extends BaseFragment implements TabLayout.OnTabSelect
     public void initView(View view) {
         tabPackage = view.findViewById(R.id.tab_package);
         vpVideo = view.findViewById(R.id.vp_video);
+        tvTitle = view.findViewById(R.id.tv_title);
+        tvTitle.setText("视频");
         VideoFragmentAdapter pagerAdapter = new VideoFragmentAdapter(getChildFragmentManager(),
                 new Fragment[]{new SubVideoFragment(),
                         new SubVideoFragment(), new SubVideoFragment()});
@@ -50,7 +67,34 @@ public class VideoFragment extends BaseFragment implements TabLayout.OnTabSelect
 
     @Override
     public void initData(Bundle bundle) {
+        KDAccountManager.getInstance().setLoginFinish(this);
+        KDAccountManager.getInstance().login("10007027", "10007027", "1001", "003");
 
+    }
+
+    private void getVideo() throws JSONException {
+        KDAccountManager.getInstance().defaultLogin();
+        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userCode", "10007027");
+        jsonObject.put("areaCode", "1001");
+        kdApi.getAllVideo(KDRequestUtils.getHeaderMaps(),
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<VideoBean>() {
+
+            @Override
+            public void onResponse(Call<VideoBean> call, Response<VideoBean> response) {
+                if (response.body() != null) {
+                    Log.d("response--->ok", response.body().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VideoBean> call, Throwable t) {
+                Log.d("response--->ok", t.getMessage());
+
+            }
+        });
     }
 
     @Override
@@ -60,17 +104,12 @@ public class VideoFragment extends BaseFragment implements TabLayout.OnTabSelect
 
 
     @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
+    public void loginFinish(LoginBean login) {
+        KDAccountManager.getInstance().setUserInfoBean(login.getData());
+        try {
+            getVideo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
