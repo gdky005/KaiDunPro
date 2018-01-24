@@ -1,8 +1,6 @@
 package com.kaidun.pro.fragment;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.view.View;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.MessageAdapter;
 import com.kaidun.pro.bean.SwipeBean;
+import com.kaidun.pro.utils.CommonUtils;
+import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +49,12 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         ButterKnife.bind(this,view);
 
         messageAdapter = new MessageAdapter(getContext(), getSampleData(),MessageAdapter.UNREAD);
-        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
+//        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
+//                DividerItemDecoration.VERTICAL);
+//        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
+        RecDividerItemDecoration decoration = new RecDividerItemDecoration(getResources().getColor(R.color.bg_color), CommonUtils.dip2px(getActivity(), 12));
+        //divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
+        msg_unread_recler.addItemDecoration(decoration);
         msg_unread_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_unread_recler.setAdapter(messageAdapter);
         messageAdapter.setOnDelListener(this);

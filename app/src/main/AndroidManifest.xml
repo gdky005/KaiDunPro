@@ -35,6 +35,11 @@
         <activity
             android:name=".notebook.NoteBookActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".MesDetailActivity"
+            android:windowSoftInputMode=""
+            />
+        <activity android:name=".WriteMsgActivity"/>
     </application>
 
 </manifest>

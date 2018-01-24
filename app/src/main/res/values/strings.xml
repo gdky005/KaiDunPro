@@ -16,6 +16,9 @@
     <string name="course_read">读</string>
     <string name="course_write">写</string>
     <string name="msg_title">消息</string>
+    <string name="msg_detail">消息详情</string>
+    <string name="msg_delete">删除</string>
+    <string name="write_msg">写消息</string>
 
     <string-array name="msg_title">
     <item>已读</item>

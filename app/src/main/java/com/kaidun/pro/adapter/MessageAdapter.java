@@ -128,7 +128,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.FullDelD
         TextView date;
         TextView name;
         View content;
-        Button btnDelete;
+        View btnDelete;
         Button btnUnRead;
         Button btnTop;
 
@@ -140,7 +140,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.FullDelD
             reply = ((TextView) content.findViewById(R.id.replay_latest));
             mainContent = ((TextView) content.findViewById(R.id.tv_recommended_content));
             date = ((TextView) content.findViewById(R.id.tv_recommended_date));
-            btnDelete = (Button) itemView.findViewById(R.id.btnDelete);
+            btnDelete =  itemView.findViewById(R.id.btnDelete);
+            if (FLAG == READ){
+                itemView.findViewById(R.id.xxtx_msg).setVisibility(View.INVISIBLE);
+            }
 //            btnUnRead = (Button) itemView.findViewById(R.id.btnUnRead);
 //            btnTop = (Button) itemView.findViewById(R.id.btnTop);
         }
