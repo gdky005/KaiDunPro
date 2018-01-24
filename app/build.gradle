@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary= true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -33,13 +33,13 @@ dependencies {
     implementation deps.support.design
     implementation deps.constraint_layout
 
-
     // retrofit2
     implementation deps.retrofit2
     implementation deps.retrofit2_gson
 
     // butterknife
     implementation deps.butterknife
+    implementation 'com.android.support:support-v4:26.1.0'
     annotationProcessor deps.butterknife_compiler
 
     implementation deps.zk_fresco

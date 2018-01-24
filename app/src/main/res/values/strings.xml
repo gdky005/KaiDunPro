@@ -18,7 +18,10 @@
     <string name="msg_title">消息</string>
 
     <string-array name="msg_title">
-    <item>已读</item>
-    <item>未读</item>
+        <item>已读</item>
+        <item>未读</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
