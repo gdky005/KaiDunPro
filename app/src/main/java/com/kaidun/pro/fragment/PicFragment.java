@@ -55,7 +55,7 @@ public class PicFragment extends BaseFragment {
         List<PicBean> list = new ArrayList<>();
         for (int i = 0; i < 60; i++) {
             PicBean itemBean = new PicBean();
-            itemBean.setName("名字：" + i);
+            itemBean.setName("2018年01月24日 " + i);
             list.add(itemBean);
         }
 
