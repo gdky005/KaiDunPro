@@ -27,4 +27,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_input_account">请输入学员学号</string>
+    <string name="hint_input_pwd">请输入密码</string>
+    <string name="tip_title1">Five To One</string>
+    <string name="tip_title2">Happy Learning</string>
+    <string name="tip_title3">Save Money</string>
+    <string name="tip_content1">教学工作是一种由教师和学生两方面共同合作，完成对规定教材的体会理解以有益于学生行为和经验的活动。这就不能不涉及理论、学校班级组织理论和训练理论的问题。</string>
+    <string name="tip_content2">教师通过这些课程与相应的课外作业促进学生的认知性学习(智力发展)、情感性学习(价值观的发展)与心理运动性学习(操作技能的发展)，从而把他们培养成能够服务于社会的全面发展的人。</string>
+    <string name="tip_content3">在公司里，我们提倡自由、开放的工作氛围，省钱网？？？</string>
 </resources>

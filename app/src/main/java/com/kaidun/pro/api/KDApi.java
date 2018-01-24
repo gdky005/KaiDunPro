@@ -6,6 +6,7 @@ import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.SchoolNotification;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -31,7 +32,12 @@ public interface KDApi {
      * 引导页角色查询
      */
     @POST("selectFamilyRole")
-    Call<FamilyRoleBean> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<KDBaseBean<List<FamilyRoleBean>>> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    /**
+     * 引导页角色查询
+     */
+    @POST("updateFamilyRole")
+    Call<KDBaseBean<String>> updateFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 家长端主页面校区通知，老师评语

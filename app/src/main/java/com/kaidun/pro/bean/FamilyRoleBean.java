@@ -1,7 +1,5 @@
 package com.kaidun.pro.bean;
 
-import java.util.List;
-
 /**
  * FamilyRoleBean
  * Created by WangQing on 2018/1/23.
@@ -16,84 +14,30 @@ public class FamilyRoleBean {
      * ver : 1
      */
 
-    private String message;
-    private int statusCode;
-    private int ver;
-    private List<ResultBean> result;
+    private String familyRoleCode;
+    private String familyRoleName;
 
-    public String getMessage() {
-        return message;
+    public String getFamilyRoleCode() {
+        return familyRoleCode;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setFamilyRoleCode(String familyRoleCode) {
+        this.familyRoleCode = familyRoleCode;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public String getFamilyRoleName() {
+        return familyRoleName;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public int getVer() {
-        return ver;
-    }
-
-    public void setVer(int ver) {
-        this.ver = ver;
-    }
-
-    public List<ResultBean> getResult() {
-        return result;
-    }
-
-    public void setResult(List<ResultBean> result) {
-        this.result = result;
-    }
-
-    public static class ResultBean {
-        /**
-         * familyRoleCode : 001
-         * familyRoleName : 妈妈
-         */
-
-        private String familyRoleCode;
-        private String familyRoleName;
-
-        public String getFamilyRoleCode() {
-            return familyRoleCode;
-        }
-
-        public void setFamilyRoleCode(String familyRoleCode) {
-            this.familyRoleCode = familyRoleCode;
-        }
-
-        public String getFamilyRoleName() {
-            return familyRoleName;
-        }
-
-        public void setFamilyRoleName(String familyRoleName) {
-            this.familyRoleName = familyRoleName;
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                    "familyRoleCode:'" + familyRoleCode + '\'' +
-                    ", familyRoleName:'" + familyRoleName + '\'' +
-                    '}';
-        }
+    public void setFamilyRoleName(String familyRoleName) {
+        this.familyRoleName = familyRoleName;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "message:'" + message + '\'' +
-                ", statusCode:" + statusCode +
-                ", ver:" + ver +
-                ", result:" + result +
+                "familyRoleCode:'" + familyRoleCode + '\'' +
+                ", familyRoleName:'" + familyRoleName + '\'' +
                 '}';
     }
 }
