@@ -6,14 +6,22 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
+import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.NoteBookAdapter;
 import com.kaidun.pro.notebook.bean.FamilyContact;
+import com.kaidun.pro.utils.KDRequestUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseFragment;
 import team.zhuoke.sdk.component.ZKRecycleView;
 
@@ -68,7 +76,14 @@ public class NoteBookFragment extends BaseFragment {
         resultBean4.setBookName("敬请期待...");
         list.add(resultBean4);
 
+
         //TODO:请求数据
+        // selectFamilyContact();
+
+        showList(list);
+    }
+
+    private void showList(ArrayList<FamilyContact.ResultBean> list) {
         adapter = new NoteBookAdapter(R.layout.item_note_book, list);
         mNoteBookGrid.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -92,5 +107,30 @@ public class NoteBookFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void selectFamilyContact() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
+            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
+            KDConnectionManager.getInstance().getZHApi().selectFamilyContact(
+                    KDRequestUtils.getHeaderMaps(),
+                    KDRequestUtils.getRequestBody(jsonObject))
+                    .enqueue(new Callback<FamilyContact>() {
+                        @Override
+                        public void onResponse(Call<FamilyContact> call, Response<FamilyContact> response) {
+                            //showList(list);
+                        }
+
+                        @Override
+                        public void onFailure(Call<FamilyContact> call, Throwable t) {
+
+                        }
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

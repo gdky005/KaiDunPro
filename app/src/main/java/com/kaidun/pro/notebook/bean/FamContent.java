@@ -1,149 +1,130 @@
 package com.kaidun.pro.notebook.bean;
 
-import java.util.List;
-
 /**
  * @author Yunr
  * @date 2018/01/23 15:35
  */
 public class FamContent {
-    /**
-     * message : 成功
-     * result : [{"bookName":"ABC","ccId":"4B93B97398216E08E0531064410ABCF4","classId":"71801b30-e69c-467b-aab7-bf4323bbd9e8","courseSortId":"fd23aa51-dd03-4896-98cf-254864f646a9","listingRate":"100%","readingRate":"0%","speakingRate":"0%","unitCode":"88","writingRate":"0%"},{"bookName":"ABC","ccId":"4B93B97398216E08E0531064410ABCF4","classId":"71801b30-e69c-467b-aab7-bf4323bbd9e8","courseSortId":"fd23aa51-dd03-4896-98cf-254864f646a9","listingRate":"%","readingRate":"%","speakingRate":"%","unitCode":"87","writingRate":"%"}]
-     * statusCode : 100
-     * ver : 1
-     */
 
-    private String message;
-    private int statusCode;
-    private int ver;
-    private List<ResultBean> result;
+    private String bookName;//(书本名称)
+    private String ccId;//(课表id)
+    private String classId;//(班级id)
+    private String courseSortId;//(课程类别id)
 
-    public String getMessage() {
-        return message;
+    private int unitCode;//(单元完成率)
+
+    private double listeningRate;//(听完成率)
+    private double speakingRate;//(说完成率)
+    private double readingRate;//(读完成率)
+    private double writingRate;//(写完成率)
+    private String practiseTime;//（评测时间）
+    private String option;//（学员表现）
+
+    private String text;//（评语内容）
+
+    private int start;//（星星数）
+
+    public String getBookName() {
+        return bookName;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public String getCcId() {
+        return ccId;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setCcId(String ccId) {
+        this.ccId = ccId;
     }
 
-    public int getVer() {
-        return ver;
+    public String getClassId() {
+        return classId;
     }
 
-    public void setVer(int ver) {
-        this.ver = ver;
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 
-    public List<ResultBean> getResult() {
-        return result;
+    public String getCourseSortId() {
+        return courseSortId;
     }
 
-    public void setResult(List<ResultBean> result) {
-        this.result = result;
+    public void setCourseSortId(String courseSortId) {
+        this.courseSortId = courseSortId;
     }
 
-    public static class ResultBean {
-        /**
-         * bookName : ABC
-         * ccId : 4B93B97398216E08E0531064410ABCF4
-         * classId : 71801b30-e69c-467b-aab7-bf4323bbd9e8
-         * courseSortId : fd23aa51-dd03-4896-98cf-254864f646a9
-         * listingRate : 100%
-         * readingRate : 0%
-         * speakingRate : 0%
-         * unitCode : 88
-         * writingRate : 0%
-         */
+    public int getUnitCode() {
+        return unitCode;
+    }
 
-        private String bookName;
-        private String ccId;
-        private String classId;
-        private String courseSortId;
-        private String listingRate;
-        private String readingRate;
-        private String speakingRate;
-        private String unitCode;
-        private String writingRate;
+    public void setUnitCode(int unitCode) {
+        this.unitCode = unitCode;
+    }
 
-        public String getBookName() {
-            return bookName;
-        }
+    public double getListeningRate() {
+        return listeningRate;
+    }
 
-        public void setBookName(String bookName) {
-            this.bookName = bookName;
-        }
+    public void setListeningRate(double listeningRate) {
+        this.listeningRate = listeningRate;
+    }
 
-        public String getCcId() {
-            return ccId;
-        }
+    public double getSpeakingRate() {
+        return speakingRate;
+    }
 
-        public void setCcId(String ccId) {
-            this.ccId = ccId;
-        }
+    public void setSpeakingRate(double speakingRate) {
+        this.speakingRate = speakingRate;
+    }
 
-        public String getClassId() {
-            return classId;
-        }
+    public double getReadingRate() {
+        return readingRate;
+    }
 
-        public void setClassId(String classId) {
-            this.classId = classId;
-        }
+    public void setReadingRate(double readingRate) {
+        this.readingRate = readingRate;
+    }
 
-        public String getCourseSortId() {
-            return courseSortId;
-        }
+    public double getWritingRate() {
+        return writingRate;
+    }
 
-        public void setCourseSortId(String courseSortId) {
-            this.courseSortId = courseSortId;
-        }
+    public void setWritingRate(double writingRate) {
+        this.writingRate = writingRate;
+    }
 
-        public String getListingRate() {
-            return listingRate;
-        }
+    public String getPractiseTime() {
+        return practiseTime;
+    }
 
-        public void setListingRate(String listingRate) {
-            this.listingRate = listingRate;
-        }
+    public void setPractiseTime(String practiseTime) {
+        this.practiseTime = practiseTime;
+    }
 
-        public String getReadingRate() {
-            return readingRate;
-        }
+    public String getOption() {
+        return option;
+    }
 
-        public void setReadingRate(String readingRate) {
-            this.readingRate = readingRate;
-        }
+    public void setOption(String option) {
+        this.option = option;
+    }
 
-        public String getSpeakingRate() {
-            return speakingRate;
-        }
+    public String getText() {
+        return text;
+    }
 
-        public void setSpeakingRate(String speakingRate) {
-            this.speakingRate = speakingRate;
-        }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-        public String getUnitCode() {
-            return unitCode;
-        }
+    public int getStart() {
+        return start;
+    }
 
-        public void setUnitCode(String unitCode) {
-            this.unitCode = unitCode;
-        }
-
-        public String getWritingRate() {
-            return writingRate;
-        }
-
-        public void setWritingRate(String writingRate) {
-            this.writingRate = writingRate;
-        }
+    public void setStart(int start) {
+        this.start = start;
     }
 }

@@ -40,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -51,10 +51,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MesDetailActivity"
-            android:windowSoftInputMode=""
-            />
-        <activity android:name=".WriteMsgActivity"/>
+        <activity
+            android:name=".MesDetailActivity"
+            android:windowSoftInputMode="" />
+        <activity android:name=".WriteMsgActivity" />
+        <activity
+            android:name=".notebook.BookDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

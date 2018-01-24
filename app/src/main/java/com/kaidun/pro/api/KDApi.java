@@ -5,6 +5,9 @@ import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.SchoolNotification;
+import com.kaidun.pro.notebook.bean.FamContent;
+import com.kaidun.pro.notebook.bean.FamilyContact;
+import com.kaidun.pro.notebook.bean.MsgBean;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +53,22 @@ public interface KDApi {
      */
     @POST("selectBookCode")
     Call<VideoBean> getAllVideo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 查询家长拥有的家联本列表
+     */
+    @POST("selectFamilyContact")
+    Call<FamilyContact> selectFamilyContact(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 家联本内容展示（听说读写完成率）
+     */
+    @POST("selectFamContContext")
+    Call<FamContent> selectFamContContext(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 给班级老师送花
+     */
+    @POST("sendFolwer")
+    Call<MsgBean> sendFolwer(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 }
