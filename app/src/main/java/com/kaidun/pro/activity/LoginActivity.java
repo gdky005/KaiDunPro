@@ -136,6 +136,7 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
                                 //TODO 账户存本地 下次自动登陆？
                                 KDAccountManager.getInstance().setToken(result.getToken());
                                 ChooseRoleActivity.start(LoginActivity.this);
+                                finish();
                             }
                             L.d("onResponse: " + result.toString());
                         }
