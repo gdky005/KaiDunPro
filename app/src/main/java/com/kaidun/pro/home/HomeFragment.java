@@ -62,10 +62,7 @@ public class HomeFragment extends BaseFragment {
     LinearLayout mShowRecommended;
     @BindView(R.id.ll_show_qr)
     LinearLayout mShowQr;
-    @BindView(R.id.tv_school_notice_content)
-    TextView mSchoolNoticeContent;
-    @BindView(R.id.tv_school_notice_date)
-    TextView mSchoolNoticeDate;
+
     @BindView(R.id.rl_home_layout)
     RecyclerView mHomeLayout;
 
@@ -93,8 +90,6 @@ public class HomeFragment extends BaseFragment {
         mToolbarTitle.setText("主页");
         mParentsName.setText("Durian_");
         mParentsNick.setText("Jaaaelu");
-        mSchoolNoticeContent.setText("          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。");
-        mSchoolNoticeDate.setText("2017年9月6日 by Zola");
         mHomeLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new HomeAdapter(R.layout.item_home, mHomes);
         mHomeLayout.setAdapter(mAdapter);
@@ -106,11 +101,17 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
+        Home homeHeader = new Home("          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。",
+                "2017年9月6日 by Zola");
+
         Home home = new Home(null, "ABC 1-9", 1,
                 0.8, 0.5, 0.3,
                 "          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。",
                 "2017年9月6日 by Zola");
         mHomes.clear();
+        mHomes.add(homeHeader);
+        mHomes.add(home);
+        mHomes.add(home);
         mHomes.add(home);
         mHomes.add(home);
         mAdapter.notifyDataSetChanged();

@@ -1,7 +1,6 @@
 package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -20,13 +19,18 @@ import team.zhuoke.sdk.component.ZKViewHolder;
  * Created by Administrator on 2018/1/23.
  */
 
-public class HomeHolder extends ZKViewHolder {
+public class HomeHeaderHolder extends HomeHolder {
+    @BindView(R.id.tv_school_notice_content)
+    TextView mSchoolNoticeContent;
+    @BindView(R.id.tv_school_notice_date)
+    TextView mSchoolNoticeDate;
 
-    public HomeHolder(View view) {
+    public HomeHeaderHolder(View view) {
         super(view);
-        ButterKnife.bind(this, itemView);
     }
 
     public void setData(Home home) {
+        mSchoolNoticeContent.setText(home.schoolNoticeContent);
+        mSchoolNoticeDate.setText(home.schoolNoticeDate);
     }
 }

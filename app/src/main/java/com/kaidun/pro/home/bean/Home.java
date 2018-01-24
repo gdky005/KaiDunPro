@@ -13,6 +13,13 @@ public class Home {
     public double writeProgress;
     public String teacherEvaluation;
     public String teacherEvaluationDate;
+    public String schoolNoticeContent;
+    public String schoolNoticeDate;
+
+    public Home(String schoolNoticeContent, String schoolNoticeDate) {
+        this.schoolNoticeContent = schoolNoticeContent;
+        this.schoolNoticeDate = schoolNoticeDate;
+    }
 
     public Home(String courseUrl, String courseName, double listenProgress, double speakProgress,
                 double readProgress, double writeProgress, String teacherEvaluation,

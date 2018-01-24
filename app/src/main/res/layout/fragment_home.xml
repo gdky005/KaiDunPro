@@ -122,8 +122,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/include_school_notification"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rl_home_layout"
         android:layout_width="match_parent"
