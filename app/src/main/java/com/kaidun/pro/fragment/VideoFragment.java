@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.VideoFragmentAdapter;
 import com.kaidun.pro.api.KDApi;
-import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -29,7 +28,7 @@ import team.zhuoke.sdk.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VideoFragment extends BaseFragment implements KDAccountManager.LoginFinish {
+public class VideoFragment extends BaseFragment {
 
     private TabLayout tabPackage;
     private ViewPager vpVideo;
@@ -67,8 +66,11 @@ public class VideoFragment extends BaseFragment implements KDAccountManager.Logi
 
     @Override
     public void initData(Bundle bundle) {
-        KDAccountManager.getInstance().setLoginFinish(this);
-        KDAccountManager.getInstance().login("10007027", "10007027", "1001", "003");
+        try {
+            getVideo();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -103,13 +105,4 @@ public class VideoFragment extends BaseFragment implements KDAccountManager.Logi
     }
 
 
-    @Override
-    public void loginFinish(LoginBean login) {
-        KDAccountManager.getInstance().setUserInfoBean(login.getData());
-        try {
-            getVideo();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }

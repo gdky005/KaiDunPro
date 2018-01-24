@@ -17,7 +17,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
-import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.home.adapter.HomeAdapter;
 import com.kaidun.pro.home.bean.Home;
 import com.kaidun.pro.home.bean.SchoolNotification;
@@ -42,7 +41,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by Administrator on 2018/1/22.
  */
 
-public class HomeFragment extends BaseFragment implements KDAccountManager.LoginFinish {
+public class HomeFragment extends BaseFragment  {
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
@@ -112,9 +111,15 @@ public class HomeFragment extends BaseFragment implements KDAccountManager.Login
         mHomes.add(home);
         mHomes.add(home);
         mAdapter.notifyDataSetChanged();
+        mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+        mParentsNick.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+        mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
+        try {
+            getFamilyInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        KDAccountManager.getInstance().setLoginFinish(this);
-        KDAccountManager.getInstance().login("10007027", "10007027", "1001", "003");
     }
 
     private void getFamilyInfo() throws Exception {
@@ -165,16 +170,5 @@ public class HomeFragment extends BaseFragment implements KDAccountManager.Login
         }
     }
 
-    @Override
-    public void loginFinish(LoginBean login) {
-        KDAccountManager.getInstance().setUserInfoBean(login.getData());
-        try {
-            getFamilyInfo();
-            mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
-            mParentsNick.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
-            mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }
