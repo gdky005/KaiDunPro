@@ -1,5 +1,6 @@
 package com.kaidun.pro.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
+import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
@@ -182,7 +185,18 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
                                 KDAccountManager.getInstance().setUserInfoBean(dataBean);
                                 //TODO 账户存本地 下次自动登陆？
                                 KDAccountManager.getInstance().setToken(result.getToken());
-                                ChooseRoleActivity.start(LoginActivity.this);
+
+
+                                // TODO: 2018/1/25  这里请处理你的逻辑
+                                KaiDunSP kaiDunSP = new KaiDunSP();
+                                boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
+                                if (!isFirst) {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                } else {
+                                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
+                                    ChooseRoleActivity.start(LoginActivity.this);
+                                }
+
                                 finish();
                             }
                             L.d("onResponse: " + result.toString());

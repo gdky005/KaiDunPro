@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.R;
+import com.kaidun.pro.kd.KaiDunSP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +96,15 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        KaiDunSP kaiDunSP = new KaiDunSP();
+        boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_WELCOME, true);
+        if (!isFirst) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            kaiDunSP.put(KaiDunSP.KEY_TEST_WELCOME, false);
+        }
 
     }
 
