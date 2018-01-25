@@ -54,16 +54,19 @@
             android:maxLines="2"
             tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验欢迎各位家长带孩子来体验，活动免费开放四天。" />
 
-        <TextView
-            android:id="@+id/tv_recommended_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/text_third"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap"
-            tools:text="2017/12/26" />
+    <TextView
+        android:id="@+id/tv_recommended_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/xxtx_msg"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/xxtx_msg"
+        android:drawableRight="@drawable/jiantou_message"
+        android:drawablePadding="2dp"
+        android:textColor="@color/text_third"
+        android:textSize="14sp"
+        tools:ignore="RelativeOverlap"
+        tools:text="2017/12/26" />
 
         <ImageView
             android:id="@+id/xxtx_msg"

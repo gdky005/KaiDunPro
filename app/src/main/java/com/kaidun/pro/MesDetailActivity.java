@@ -3,10 +3,15 @@ package com.kaidun.pro;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseIntArray;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.kaidun.pro.adapter.MsgDetailAdapter;
 import com.kaidun.pro.bean.SwipeBean;
+import com.kaidun.pro.notebook.bean.MsgBean;
 import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -19,17 +24,24 @@ import team.zhuoke.sdk.base.BaseActivity;
  * Created by lmj on 2018/1/23.
  */
 
-public class MesDetailActivity extends BaseActivity {
+public class MesDetailActivity extends BaseActivity implements View.OnClickListener {
 
+
+    public static final int REPLY = 1;
+    public static final int MSG = 0;
 
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
+    @BindView(R.id.send_img)
+    ImageView sendMsg;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.msg_recycler)
     RecyclerView mMsgDetailRecycler;
     private ArrayList<SwipeBean> mData;
-    private MsgDetailAdapter msgDetailAdapter;
+
+    private SparseIntArray layouts = new SparseIntArray(2);
+    private KdNetWorkClient httpUtils;
 
 
     @Override
@@ -39,13 +51,44 @@ public class MesDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        layouts.put(REPLY,R.layout.item_msg_detail_reply);
+        layouts.put(MSG,R.layout.item_msg_detail_msg);
+        httpUtils = new KdNetWorkClient();
         ButterKnife.bind(this);
+        sendMsg.setOnClickListener(this);
         initDemoData();
-        msgDetailAdapter = new MsgDetailAdapter(mData, this);
+
+
+
+        MsgDetailAdapter adapter = new MsgDetailAdapter(mData);
+        adapter.setMultiTypeDelegate(new MultiTypeDelegate<SwipeBean>(layouts) {
+            @Override
+            protected int getItemType(SwipeBean swipeBean) {
+                return swipeBean.type;
+            }
+        });
+
         mMsgDetailRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third),1));
-        mMsgDetailRecycler.setAdapter(msgDetailAdapter);
+        mMsgDetailRecycler.setAdapter(adapter);
         mToolbarTitle.setText(R.string.msg_detail);
+        getDetailDemo();
+    }
+
+    private void getDetailDemo() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
+
+            @Override
+            public void getSuccessDataCallBack(MsgBean data) {
+
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+
+            }
+        });
+        httpUtils.getMsgDetail("");
     }
 
     private void initDemoData() {
@@ -56,6 +99,10 @@ public class MesDetailActivity extends BaseActivity {
                     "家长", content, "回复：凯顿" + i, i % 2);
             mData.add(bean);
         }
+
+
+
+
     }
 
     @Override
@@ -66,5 +113,31 @@ public class MesDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == sendMsg){
+            httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<SwipeBean>() {
+                @Override
+                public void getSuccessDataCallBack(SwipeBean data) {
+
+                }
+
+                @Override
+                public void getFailDataCallBack(int failIndex) {
+
+                }
+            });
+            httpUtils.sendMsgDetail("");
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        httpUtils.setmCallBack(null);
+        httpUtils = null;
     }
 }

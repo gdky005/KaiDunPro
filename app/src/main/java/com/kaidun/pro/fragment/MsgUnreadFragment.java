@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.facebook.fresco.helper.utils.DensityUtil;
+import com.kaidun.pro.KdNetWorkClient;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.MessageAdapter;
 import com.kaidun.pro.bean.SwipeBean;
@@ -30,6 +31,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
     RecyclerView msg_unread_recler;
     private MessageAdapter messageAdapter;
     private ArrayList data;
+    private KdNetWorkClient httpUtils;
 
 
     public static MsgUnreadFragment newInstance() {
@@ -47,8 +49,8 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
     @Override
     public void initView(View view) {
         ButterKnife.bind(this,view);
-
-        messageAdapter = new MessageAdapter(getContext(), getSampleData(),MessageAdapter.UNREAD);
+        httpUtils = new KdNetWorkClient();
+        messageAdapter = new MessageAdapter(getSampleData(),R.layout.item_msg_unread);
 //        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
 //                DividerItemDecoration.VERTICAL);
 //        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
@@ -59,6 +61,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         msg_unread_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_unread_recler.setAdapter(messageAdapter);
         messageAdapter.setOnDelListener(this);
+
     }
 
     private List<SwipeBean> getSampleData() {
@@ -86,6 +89,18 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
     public void onDel(int pos) {
         data.remove(pos);
         messageAdapter.notifyItemRemoved(pos);
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack() {
+            @Override
+            public void getSuccessDataCallBack(Object data) {
+
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+
+            }
+        });
+        httpUtils.udpateMessage("");
     }
 
     @Override

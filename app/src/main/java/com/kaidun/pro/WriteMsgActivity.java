@@ -3,6 +3,8 @@ package com.kaidun.pro;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kaidun.pro.notebook.bean.MsgBean;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team.zhuoke.sdk.base.BaseActivity;
@@ -21,6 +23,7 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
     @BindView(R.id.send_btn)
     TextView send;
+    private KdNetWorkClient httpUtils;
 
     @Override
     protected int getLayoutId() {
@@ -48,15 +51,35 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initData() {
+        httpUtils = new KdNetWorkClient();
 
     }
 
     @Override
     public void onClick(View view) {
         if (view == send){
+            httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
+                @Override
+                public void getSuccessDataCallBack(MsgBean data) {
 
+                }
+
+                @Override
+                public void getFailDataCallBack(int failIndex) {
+
+                }
+            });
+            httpUtils.leaveMsg();
         }else if (view == cancel){
             finish();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        httpUtils.setmCallBack(null);
+        httpUtils = null;
     }
 }

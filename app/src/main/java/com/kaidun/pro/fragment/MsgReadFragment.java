@@ -9,6 +9,8 @@ import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.MessageAdapter;
 import com.kaidun.pro.bean.SwipeBean;
+import com.kaidun.pro.KdNetWorkClient;
+import com.kaidun.pro.notebook.bean.MsgBean;
 import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class MsgReadFragment extends BaseFragment {
     @BindView(R.id.read_recle)
     RecyclerView msg_read_recler;
     private MessageAdapter messageAdapter;
+    private KdNetWorkClient httpUtils;
 
 
     public static MsgReadFragment newInstance() {
@@ -50,7 +53,7 @@ public class MsgReadFragment extends BaseFragment {
     public void initView(View view) {
         ButterKnife.bind(this,view);
 
-        messageAdapter = new MessageAdapter(getContext(), getSampleData(),MessageAdapter.READ);
+        messageAdapter = new MessageAdapter(getSampleData(),R.layout.item_msg_read);
        /* DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL);*/
         RecDividerItemDecoration decoration = new RecDividerItemDecoration(
@@ -59,6 +62,8 @@ public class MsgReadFragment extends BaseFragment {
        msg_read_recler.addItemDecoration(decoration);
         msg_read_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_read_recler.setAdapter(messageAdapter);
+        httpUtils = new KdNetWorkClient();
+        getReadMsg();
     }
 
     private List<SwipeBean> getSampleData() {
@@ -72,6 +77,22 @@ public class MsgReadFragment extends BaseFragment {
         return data;
     }
 
+
+    private void getReadMsg(){
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
+            @Override
+            public void getSuccessDataCallBack(MsgBean data) {
+
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+
+            }
+        });
+        httpUtils.getReadMsg("001");
+    }
+
     @Override
     public void initData(Bundle bundle1) {
 
@@ -81,5 +102,12 @@ public class MsgReadFragment extends BaseFragment {
     @Override
     public void initListener() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        httpUtils.setmCallBack(null);
+        httpUtils = null;
     }
 }

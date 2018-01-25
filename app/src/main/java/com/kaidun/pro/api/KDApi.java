@@ -110,4 +110,44 @@ public interface KDApi {
      */
     @POST("selectBookFinshRate")
     Call<KDBaseBean> selectBookFinishRate(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+
+    /**
+     * 获取已读和未读消息
+     */
+    @POST("selectMessge")
+    Call<MsgBean> getReadAndUnreadMsg(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+
+    /**
+     * 获取消息详情
+     */
+    @POST("selectMessgeDetail")
+    Call<MsgBean> getMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+
+    /**
+     * 发送消息时点击“+” 查找班级
+     */
+    @POST("selectClassInfo")
+    Call<MsgBean> selectClassInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 回复详情消息
+     */
+    @POST("replyMessage")
+    Call<MsgBean> sendMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 删除未读消息
+     */
+    @POST("udpateMessage")
+    Call<MsgBean> udpateMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 给班级留言
+     */
+    @POST("leaveMessage")
+    Call<MsgBean> leaveMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
 }
