@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.fragment.MsgFragment;
 import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.TestFragment;
 import com.kaidun.pro.fragment.VideoFragment;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity {
             VideoFragment.newInstance(NAV_TYPE_VIDEO),
             PicFragment.newInstance(),
             NoteBookFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
-            TestFragment.newInstance(NAV_TYPE_MESSAGE)};
+            MsgFragment.newInstance(NAV_TYPE_MESSAGE)};
 
     public static int[] NAV_TYPE = new int[]{NAV_TYPE_MAIN, NAV_TYPE_VIDEO, NAV_TYPE_PICTURE, NAV_TYPE_PARENT_NOTEBOOK, NAV_TYPE_MESSAGE};
 

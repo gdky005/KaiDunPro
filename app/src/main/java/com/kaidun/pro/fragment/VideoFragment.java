@@ -5,24 +5,24 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.VideoFragmentAdapter;
-import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.VideoBean;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
+import java.util.List;
+
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
@@ -34,6 +34,7 @@ public class VideoFragment extends BaseFragment {
     private ViewPager vpVideo;
     private TextView tvTitle;
     public static final String KEY = "key";
+    private List<VideoBean> list = new ArrayList<>();
 
 
     @Override
@@ -47,12 +48,6 @@ public class VideoFragment extends BaseFragment {
         vpVideo = view.findViewById(R.id.vp_video);
         tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText("视频");
-        VideoFragmentAdapter pagerAdapter = new VideoFragmentAdapter(getChildFragmentManager(),
-                new Fragment[]{new SubVideoFragment(),
-                        new SubVideoFragment(), new SubVideoFragment()});
-        vpVideo.setAdapter(pagerAdapter);
-        pagerAdapter.setTitles(new String[]{"ABC", "LA", "SC"});
-        tabPackage.setupWithViewPager(vpVideo);
 
     }
 
@@ -67,7 +62,8 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void initData(Bundle bundle) {
         try {
-            getVideo();
+            if (list.isEmpty())
+                getVideo();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -75,28 +71,45 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void getVideo() throws JSONException {
-        KDAccountManager.getInstance().defaultLogin();
-        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userCode", "10007027");
         jsonObject.put("areaCode", "1001");
-        kdApi.getAllVideo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<VideoBean>() {
+        KDConnectionManager.getInstance().getZHApi()
+                .getAllVideo(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject))
+                .enqueue(new KDCallback<List<VideoBean>>() {
+                    @Override
+                    public void onResponse(KDBaseBean<List<VideoBean>> baseBean, List<VideoBean> result) {
 
-            @Override
-            public void onResponse(Call<VideoBean> call, Response<VideoBean> response) {
-                if (response.body() != null) {
-                    Log.d("response--->ok", response.body().toString());
+                        if (baseBean.getStatusCode() == 100) {
 
-                }
-            }
+                            List<Fragment> fragments = new ArrayList<>(result.size());
+                            String[] titles = new String[result.size()];
 
-            @Override
-            public void onFailure(Call<VideoBean> call, Throwable t) {
-                Log.d("response--->ok", t.getMessage());
+                            for (int i = 0; i < result.size(); i++) {
+                                VideoBean videoBean = result.get(i);
+                                SubVideoFragment sub = new SubVideoFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("sub", videoBean);
+                                sub.setArguments(bundle);
+                                fragments.add(sub);
+                                titles[i] = videoBean.getCourseSortName();
+                            }
+                            VideoFragmentAdapter pagerAdapter = new VideoFragmentAdapter(getChildFragmentManager(),
+                                    fragments);
+                            vpVideo.setAdapter(pagerAdapter);
+                            pagerAdapter.setTitles(titles);
+                            tabPackage.setupWithViewPager(vpVideo);
 
-            }
-        });
+                        } else
+                            ToastUtils.showShort(baseBean.getMessage());
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
     }
 
     @Override

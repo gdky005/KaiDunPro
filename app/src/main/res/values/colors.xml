@@ -13,4 +13,6 @@
     <color name="color_text">#433d2e</color>
     <color name="color_1f5dc3">#1f5dc3</color>
     <color name="color_6d695e">#6d695e</color>
+    <color name="color_pic_item_text">#1B1A16</color>
+    <color name="color_pic_bg">#F4F5ED</color>
 </resources>
