@@ -18,7 +18,6 @@ import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +70,8 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void getVideo() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", "10007027");
-        jsonObject.put("areaCode", "1001");
         KDConnectionManager.getInstance().getZHApi()
-                .getAllVideo(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject))
+                .getAllVideo(KDRequestUtils.getRequestBody())
                 .enqueue(new KDCallback<List<VideoBean>>() {
                     @Override
                     public void onResponse(KDBaseBean<List<VideoBean>> baseBean, List<VideoBean> result) {

@@ -22,7 +22,7 @@ import okhttp3.RequestBody;
 public class KDRequestUtils {
 
     /**
-     * 获取通用的请求 Header
+     * 获取通用的请求 Header, 已经统一在 Okhttp 的拦截器里面处理，不需要手动调用
      *
      * @return headerMaps
      */
@@ -40,6 +40,10 @@ public class KDRequestUtils {
             e.printStackTrace();
         }
 
+        if (TextUtils.isEmpty(deviceId)) {
+            deviceId = "asdas2342";
+        }
+
 
         String token = KDAccountManager.getInstance().getToken();
 
@@ -51,20 +55,52 @@ public class KDRequestUtils {
             deviceId = "asdas2342";
         }
         headerMaps.put("machineCode", deviceId);
-
         headerMaps.put("Content-Type", Constant.MEDIA_TYPE);
 
         return headerMaps;
     }
 
+    /**
+     * 默认包含 userCode 和 areaCode 字段。 不需要额外的数据。
+     * @return RequestBody
+     */
+    public static RequestBody getRequestBody() {
+        return KDRequestUtils.getRequestBody(new JSONObject());
+    }
+
+    /**
+     * 默认包含 userCode 和 areaCode 字段。  需要添加 额外 JSONObject 数据 参数。
+     * @return RequestBody
+     */
     public static RequestBody getRequestBody(JSONObject jsonObject) {
+        return getRequestBody(jsonObject, false);
+    }
+
+    public static RequestBody getLoginRequestBody(JSONObject jsonObject) {
+        return getRequestBody(jsonObject, true);
+    }
+
+    /**
+     * 仅供内部调用。
+     * @param jsonObject 需要传入的  jsonObject 参数，所有的
+     * @param isLogin 如果登录 true, 不会自动添加任何东西, 否则添加 userCode 和 areaCode 字段
+     * @return RequestBody
+     */
+    private static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
+        if (!isLogin) {
+            setCommonJsonObject(jsonObject);
+        }
         return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
     }
 
-    public static RequestBody getBaseInfo() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-        return KDRequestUtils.getRequestBody(jsonObject);
+    public static void setCommonJsonObject(JSONObject jsonObject) {
+        try {
+            KDAccountManager kdAccountManager = KDAccountManager.getInstance();
+
+            jsonObject.put("userCode", kdAccountManager.getUserCode());
+            jsonObject.put("areaCode", kdAccountManager.getAreaCode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

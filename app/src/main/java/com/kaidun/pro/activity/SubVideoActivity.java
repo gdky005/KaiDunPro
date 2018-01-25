@@ -60,12 +60,10 @@ public class SubVideoActivity extends BaseActivity {
 
     private void getVideoDetail(String id, String code) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", "10007027");
-        jsonObject.put("areaCode", "1001");
         jsonObject.put("courseSortId", id);
         jsonObject.put("bookCode", code);
         KDConnectionManager.getInstance().getZHApi()
-                .getAllSubVideo(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject))
+                .getAllSubVideo(KDRequestUtils.getRequestBody(jsonObject))
                 .enqueue(new KDCallback<List<SubVideoBean>>() {
                     @Override
                     public void onResponse(KDBaseBean<List<SubVideoBean>> baseBean, List<SubVideoBean> result) {

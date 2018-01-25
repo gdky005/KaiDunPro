@@ -30,8 +30,6 @@ public class KaiDunApplication extends Application {
 
         ZKBase.init(this, BuildConfig.DEBUG);
 
-
-
         Stetho.initialize(Stetho.newInitializerBuilder(mContext)
                 .enableDumpapp(new DumperPluginsProvider() {
                     @Override
@@ -46,9 +44,5 @@ public class KaiDunApplication extends Application {
 
         //添加 Stetho 的拦截器
         KDConnectionManager.getInstance().getBuilder().addNetworkInterceptor(new StethoInterceptor());
-
-
-
-
     }
 }

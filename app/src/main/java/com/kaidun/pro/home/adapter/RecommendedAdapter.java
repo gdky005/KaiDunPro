@@ -12,14 +12,14 @@ import team.zhuoke.sdk.component.ZKAdapter;
  * Created by Administrator on 2018/1/22.
  */
 
-public class RecommendedAdapter extends ZKAdapter<Recommended, RecommendedHolder> {
+public class RecommendedAdapter extends ZKAdapter<Recommended.ResultBean, RecommendedHolder> {
 
-    public RecommendedAdapter(int layoutResId, @Nullable List<Recommended> data) {
+    public RecommendedAdapter(int layoutResId, @Nullable List<Recommended.ResultBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(RecommendedHolder helper, Recommended item) {
+    protected void convert(RecommendedHolder helper, Recommended.ResultBean item) {
         helper.setData(item);
     }
 

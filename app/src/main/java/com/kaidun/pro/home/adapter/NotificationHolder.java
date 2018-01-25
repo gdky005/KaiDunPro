@@ -29,13 +29,13 @@ public class NotificationHolder extends ZKViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void setData(Notification notification) {
-        mNotificationDate.setText(notification.date);
-        mNotificationContent.setText(notification.content);
-        mNotificationType.setText(notification.contentType);
+    public void setData(Notification.ResultBean notification) {
+        mNotificationDate.setText(notification.getKpmDate());
+        mNotificationContent.setText(notification.getKpmContextMessage());
+        mNotificationType.setText(notification.getKpmTitle());
     }
 
-    public void showOrHide(int position) {
+    void showOrHide(int position) {
         if (position == 0) {
             mLine.setVisibility(View.VISIBLE);
         } else {

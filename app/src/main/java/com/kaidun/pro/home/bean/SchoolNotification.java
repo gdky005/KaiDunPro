@@ -4,7 +4,7 @@ package com.kaidun.pro.home.bean;
  * Created by Administrator on 2018/1/22.
  */
 
-public class SchoolNotification extends Home{
+public class SchoolNotification extends Home {
     /**
      * message : 成功
      * result : {"releaseContent":"下周考试，请考生做好准备","releaseTime":"2018/01/24\n\t\t00:00:00","releaser":"Stella"}
@@ -53,7 +53,7 @@ public class SchoolNotification extends Home{
         /**
          * releaseContent : 下周考试，请考生做好准备
          * releaseTime : 2018/01/24
-         00:00:00
+         * 00:00:00
          * releaser : Stella
          */
 

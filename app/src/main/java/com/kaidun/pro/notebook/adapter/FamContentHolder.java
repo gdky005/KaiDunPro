@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.kaidun.pro.R;
 import com.kaidun.pro.WriteMsgActivity;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
 import com.kaidun.pro.notebook.bean.FamContent;
@@ -74,6 +73,7 @@ public class FamContentHolder extends ZKViewHolder {
     TextView mTvWritePercentage;
     @BindView(R.id.fam_date)
     TextView mFamDate;
+    private static double sScheduleLength = 0;
 
     private FamContent data;
 
@@ -152,13 +152,13 @@ public class FamContentHolder extends ZKViewHolder {
 
         try {
             JSONObject jsonObject = new JSONObject();
+            // TODO: 2018/1/25  请删除这里
 //            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
 //            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("userCode", userCode);
-            jsonObject.put("areaCode", areaCode);
+//            jsonObject.put("userCode", userCode);
+//            jsonObject.put("areaCode", areaCode);
             jsonObject.put("ccId", ccId);
             KDConnectionManager.getInstance().getZHApi().sendFolwer(
-                    KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgBean>() {
                         @Override
@@ -188,7 +188,10 @@ public class FamContentHolder extends ZKViewHolder {
     private void realSetPercentage(FrameLayout layout, double progress) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
         layout.measure(0, 0);
-        params.width = (int) (layout.getWidth() * progress);
+        if (sScheduleLength == 0) {
+            sScheduleLength = layout.getWidth();
+        }
+        params.width = (int) (sScheduleLength * progress);
         layout.setLayoutParams(params);
     }
 }

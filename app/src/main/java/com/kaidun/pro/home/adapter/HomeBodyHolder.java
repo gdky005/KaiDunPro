@@ -2,13 +2,12 @@ package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import com.kaidun.pro.home.bean.Home;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.component.ZKViewHolder;
 
 /**
  * Created by Administrator on 2018/1/23.
@@ -56,6 +54,7 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationDate;
     private Context mContext;
     private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
+    private static double sScheduleLength = 0;
 
     public HomeBodyHolder(View view) {
         super(view);
@@ -91,9 +90,8 @@ public class HomeBodyHolder extends HomeHolder {
 
     private void setCourseSpinner(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
         String[] bookCodes = getBookCodeList(courseInfoBean);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_spinner_dropdown_item, bookCodes);
-//        adapter.setDropDownViewResource(R.drawable.xiala_home);
         mCourseSelect.setAdapter(adapter);
     }
 
@@ -135,11 +133,10 @@ public class HomeBodyHolder extends HomeHolder {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
         //  measure方法的参数值都设为0即可
         layout.measure(0, 0);
-        Log.e("TAG", "getMeasuredWidth = " + layout.getMeasuredWidth());
-        Log.e("TAG", "getWidth = " + layout.getWidth());
-        Log.e("TAG", "getMeasuredWidthAndState = " + layout.getMeasuredWidthAndState());
-        Log.e("TAG", "params.width = " + params.width);
-        params.width = (int) (layout.getWidth() * progress);
+        if (sScheduleLength == 0) {
+            sScheduleLength = layout.getWidth();
+        }
+        params.width = (int) (sScheduleLength * progress);
         layout.setLayoutParams(params);
     }
 }

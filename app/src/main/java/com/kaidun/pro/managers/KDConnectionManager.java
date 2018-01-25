@@ -6,10 +6,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.utils.KDRequestUtils;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -68,6 +74,23 @@ public class KDConnectionManager {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             //设置Debug Log模式
             builder.addInterceptor(httpLoggingInterceptor);
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+
+                    Request.Builder requestBuilder = original.newBuilder();
+
+                    Map<String, String> map = KDRequestUtils.getHeaderMaps();
+                    for (Map.Entry<String, String> entry:
+                            map.entrySet()) {
+                        requestBuilder.header(entry.getKey(), entry.getValue());
+                    }
+
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
+                }
+            });
         }
 
         return new Retrofit.Builder()

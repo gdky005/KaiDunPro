@@ -62,7 +62,7 @@ public class CourseInfo {
             this.classCourseInfo = classCourseInfo;
         }
 
-        public static class ClassCourseInfoBean extends Home{
+        public static class ClassCourseInfoBean extends Home {
             /**
              * bookModels : [{"bookCode":"1","bookUrl":"http://211.152.60.252:8088/baseImg/book/fun-book-01@2x.png"}]
              * className : ABC1000-1
