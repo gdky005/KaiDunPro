@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.utils.KDRequestUtils;
 
@@ -80,7 +79,7 @@ public class RecommendedDialogFragment extends BaseDialogFragment {
 
     private void recommend() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.recommend(KDRequestUtils.getHeaderMaps(), recommendInfo()).enqueue(new Callback<KDBaseBean>() {
+        kdApi.recommend(recommendInfo()).enqueue(new Callback<KDBaseBean>() {
             @Override
             public void onResponse(Call<KDBaseBean> call, Response<KDBaseBean> response) {
                 if (response.body() != null) {
@@ -110,8 +109,9 @@ public class RecommendedDialogFragment extends BaseDialogFragment {
 
     private RequestBody recommendInfo() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
+        // TODO: 2018/1/25  内部已经添加这两个了，请删除下面两个注释
+//        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
+//        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
         jsonObject.put("cellPhoneNumber", mInputNumber.getText().toString());
         jsonObject.put("familyName", mInputParentsName.getText().toString());
         jsonObject.put("childName", mInputChildName.getText().toString());

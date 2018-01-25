@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getCourseInfo() throws JSONException {
-        mKdApi.selectClassCourseInfo(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<CourseInfo>() {
+        mKdApi.selectClassCourseInfo(KDRequestUtils.getRequestBody()).enqueue(new Callback<CourseInfo>() {
             @Override
             public void onResponse(Call<CourseInfo> call, Response<CourseInfo> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {
@@ -136,8 +136,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getFamilyInfo() throws Exception {
-        mKdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getRequestBody()).enqueue(new Callback<SchoolNotification>() {
+        mKdApi.selectFamilyInfo(KDRequestUtils.getRequestBody()).enqueue(new Callback<SchoolNotification>() {
             @Override
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {

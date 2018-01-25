@@ -3,7 +3,6 @@ package com.kaidun.pro.notebook;
 import android.content.Intent;
 
 import com.kaidun.pro.R;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.FamContentAdapter;
 import com.kaidun.pro.notebook.bean.FamContent;
@@ -85,13 +84,9 @@ public class NoteBookActivity extends BaseActivity {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("courseType", courseType);
             jsonObject.put("unitCode", unitCode);
-            KDConnectionManager.getInstance().getZHApi().selectFamContContext(
-                    KDRequestUtils.getHeaderMaps(),
-                    KDRequestUtils.getRequestBody(jsonObject))
+            KDConnectionManager.getInstance().getZHApi().selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<FamContent>() {
                         @Override
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {

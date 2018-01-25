@@ -73,7 +73,7 @@ public class KDAPITest {
             jsonObject.put("areaCode", "1001");
             jsonObject.put("loginType", "003");
 
-            kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
+            kdApi.login(KDRequestUtils.getLoginRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
                     if (result != null) {
@@ -177,11 +177,8 @@ public class KDAPITest {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("ccId", ccId);
             KDConnectionManager.getInstance().getZHApi().sendFolwer(
-                    KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgBean>() {
                         @Override

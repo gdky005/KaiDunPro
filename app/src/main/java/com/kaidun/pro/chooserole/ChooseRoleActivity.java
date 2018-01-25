@@ -13,7 +13,6 @@ import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.adapter.RoleAdapter;
 import com.kaidun.pro.chooserole.bean.ChooseRoleBean;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
@@ -97,11 +96,7 @@ public class ChooseRoleActivity extends BaseActivity implements BaseQuickAdapter
     private void getFamilyRoles() {
 
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-
-            KDConnectionManager.getInstance().getZHApi().selectFamilyRole(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).
+            KDConnectionManager.getInstance().getZHApi().selectFamilyRole(KDRequestUtils.getRequestBody()).
                     enqueue(new KDCallback<List<FamilyRoleBean>>() {
                         @Override
                         public void onResponse(KDBaseBean<List<FamilyRoleBean>> baseBean, List<FamilyRoleBean> response) {
@@ -134,11 +129,9 @@ public class ChooseRoleActivity extends BaseActivity implements BaseQuickAdapter
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("familyRoleCode", familyRoleCode);
 
-            KDConnectionManager.getInstance().getZHApi().updateFamilyRole(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(
+            KDConnectionManager.getInstance().getZHApi().updateFamilyRole(KDRequestUtils.getRequestBody(jsonObject)).enqueue(
                     new KDCallback<String>() {
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {

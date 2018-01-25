@@ -17,8 +17,6 @@ import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDListCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,11 +77,8 @@ public class PicFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-
-        JSONObject jsonObject = new JSONObject();
-
-        KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDListCallback<PicBean>() {
+        KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(
+                KDRequestUtils.getRequestBody()).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
 

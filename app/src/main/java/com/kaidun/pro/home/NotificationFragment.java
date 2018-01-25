@@ -78,7 +78,7 @@ public class NotificationFragment extends BaseFragment {
 
     private void getNotification() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getPushMessage(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<Notification>() {
+        kdApi.getPushMessage(KDRequestUtils.getRequestBody()).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(Call<Notification> call, Response<Notification> response) {
                 if (response.body() != null) {

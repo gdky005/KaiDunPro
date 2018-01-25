@@ -83,7 +83,7 @@ public class RecommendedFragment extends BaseFragment {
 
     private void getRecommended() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<Recommended>() {
+        kdApi.getRecommend(KDRequestUtils.getRequestBody()).enqueue(new Callback<Recommended>() {
             @Override
             public void onResponse(Call<Recommended> call, Response<Recommended> response) {
                 if (response.body() != null) {

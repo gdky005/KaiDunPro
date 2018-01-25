@@ -6,13 +6,10 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.NoteBookAdapter;
 import com.kaidun.pro.notebook.bean.FamilyContact;
 import com.kaidun.pro.utils.KDRequestUtils;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -111,12 +108,7 @@ public class NoteBookFragment extends BaseFragment {
 
     public void selectFamilyContact() {
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            KDConnectionManager.getInstance().getZHApi().selectFamilyContact(
-                    KDRequestUtils.getHeaderMaps(),
-                    KDRequestUtils.getRequestBody(jsonObject))
+            KDConnectionManager.getInstance().getZHApi().selectFamilyContact(KDRequestUtils.getRequestBody())
                     .enqueue(new Callback<FamilyContact>() {
                         @Override
                         public void onResponse(Call<FamilyContact> call, Response<FamilyContact> response) {
