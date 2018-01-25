@@ -5,12 +5,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
@@ -28,7 +24,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,7 +92,7 @@ public class RecommendedFragment extends BaseFragment {
 
     private void getRecommended() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<KDBaseBean>() {
+        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<KDBaseBean>() {
             @Override
             public void onResponse(Call<KDBaseBean> call, Response<KDBaseBean> response) {
                 if (response.body() != null) {

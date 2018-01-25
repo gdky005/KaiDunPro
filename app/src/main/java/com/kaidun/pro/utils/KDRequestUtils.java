@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.managers.KDAccountManager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -59,24 +60,31 @@ public class KDRequestUtils {
         return headerMaps;
     }
 
-
-    public static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
-        if (!isLogin) {
-            try {
-                KDAccountManager kdAccountManager = KDAccountManager.getInstance();
-
-                jsonObject.put("userCode", kdAccountManager.getUserCode());
-                jsonObject.put("areaCode", kdAccountManager.getAreaCode());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
+    public static RequestBody getRequestBody() {
+        JSONObject jsonObject = new JSONObject();
+        setCommonJsonObject(jsonObject);
+        return KDRequestUtils.getRequestBody(jsonObject);
     }
-
 
     public static RequestBody getRequestBody(JSONObject jsonObject) {
         return getRequestBody(jsonObject, false);
+    }
+
+    public static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
+        if (!isLogin) {
+            setCommonJsonObject(jsonObject);
+        }
+        return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
+    }
+
+    private static void setCommonJsonObject(JSONObject jsonObject) {
+        try {
+            KDAccountManager kdAccountManager = KDAccountManager.getInstance();
+
+            jsonObject.put("userCode", kdAccountManager.getUserCode());
+            jsonObject.put("areaCode", kdAccountManager.getAreaCode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
