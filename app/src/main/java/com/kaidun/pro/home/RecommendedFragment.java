@@ -5,17 +5,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
-import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.home.adapter.RecommendedAdapter;
 import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -28,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,9 +76,14 @@ public class RecommendedFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void initListener() {
+
+    }
+
     private void getRecommended() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<Recommended>() {
+        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<Recommended>() {
             @Override
             public void onResponse(Call<Recommended> call, Response<Recommended> response) {
                 if (response.body() != null) {
@@ -104,11 +103,6 @@ public class RecommendedFragment extends BaseFragment {
                 mLoading.setVisibility(View.GONE);
             }
         });
-    }
-
-    @Override
-    public void initListener() {
-
     }
 
     private void showToast(String msg) {

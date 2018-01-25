@@ -1,9 +1,7 @@
 package com.kaidun.pro.home.adapter;
 
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.kaidun.pro.home.bean.Notification;
 
 import java.util.List;

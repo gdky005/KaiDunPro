@@ -2,11 +2,12 @@ package com.kaidun.pro.api;
 
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
+import com.kaidun.pro.bean.KDListBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.bean.PicBean;
 import com.kaidun.pro.bean.SubVideoBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.CourseInfo;
-import com.kaidun.pro.home.bean.Home;
 import com.kaidun.pro.home.bean.Notification;
 import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.home.bean.SchoolNotification;
@@ -82,6 +83,12 @@ public interface KDApi {
      */
     @POST("sendFolwer")
     Call<MsgBean> sendFolwer(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 获取所有的图片
+     */
+    @POST("selectFamilyPicture")
+    Call<KDListBaseBean<PicBean>> selectFamilyPicture(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 推荐

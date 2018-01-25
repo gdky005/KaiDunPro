@@ -3,12 +3,9 @@ package com.kaidun.pro.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
-import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.home.adapter.HomeAdapter;
 import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
@@ -27,9 +23,7 @@ import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,8 +107,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getCourseInfo() throws JSONException {
-        mKdApi.selectClassCourseInfo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getBaseInfo()).enqueue(new Callback<CourseInfo>() {
+        mKdApi.selectClassCourseInfo(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody()).enqueue(new Callback<CourseInfo>() {
             @Override
             public void onResponse(Call<CourseInfo> call, Response<CourseInfo> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {
@@ -144,7 +137,7 @@ public class HomeFragment extends BaseFragment {
 
     private void getFamilyInfo() throws Exception {
         mKdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getBaseInfo()).enqueue(new Callback<SchoolNotification>() {
+                KDRequestUtils.getRequestBody()).enqueue(new Callback<SchoolNotification>() {
             @Override
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {

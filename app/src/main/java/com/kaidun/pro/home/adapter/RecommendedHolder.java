@@ -2,12 +2,10 @@ package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
-import com.kaidun.pro.home.bean.Notification;
 import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.managers.KDAccountManager;
 

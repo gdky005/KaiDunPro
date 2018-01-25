@@ -2,13 +2,11 @@ package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,7 +17,6 @@ import com.kaidun.pro.home.bean.Home;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.component.ZKViewHolder;
 
 /**
  * Created by Administrator on 2018/1/23.

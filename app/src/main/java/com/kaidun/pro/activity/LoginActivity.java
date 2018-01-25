@@ -12,16 +12,9 @@ import android.widget.Spinner;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
-import com.kaidun.pro.bean.KDBaseBean;
-import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
 import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
-import com.kaidun.pro.managers.KDConnectionManager;
-import com.kaidun.pro.retrofit2.KDCallback;
-import com.kaidun.pro.utils.KDRequestUtils;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import team.zhuoke.sdk.base.BaseActivity;
-import team.zhuoke.sdk.utils.L;
 
 /**
  * Created by Doraemon on 2018/1/23.
@@ -167,57 +159,20 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
 
     public void login(String account, String pwd, String areaCode) {
 //        测试账号有：10007027，10009010， 账号和密码都相同
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", account);
-            jsonObject.put("passWord", pwd);
-            jsonObject.put("areaCode", areaCode);
-            jsonObject.put("loginType", "003");
-
-            KDConnectionManager.getInstance().getZHApi()
-                    .login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<LoginBean>() {
-                @Override
-                public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
-                    if (baseBean.getStatusCode() == 100) {//登陆成功标识？
-                        if (result != null) {
-                            LoginBean.DataBean dataBean = result.getData();
-                            if (dataBean != null) {
-                                KDAccountManager.getInstance().setUserInfoBean(dataBean);
-                                //TODO 账户存本地 下次自动登陆？
-                                KDAccountManager.getInstance().setToken(result.getToken());
-
-
-                                // TODO: 2018/1/25  这里请处理你的逻辑
-                                KaiDunSP kaiDunSP = new KaiDunSP();
-                                boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
-                                if (!isFirst) {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                } else {
-                                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
-                                    ChooseRoleActivity.start(LoginActivity.this);
-                                }
-
-                                finish();
-                            }
-                            L.d("onResponse: " + result.toString());
-                        }
-                    } else {
-                        ToastUtils.showShort(baseBean.getMessage());
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Throwable throwable) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        KDAccountManager kdAccountManager = KDAccountManager.getInstance();
+        kdAccountManager.setLoginFinish(login -> {
+            // TODO: 2018/1/25  这里请处理你的逻辑
+            KaiDunSP kaiDunSP = new KaiDunSP();
+            boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
+            if (!isFirst) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            } else {
+                kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
+                ChooseRoleActivity.start(LoginActivity.this);
+            }
+            finish();
+        });
+        kdAccountManager.login(account, pwd, areaCode, "003");
     }
 
     @Override

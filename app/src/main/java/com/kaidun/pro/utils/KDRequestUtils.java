@@ -40,6 +40,10 @@ public class KDRequestUtils {
             e.printStackTrace();
         }
 
+        if (TextUtils.isEmpty(deviceId)) {
+            deviceId = "asdas2342";
+        }
+
 
         String token = KDAccountManager.getInstance().getToken();
 
@@ -51,20 +55,36 @@ public class KDRequestUtils {
             deviceId = "asdas2342";
         }
         headerMaps.put("machineCode", deviceId);
-
         headerMaps.put("Content-Type", Constant.MEDIA_TYPE);
 
         return headerMaps;
     }
 
+    public static RequestBody getRequestBody() {
+        JSONObject jsonObject = new JSONObject();
+        setCommonJsonObject(jsonObject);
+        return KDRequestUtils.getRequestBody(jsonObject);
+    }
+
     public static RequestBody getRequestBody(JSONObject jsonObject) {
+        return getRequestBody(jsonObject, false);
+    }
+
+    public static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
+        if (!isLogin) {
+            setCommonJsonObject(jsonObject);
+        }
         return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
     }
 
-    public static RequestBody getBaseInfo() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-        return KDRequestUtils.getRequestBody(jsonObject);
+    public static void setCommonJsonObject(JSONObject jsonObject) {
+        try {
+            KDAccountManager kdAccountManager = KDAccountManager.getInstance();
+
+            jsonObject.put("userCode", kdAccountManager.getUserCode());
+            jsonObject.put("areaCode", kdAccountManager.getAreaCode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
