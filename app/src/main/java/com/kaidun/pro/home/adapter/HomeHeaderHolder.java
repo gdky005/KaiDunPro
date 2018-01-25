@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.kaidun.pro.R;
 import com.kaidun.pro.home.bean.Home;
+import com.kaidun.pro.home.bean.SchoolNotification;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +30,12 @@ public class HomeHeaderHolder extends HomeHolder {
         super(view);
     }
 
+    @SuppressLint("SetTextI18n")
     public void setData(Home home) {
-        mSchoolNoticeContent.setText(home.schoolNoticeContent);
-        mSchoolNoticeDate.setText(home.schoolNoticeDate);
+        if (home instanceof SchoolNotification) {
+            mSchoolNoticeContent.setText(((SchoolNotification) home).getResult().getReleaseContent());
+            mSchoolNoticeDate.setText(((SchoolNotification) home).getResult().getReleaseTime()
+                    + " by " + ((SchoolNotification) home).getResult().getReleaser());
+        }
     }
 }

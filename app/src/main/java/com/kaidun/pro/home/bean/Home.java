@@ -33,4 +33,7 @@ public class Home {
         this.teacherEvaluation = teacherEvaluation;
         this.teacherEvaluationDate = teacherEvaluationDate;
     }
+
+    public Home() {
+    }
 }

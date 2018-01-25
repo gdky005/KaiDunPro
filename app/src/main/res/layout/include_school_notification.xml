@@ -5,9 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#f4f3ee"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:padding="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,12 +52,13 @@
 
         <TextView
             android:id="@+id/tv_school_notice_date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="18dp"
+            android:gravity="end"
             tools:text="2017年9月6日 by Zola" />
 
     </RelativeLayout>

@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.managers.KDAccountManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;

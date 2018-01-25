@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -51,12 +52,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_course_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/fun_book_placeholder" />
+                fresco:placeholderImage="@drawable/fun_book_placeholder" />
 
             <TextView
                 android:id="@+id/iv_course_name"
@@ -80,13 +81,14 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/course_index"
                     android:paddingBottom="3dp"
-                    android:paddingTop="3dp" />
+                    android:paddingTop="3dp"
+                    android:dropDownSelector="@drawable/xiala_home"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <include layout="@layout/item_course_schedule"/>
+        <include layout="@layout/item_course_schedule" />
 
     </RelativeLayout>
 
@@ -151,5 +153,10 @@
             tools:text="2017年9月6日 by Zola" />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#f4f3ee" />
 
 </LinearLayout>
