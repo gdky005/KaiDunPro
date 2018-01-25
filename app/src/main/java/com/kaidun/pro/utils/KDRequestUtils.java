@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.managers.KDAccountManager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -39,6 +40,10 @@ public class KDRequestUtils {
             e.printStackTrace();
         }
 
+        if (TextUtils.isEmpty(deviceId)) {
+            deviceId = "asdas2342";
+        }
+
 
         String token = KDAccountManager.getInstance().getToken();
 
@@ -50,14 +55,29 @@ public class KDRequestUtils {
             deviceId = "asdas2342";
         }
         headerMaps.put("machineCode", deviceId);
-
         headerMaps.put("Content-Type", Constant.MEDIA_TYPE);
 
         return headerMaps;
     }
 
-    public static RequestBody getRequestBody(JSONObject jsonObject) {
+
+    public static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
+        if (!isLogin) {
+            try {
+                KDAccountManager kdAccountManager = KDAccountManager.getInstance();
+
+                jsonObject.put("userCode", kdAccountManager.getUserCode());
+                jsonObject.put("areaCode", kdAccountManager.getAreaCode());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
     }
 
+
+    public static RequestBody getRequestBody(JSONObject jsonObject) {
+        return getRequestBody(jsonObject, false);
+    }
 }

@@ -1,5 +1,6 @@
 package com.kaidun.pro.managers;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
@@ -66,12 +67,10 @@ public class KDAccountManager {
             jsonObject.put("loginType", loginType);
 
             KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-            kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
+            kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject, true)).enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
-
                     if (result != null) {
-
                         LoginBean.DataBean dataBean = result.getData();
 
                         if (dataBean != null) {
@@ -91,6 +90,7 @@ public class KDAccountManager {
                 @Override
                 public void onFailure(Throwable throwable) {
 
+                    ToastUtils.showShort(throwable.getMessage());
                     L.d("onFailure: " + throwable.getMessage());
                 }
             });

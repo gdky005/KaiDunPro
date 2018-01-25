@@ -8,9 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.PicAdapter;
+import com.kaidun.pro.bean.KDListBaseBean;
 import com.kaidun.pro.bean.PicBean;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.retrofit2.KDListCallback;
+import com.kaidun.pro.utils.KDRequestUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import team.zhuoke.sdk.base.BaseFragment;
 import team.zhuoke.sdk.component.ZKRecycleView;
+import team.zhuoke.sdk.utils.L;
 
 /**
  * PicFragment
@@ -61,7 +69,7 @@ public class PicFragment extends BaseFragment {
         List<PicBean> list = new ArrayList<>();
         for (int i = 0; i < 60; i++) {
             PicBean itemBean = new PicBean();
-            itemBean.setName("2018年01月24日 " + i);
+            itemBean.setCourseSortName("2018年01月24日 " + i);
             list.add(itemBean);
         }
 
@@ -71,6 +79,23 @@ public class PicFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
+
+        JSONObject jsonObject = new JSONObject();
+
+        KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(KDRequestUtils.getHeaderMaps(),
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDListCallback<PicBean>() {
+            @Override
+            public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
+
+                L.d("selectFamilyPicture: " + result.toString());
+
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                ToastUtils.showShort(throwable.getMessage());
+            }
+        });
 
     }
 

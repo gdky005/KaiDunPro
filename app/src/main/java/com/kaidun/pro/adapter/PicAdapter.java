@@ -24,7 +24,7 @@ public class PicAdapter extends ZKAdapter<PicBean, ZKViewHolder> {
 
     @Override
     protected void convert(ZKViewHolder helper, PicBean item) {
-        helper.setText(R.id.time, item.getName());
+        helper.setText(R.id.time, item.getCourseSortName());
 
         ZKRecycleView itemRecycleView = helper.getView(R.id.item_recycle_view);
 
