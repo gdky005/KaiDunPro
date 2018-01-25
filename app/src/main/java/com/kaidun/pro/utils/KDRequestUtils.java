@@ -22,7 +22,7 @@ import okhttp3.RequestBody;
 public class KDRequestUtils {
 
     /**
-     * 获取通用的请求 Header
+     * 获取通用的请求 Header, 已经统一在 Okhttp 的拦截器里面处理，不需要手动调用
      *
      * @return headerMaps
      */
@@ -60,17 +60,33 @@ public class KDRequestUtils {
         return headerMaps;
     }
 
+    /**
+     * 默认包含 userCode 和 areaCode 字段。 不需要额外的数据。
+     * @return RequestBody
+     */
     public static RequestBody getRequestBody() {
-        JSONObject jsonObject = new JSONObject();
-        setCommonJsonObject(jsonObject);
-        return KDRequestUtils.getRequestBody(jsonObject);
+        return KDRequestUtils.getRequestBody(new JSONObject());
     }
 
+    /**
+     * 默认包含 userCode 和 areaCode 字段。  需要添加 额外 JSONObject 数据 参数。
+     * @return RequestBody
+     */
     public static RequestBody getRequestBody(JSONObject jsonObject) {
         return getRequestBody(jsonObject, false);
     }
 
-    public static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
+    public static RequestBody getLoginRequestBody(JSONObject jsonObject) {
+        return getRequestBody(jsonObject, true);
+    }
+
+    /**
+     * 仅供内部调用。
+     * @param jsonObject 需要传入的  jsonObject 参数，所有的
+     * @param isLogin 如果登录 true, 不会自动添加任何东西, 否则添加 userCode 和 areaCode 字段
+     * @return RequestBody
+     */
+    private static RequestBody getRequestBody(JSONObject jsonObject, boolean isLogin) {
         if (!isLogin) {
             setCommonJsonObject(jsonObject);
         }

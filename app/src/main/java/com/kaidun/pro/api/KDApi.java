@@ -34,7 +34,7 @@ public interface KDApi {
      * 登录接口
      */
     @POST("login")
-    Call<KDBaseBean<LoginBean>> login(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<KDBaseBean<LoginBean>> login(@Body RequestBody requestBody);
 
     /**
      * 引导页角色查询

@@ -67,7 +67,7 @@ public class KDAccountManager {
             jsonObject.put("loginType", loginType);
 
             KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-            kdApi.login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject, true)).enqueue(new KDCallback<LoginBean>() {
+            kdApi.login(KDRequestUtils.getLoginRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
                     if (result != null) {
