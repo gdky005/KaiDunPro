@@ -1,8 +1,12 @@
 package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -50,40 +54,75 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationContent;
     @BindView(R.id.tv_teacher_evaluation_date)
     TextView mTeacherEvaluationDate;
+    private Context mContext;
+    private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
 
     public HomeBodyHolder(View view) {
         super(view);
         ButterKnife.bind(this, itemView);
+        mContext = view.getContext();
     }
 
     public void setData(Home home) {
         if (home instanceof CourseInfo.ResultBean.ClassCourseInfoBean) {
             CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
                     = (CourseInfo.ResultBean.ClassCourseInfoBean) home;
+            mCourseInfo = courseInfoBean;
             mCourseName.setText(courseInfoBean.getClassName());
             mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(0).getBookUrl());
-            mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(0).getBookUrl());
 
-            setPercentage(mListenSchedule,
-                    calculatePercentage(courseInfoBean.getRateList().get(0).getListingRate()),
-                    mListenPercentage);
-            setPercentage(mSpeakSchedule,
-                    calculatePercentage(courseInfoBean.getRateList().get(0).getSpeakingRate()),
-                    mSpeakPercentage);
-            setPercentage(mReadSchedule,
-                    calculatePercentage(courseInfoBean.getRateList().get(0).getReadingRate()),
-                    mReadPercentage);
-            setPercentage(mWriteSchedule,
-                    calculatePercentage(courseInfoBean.getRateList().get(0).getWritingRate()),
-                    mWritePercentage);
+            setCoursePercentage(courseInfoBean, 0);
+            setCourseSpinner(courseInfoBean);
+            mCourseSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    setCoursePercentage(courseInfoBean, position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         }
         mTeacherEvaluationContent.setText(home.teacherEvaluation);
         mTeacherEvaluationDate.setText(home.teacherEvaluationDate);
     }
 
-    private double calculatePercentage(String rate) {
+    private void setCourseSpinner(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
+        String[] bookCodes = getBookCodeList(courseInfoBean);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_dropdown_item, bookCodes);
+//        adapter.setDropDownViewResource(R.drawable.xiala_home);
+        mCourseSelect.setAdapter(adapter);
+    }
 
-        return 0;
+    private String[] getBookCodeList(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
+        String[] bookCodes = new String[courseInfoBean.getBookModels().size()];
+        for (int i = 0; i < courseInfoBean.getBookModels().size(); i++) {
+            bookCodes[i] = courseInfoBean.getBookModels().get(i).getBookCode();
+        }
+        return bookCodes;
+    }
+
+    private void setCoursePercentage(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean, int index) {
+        setPercentage(mListenSchedule,
+                calculatePercentage(courseInfoBean.getRateList().get(index).getListingRate()),
+                mListenPercentage);
+        setPercentage(mSpeakSchedule,
+                calculatePercentage(courseInfoBean.getRateList().get(index).getSpeakingRate()),
+                mSpeakPercentage);
+        setPercentage(mReadSchedule,
+                calculatePercentage(courseInfoBean.getRateList().get(index).getReadingRate()),
+                mReadPercentage);
+        setPercentage(mWriteSchedule,
+                calculatePercentage(courseInfoBean.getRateList().get(index).getWritingRate()),
+                mWritePercentage);
+    }
+
+    private double calculatePercentage(String rate) {
+        double percentage = Double.valueOf(rate.split("%")[0]);
+        return (percentage / 100);
     }
 
     @SuppressLint("SetTextI18n")

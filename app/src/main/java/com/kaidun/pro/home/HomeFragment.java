@@ -62,6 +62,7 @@ public class HomeFragment extends BaseFragment {
     LinearLayout mShowRecommended;
     @BindView(R.id.ll_show_qr)
     LinearLayout mShowQr;
+    private SchoolNotification mSchoolNotification;
 
     @BindView(R.id.rl_home_layout)
     RecyclerView mHomeLayout;
@@ -121,6 +122,10 @@ public class HomeFragment extends BaseFragment {
                             && courseInfo.getResult().getClassCourseInfo() != null) {
                         List<CourseInfo.ResultBean.ClassCourseInfoBean> classCourseInfos
                                 = courseInfo.getResult().getClassCourseInfo();
+                        mHomes.clear();
+                        if (mSchoolNotification != null) {
+                            mHomes.add(0, mSchoolNotification);
+                        }
                         mHomes.addAll(classCourseInfos);
                         mAdapter.notifyDataSetChanged();
                     }
@@ -142,8 +147,8 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {
-                    SchoolNotification schoolNotification = response.body();
-                    mHomes.add(0, schoolNotification);
+                    mSchoolNotification = response.body();
+                    mHomes.add(0, mSchoolNotification);
                     mAdapter.notifyDataSetChanged();
                 } else if (response.body() != null && response.body().getMessage() != null) {
                     ToastUtils.showShort(response.body().getMessage());
