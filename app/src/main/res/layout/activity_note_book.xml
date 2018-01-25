@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_toolbar"/>
+    <include layout="@layout/widget_toolbar"/>
 
     <team.zhuoke.sdk.component.ZKRecycleView
         android:id="@+id/note_book_list"

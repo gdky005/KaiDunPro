@@ -2,11 +2,9 @@ package com.kaidun.pro;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.kaidun.pro.adapter.MsgDetailAdapter;
@@ -30,12 +28,9 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
     public static final int REPLY = 1;
     public static final int MSG = 0;
 
-    @BindView(R.id.tv_title)
-    TextView mToolbarTitle;
+
     @BindView(R.id.send_img)
     ImageView sendMsg;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.msg_recycler)
     RecyclerView mMsgDetailRecycler;
     private ArrayList<SwipeBean> mData;
@@ -51,13 +46,12 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initViews() {
-        layouts.put(REPLY,R.layout.item_msg_detail_reply);
-        layouts.put(MSG,R.layout.item_msg_detail_msg);
+        layouts.put(REPLY, R.layout.item_msg_detail_reply);
+        layouts.put(MSG, R.layout.item_msg_detail_msg);
         httpUtils = new KdNetWorkClient();
         ButterKnife.bind(this);
         sendMsg.setOnClickListener(this);
         initDemoData();
-
 
 
         MsgDetailAdapter adapter = new MsgDetailAdapter(mData);
@@ -69,9 +63,9 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
         });
 
         mMsgDetailRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third),1));
+        mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third), 1));
         mMsgDetailRecycler.setAdapter(adapter);
-        mToolbarTitle.setText(R.string.msg_detail);
+        setTitle(R.string.msg_detail);
         getDetailDemo();
     }
 
@@ -101,8 +95,6 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
         }
 
 
-
-
     }
 
     @Override
@@ -117,7 +109,7 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view == sendMsg){
+        if (view == sendMsg) {
             httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<SwipeBean>() {
                 @Override
                 public void getSuccessDataCallBack(SwipeBean data) {

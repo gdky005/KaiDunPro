@@ -59,6 +59,8 @@
         <activity
             android:name=".notebook.BookDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.SubVideoActivity"/>
+        <activity android:name=".activity.VideoPlayActivity"/>
     </application>
 
 </manifest>

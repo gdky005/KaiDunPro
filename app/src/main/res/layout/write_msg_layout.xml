@@ -1,154 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay" >
+        app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
         <TextView
             android:id="@+id/tv_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="剧中标题"
             android:textColor="#333"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+            tools:text="居中标题"/>
+
         <TextView
             android:id="@+id/send_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:text="发送"
-            android:textColor="@color/white"
             android:layout_gravity="end"
             android:layout_marginRight="@dimen/dp_10"
+            android:text="发送"
+            android:textColor="@color/white"
             />
 
         <TextView
             android:id="@+id/cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="取消"
             android:layout_gravity="start"
             android:layout_marginLeft="@dimen/dp_10"
+            android:text="取消"
+            android:textColor="@color/white"
             />
 
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
-        android:padding="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/dp_10">
 
 
         <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/class_icon"
-        android:src="@drawable/class_icon__massage"
-        />
+            android:id="@+id/class_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/class_icon__massage"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="班级"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_main"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/class_icon"
+            android:text="班级"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/sp_16"
             />
 
         <EditText
             android:id="@+id/edit_class"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/class_icon"
+            android:layout_marginTop="5dp"
+            android:background="@color/bg_color"
             android:hint="添加班级"
             android:padding="5dp"
-            android:textSize="14sp"
             android:textColorHint="@color/text_second"
-            android:background="@color/bg_color"
-            android:layout_below="@id/class_icon"
+            android:textSize="14sp"
             />
 
         <ImageView
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_below="@id/edit_class"
+            android:id="@+id/theme_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/theme_icon"
+            android:layout_below="@id/edit_class"
+            android:layout_marginTop="@dimen/dp_10"
             android:src="@drawable/theme_icon__massage"
             />
 
         <TextView
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_below="@id/edit_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/edit_class"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toRightOf="@id/class_icon"
             android:text="主题"
             android:textColor="@color/text_main"
             android:textSize="@dimen/sp_16"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/class_icon"
             />
 
         <EditText
             android:id="@+id/edit_theme"
-            android:textColorHint="@color/text_second"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/theme_icon"
+            android:layout_marginTop="5dp"
+            android:background="@color/bg_color"
             android:hint="添加主题"
             android:padding="5dp"
+            android:textColorHint="@color/text_second"
             android:textSize="14sp"
-            android:background="@color/bg_color"
-            android:layout_below="@id/theme_icon"
             />
 
         <ImageView
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_below="@id/edit_theme"
+            android:id="@+id/content_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/content_icon"
+            android:layout_below="@id/edit_theme"
+            android:layout_marginTop="@dimen/dp_10"
             android:src="@drawable/content_icon__massage"
             />
 
         <TextView
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_below="@id/edit_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/edit_theme"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toRightOf="@id/class_icon"
             android:text="内容"
             android:textColor="@color/text_main"
             android:textSize="@dimen/sp_16"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/class_icon"
             />
 
         <EditText
             android:id="@+id/edit_content"
-            android:textColorHint="@color/text_second"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_below="@id/content_icon"
+            android:layout_marginTop="5dp"
+            android:background="@color/bg_color"
+            android:gravity="start"
             android:hint="请输入内容"
             android:padding="5dp"
+            android:textColorHint="@color/text_second"
             android:textSize="14sp"
-            android:gravity="start"
-            android:background="@color/bg_color"
-            android:layout_below="@id/content_icon"
             />
-
-
 
 
     </RelativeLayout>

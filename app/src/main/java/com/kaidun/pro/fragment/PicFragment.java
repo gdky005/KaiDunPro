@@ -2,11 +2,9 @@ package com.kaidun.pro.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
@@ -36,10 +34,6 @@ public class PicFragment extends BaseFragment {
     @BindView(R.id.pic_recycle_view)
     ZKRecycleView picRecycleView;
     Unbinder unbinder;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     private List<PicBean> list;
     private PicAdapter picAdapter;
@@ -59,8 +53,6 @@ public class PicFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        tvTitle.setText(R.string.nav_title_picture);
-
         initRecyclerView();
 
 

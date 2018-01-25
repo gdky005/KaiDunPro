@@ -2,21 +2,20 @@ package com.kaidun.pro;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.fragment.MsgFragment;
 import com.kaidun.pro.fragment.PicFragment;
-import com.kaidun.pro.fragment.TestFragment;
 import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
@@ -32,14 +31,12 @@ public class MainActivity extends BaseActivity {
     public static final int NAV_TYPE_PICTURE = 2;
     public static final int NAV_TYPE_PARENT_NOTEBOOK = 3;
     public static final int NAV_TYPE_MESSAGE = 4;
-    @BindView(R.id.message)
-    TextView message;
     @BindView(R.id.container_view_pager)
     ViewPager containerViewPager;
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     @BindView(R.id.container)
-    ConstraintLayout container;
+    RelativeLayout container;
 
 
     private static Fragment[] TABLE_FRAGMENT = new Fragment[]{
@@ -70,22 +67,26 @@ public class MainActivity extends BaseActivity {
             int itemId = R.id.navigation_main;
             switch (position) {
                 case NAV_TYPE_MAIN:
+                    setRight(-1);
                     itemId = R.id.navigation_main;
                     break;
                 case NAV_TYPE_VIDEO:
+                    setRight(-1);
                     itemId = R.id.navigation_video;
                     break;
                 case NAV_TYPE_PICTURE:
+                    setRight(-1);
                     itemId = R.id.navigation_picture;
                     break;
                 case NAV_TYPE_PARENT_NOTEBOOK:
+                    setRight(-1);
                     itemId = R.id.navigation_parent_notebook;
                     break;
                 case NAV_TYPE_MESSAGE:
                     itemId = R.id.navigation_message;
+                    setRight(R.menu.item_message_edit);
                     break;
             }
-
             navigation.setSelectedItemId(itemId);
         }
 
@@ -95,6 +96,13 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    @Override
+    public void onRightText(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.write_btn) {
+            startActivity(new Intent(mContext, WriteMsgActivity.class));
+        }
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -103,24 +111,29 @@ public class MainActivity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_main:
-                    message.setText(R.string.nav_title_main);
+                    setRight(-1);
+                    setTitle("主页");
                     containerViewPager.setCurrentItem(NAV_TYPE_MAIN);
                     return true;
                 case R.id.navigation_video:
-                    message.setText(R.string.nav_title_video);
+                    setTitle("视频");
+                    setRight(-1);
                     containerViewPager.setCurrentItem(NAV_TYPE_VIDEO);
                     return true;
                 case R.id.navigation_picture:
-                    message.setText(R.string.nav_title_picture);
+                    setTitle("图片");
+                    setRight(-1);
                     containerViewPager.setCurrentItem(NAV_TYPE_PICTURE);
                     return true;
                 case R.id.navigation_parent_notebook:
+                    setTitle("家联本");
+                    setRight(-1);
                     containerViewPager.setCurrentItem(NAV_TYPE_PARENT_NOTEBOOK);
-                    message.setText(R.string.nav_title_parent_notebook);
                     return true;
                 case R.id.navigation_message:
+                    setTitle("消息");
+                    setRight(R.menu.item_message_edit);
                     containerViewPager.setCurrentItem(NAV_TYPE_MESSAGE);
-                    message.setText(R.string.nav_title_message);
                     return true;
             }
             return false;
@@ -178,6 +191,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        mToolbar.setNavigationIcon(null);
+        setTitle("首页");
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

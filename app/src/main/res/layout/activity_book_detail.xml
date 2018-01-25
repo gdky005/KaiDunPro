@@ -5,7 +5,7 @@
     android:background="#FFF"
     android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar" />
+    <include layout="@layout/widget_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"

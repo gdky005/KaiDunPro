@@ -52,6 +52,7 @@ public class ChooseRoleActivity extends BaseActivity implements BaseQuickAdapter
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        setTitle("请选择家长关系");
     }
 
     @Override

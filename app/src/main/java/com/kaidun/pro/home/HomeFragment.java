@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,10 +39,6 @@ import team.zhuoke.sdk.base.BaseFragment;
  */
 
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.tv_title)
-    TextView mToolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.iv_parents_avatar)
     SimpleDraweeView mParentsAvatar;
     @BindView(R.id.tv_parents_name)
@@ -83,7 +78,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         ButterKnife.bind(this, view);
-        mToolbarTitle.setText("主页");
         mHomeLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new HomeAdapter(R.layout.item_home, mHomes);
         mHomeLayout.setAdapter(mAdapter);

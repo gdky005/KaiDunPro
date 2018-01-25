@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
@@ -31,7 +30,6 @@ public class VideoFragment extends BaseFragment {
 
     private TabLayout tabPackage;
     private ViewPager vpVideo;
-    private TextView tvTitle;
     public static final String KEY = "key";
     private List<VideoBean> list = new ArrayList<>();
 
@@ -45,8 +43,6 @@ public class VideoFragment extends BaseFragment {
     public void initView(View view) {
         tabPackage = view.findViewById(R.id.tab_package);
         vpVideo = view.findViewById(R.id.vp_video);
-        tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText("视频");
 
     }
 

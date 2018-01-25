@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
 
 import com.kaidun.pro.R;
 
@@ -19,10 +17,6 @@ import team.zhuoke.sdk.base.BaseActivity;
  */
 
 public class StandInsideLetterActivity extends BaseActivity {
-    @BindView(R.id.tv_title)
-    TextView mToolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.vp_inside_letter)
     ViewPager mInsideLetter;
     @BindView(R.id.tl_letter_type_tab)
@@ -40,9 +34,6 @@ public class StandInsideLetterActivity extends BaseActivity {
         mLetterTypeTabTitle[1] = "推荐";
         ButterKnife.bind(this);
         mInsideLetter.setAdapter(new InsideLetterAdapter(getSupportFragmentManager()));
-        initToolbar();
-        mToolbar.setNavigationIcon(R.drawable.return_icon_home);
-        mToolbarTitle.setText("站内信");
         mLetterTypeTab.setupWithViewPager(mInsideLetter);
     }
 

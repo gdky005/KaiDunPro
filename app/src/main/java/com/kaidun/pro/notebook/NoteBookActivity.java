@@ -49,7 +49,7 @@ public class NoteBookActivity extends BaseActivity {
     protected void initData() {
         Intent intent = getIntent();
         resultBean = (FamilyContact.ResultBean) intent.getSerializableExtra("book");
-        mTitle.setText("家联本内");
+        setTitle("家联本内");
 
         ArrayList<FamContent> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {

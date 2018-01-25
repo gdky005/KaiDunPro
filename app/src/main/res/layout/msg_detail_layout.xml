@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-    <include layout="@layout/include_toolbar"
-       android:id="@+id/titlebar"
+    <include
+        android:id="@+id/titlebar"
+        layout="@layout/widget_toolbar"
         />
 
     <ImageView
         android:id="@+id/send_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/send_icon_message"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_10"
         android:layout_marginBottom="12dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/send_icon_message"
         />
 
     <EditText
-        android:padding="5dp"
-        android:layout_margin="@dimen/dp_10"
-        android:hint="回复..."
-        android:textColorHint="@color/text_second"
+        android:id="@+id/reply_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/reply_edit"
-        android:textSize="@dimen/sp_16"
         android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dp_10"
         android:layout_toLeftOf="@id/send_img"
         android:background="@color/bg_color"
+        android:hint="回复..."
+        android:padding="5dp"
+        android:textColorHint="@color/text_second"
+        android:textSize="@dimen/sp_16"
         />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/titlebar"
+        android:id="@+id/msg_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/reply_edit"
+        android:layout_below="@id/titlebar"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:id="@+id/msg_recycler"
-        android:layout_above="@id/reply_edit"
         />
 
 </RelativeLayout>

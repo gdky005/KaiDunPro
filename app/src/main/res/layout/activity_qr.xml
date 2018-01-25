@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +8,7 @@
     android:background="@android:color/black"
     android:orientation="vertical">
 
-    <include layout="@layout/include_toolbar" />
+    <include layout="@layout/widget_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@mipmap/ic_launcher_round"/>
 
             <TextView
                 android:id="@+id/tv_qr_name"
@@ -42,7 +43,7 @@
                 android:layout_marginStart="12dp"
                 android:textColor="#666"
                 android:textSize="15sp"
-                tools:text="Durain_" />
+                tools:text="Durain_"/>
 
         </LinearLayout>
 
@@ -54,7 +55,7 @@
             android:layout_below="@id/ll_"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/temp" />
+            android:src="@drawable/temp"/>
 
     </RelativeLayout>
 
