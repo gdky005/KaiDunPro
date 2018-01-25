@@ -1,7 +1,9 @@
 package com.kaidun.pro.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.PicBean;
 import com.kaidun.pro.views.ZKImageView;
@@ -25,5 +27,12 @@ public class PicItemAdapter extends ZKAdapter<PicBean.PictureUrlMapBean, ZKViewH
         ZKImageView zkImageView = helper.getView(R.id.iv);
 
         zkImageView.setImageURI(item.getDvdUrl());
+
+        zkImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showShort("图片：" + helper.getAdapterPosition());
+            }
+        });
     }
 }
