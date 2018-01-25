@@ -6,6 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <Spinner
+        android:id="@+id/spinner_test_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_20"
+        android:dropDownVerticalOffset="@dimen/dp_40"
+        android:spinnerMode="dropdown"
+        android:textColor="@color/color_text" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
