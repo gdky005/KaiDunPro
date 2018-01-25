@@ -30,6 +30,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support libraries
+    implementation deps.support.v4
     implementation deps.support.design
     implementation deps.constraint_layout
 
@@ -39,7 +40,6 @@ dependencies {
 
     // butterknife
     implementation deps.butterknife
-    implementation 'com.android.support:support-v4:26.1.0'
     annotationProcessor deps.butterknife_compiler
 
     implementation deps.zk_fresco
@@ -51,7 +51,7 @@ dependencies {
     implementation deps.stetho
     implementation deps.stetho_okhttp3
 
-    implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.0.0'
+    implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.0.1'
 
 
     testImplementation deps.junit
