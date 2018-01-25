@@ -33,6 +33,7 @@ public class StandInsideLetterActivity extends BaseActivity {
         mLetterTypeTabTitle[0] = "通知";
         mLetterTypeTabTitle[1] = "推荐";
         ButterKnife.bind(this);
+        setTitle("站内信");
         mInsideLetter.setAdapter(new InsideLetterAdapter(getSupportFragmentManager()));
         mLetterTypeTab.setupWithViewPager(mInsideLetter);
     }
