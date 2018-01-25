@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
+import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
 
 import butterknife.BindView;
@@ -21,7 +23,7 @@ import team.zhuoke.sdk.component.ZKViewHolder;
 
 public class HomeBodyHolder extends HomeHolder {
     @BindView(R.id.iv_course_photo)
-    ImageView mCoursePhoto;
+    SimpleDraweeView mCoursePhoto;
     @BindView(R.id.iv_course_name)
     TextView mCourseName;
     @BindView(R.id.sp_course_select)
@@ -55,13 +57,33 @@ public class HomeBodyHolder extends HomeHolder {
     }
 
     public void setData(Home home) {
-        mCourseName.setText(home.courseName);
-        setPercentage(mListenSchedule, home.listenProgress, mListenPercentage);
-        setPercentage(mSpeakSchedule, home.speakProgress, mSpeakPercentage);
-        setPercentage(mReadSchedule, home.readProgress, mReadPercentage);
-        setPercentage(mWriteSchedule, home.writeProgress, mWritePercentage);
+        if (home instanceof CourseInfo.ResultBean.ClassCourseInfoBean) {
+            CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
+                    = (CourseInfo.ResultBean.ClassCourseInfoBean) home;
+            mCourseName.setText(courseInfoBean.getClassName());
+            mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(0).getBookUrl());
+            mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(0).getBookUrl());
+
+            setPercentage(mListenSchedule,
+                    calculatePercentage(courseInfoBean.getRateList().get(0).getListingRate()),
+                    mListenPercentage);
+            setPercentage(mSpeakSchedule,
+                    calculatePercentage(courseInfoBean.getRateList().get(0).getSpeakingRate()),
+                    mSpeakPercentage);
+            setPercentage(mReadSchedule,
+                    calculatePercentage(courseInfoBean.getRateList().get(0).getReadingRate()),
+                    mReadPercentage);
+            setPercentage(mWriteSchedule,
+                    calculatePercentage(courseInfoBean.getRateList().get(0).getWritingRate()),
+                    mWritePercentage);
+        }
         mTeacherEvaluationContent.setText(home.teacherEvaluation);
         mTeacherEvaluationDate.setText(home.teacherEvaluationDate);
+    }
+
+    private double calculatePercentage(String rate) {
+
+        return 0;
     }
 
     @SuppressLint("SetTextI18n")

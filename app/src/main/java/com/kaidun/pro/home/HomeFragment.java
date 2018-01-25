@@ -17,17 +17,21 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.home.adapter.HomeAdapter;
+import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
 import com.kaidun.pro.home.bean.SchoolNotification;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.utils.KDRequestUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +45,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by Administrator on 2018/1/22.
  */
 
-public class HomeFragment extends BaseFragment  {
+public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
@@ -64,6 +68,7 @@ public class HomeFragment extends BaseFragment  {
 
     private HomeAdapter mAdapter;
     private ArrayList<Home> mHomes = new ArrayList<>();
+    private KDApi mKdApi = KDConnectionManager.getInstance().getZHApi();
 
     public static HomeFragment newInstance() {
 
@@ -89,57 +94,60 @@ public class HomeFragment extends BaseFragment  {
         mHomeLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new HomeAdapter(R.layout.item_home, mHomes);
         mHomeLayout.setAdapter(mAdapter);
-        DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
-        mHomeLayout.addItemDecoration(divider);
     }
 
     @Override
     public void initData(Bundle bundle) {
-        Home homeHeader = new Home("          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。",
-                "2017年9月6日 by Zola");
-
-        Home home = new Home(null, "ABC 1-9", 1,
-                0.8, 0.5, 0.3,
-                "          下次一ABC课程，我们进行考试，及成果展示，请各位家长带好xxx相关的东西，并准时参加成果展示课程。",
-                "2017年9月6日 by Zola");
-        mHomes.clear();
-        mHomes.add(homeHeader);
-        mHomes.add(home);
-        mHomes.add(home);
-        mHomes.add(home);
-        mHomes.add(home);
-        mAdapter.notifyDataSetChanged();
         mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
         mParentsNick.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         try {
             getFamilyInfo();
+            getCourseInfo();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private void getFamilyInfo() throws Exception {
-        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
+    private void getCourseInfo() throws JSONException {
+        mKdApi.selectClassCourseInfo(KDRequestUtils.getHeaderMaps(),
+                KDRequestUtils.getBaseInfo()).enqueue(new Callback<CourseInfo>() {
+            @Override
+            public void onResponse(Call<CourseInfo> call, Response<CourseInfo> response) {
+                if (response.body() != null && response.body().getStatusCode() == 100) {
+                    CourseInfo courseInfo = response.body();
+                    if (courseInfo.getResult() != null
+                            && courseInfo.getResult().getClassCourseInfo() != null) {
+                        List<CourseInfo.ResultBean.ClassCourseInfoBean> classCourseInfos
+                                = courseInfo.getResult().getClassCourseInfo();
+                        mHomes.addAll(classCourseInfos);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                } else if (response.body() != null && response.body().getMessage() != null) {
+                    ToastUtils.showShort(response.body().getMessage());
+                }
+            }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userCode", "10007027");
-        jsonObject.put("areaCode", "1001");
-        kdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
-                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<SchoolNotification>() {
+            @Override
+            public void onFailure(Call<CourseInfo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void getFamilyInfo() throws Exception {
+        mKdApi.selectFamilyInfo(KDRequestUtils.getHeaderMaps(),
+                KDRequestUtils.getBaseInfo()).enqueue(new Callback<SchoolNotification>() {
             @Override
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
-                if (response.errorBody() != null) {
-                    try {
-                        ToastUtils.showShort(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                if (response.body() != null && response.body().getStatusCode() == 100) {
+                    SchoolNotification schoolNotification = response.body();
+                    mHomes.add(0, schoolNotification);
+                    mAdapter.notifyDataSetChanged();
+                } else if (response.body() != null && response.body().getMessage() != null) {
+                    ToastUtils.showShort(response.body().getMessage());
                 }
-                Log.e("TAG", "");
             }
 
             @Override
@@ -169,6 +177,4 @@ public class HomeFragment extends BaseFragment  {
                 break;
         }
     }
-
-
 }

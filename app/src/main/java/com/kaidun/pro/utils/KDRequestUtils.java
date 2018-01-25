@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.PhoneUtils;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.managers.KDAccountManager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -60,4 +61,10 @@ public class KDRequestUtils {
         return RequestBody.create(MediaType.parse(Constant.CHARSET_NAME), jsonObject.toString());
     }
 
+    public static RequestBody getBaseInfo() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
+        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
+        return KDRequestUtils.getRequestBody(jsonObject);
+    }
 }

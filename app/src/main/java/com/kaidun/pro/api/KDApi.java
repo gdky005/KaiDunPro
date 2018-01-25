@@ -4,6 +4,8 @@ import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.bean.VideoBean;
+import com.kaidun.pro.home.bean.CourseInfo;
+import com.kaidun.pro.home.bean.Home;
 import com.kaidun.pro.home.bean.SchoolNotification;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.notebook.bean.FamilyContact;
@@ -23,7 +25,6 @@ import retrofit2.http.POST;
  */
 
 public interface KDApi {
-
 
     /**
      * 登录接口
@@ -71,4 +72,34 @@ public interface KDApi {
      */
     @POST("sendFolwer")
     Call<MsgBean> sendFolwer(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 推荐
+     */
+    @POST("recommend")
+    Call<KDBaseBean> recommend(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 站内信：推送通知消息
+     */
+    @POST("getPushMessage")
+    Call<KDBaseBean> getPushMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 站内信：推荐历史纪录
+     */
+    @POST("getRecommend")
+    Call<KDBaseBean> getRecommend(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 家长端主页面渲染，获取学员课程类别和对应的书本号
+     */
+    @POST("selectClassCourseInfo")
+    Call<CourseInfo> selectClassCourseInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 家长主页面书本完成率
+     */
+    @POST("selectBookFinshRate")
+    Call<KDBaseBean> selectBookFinishRate(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 }

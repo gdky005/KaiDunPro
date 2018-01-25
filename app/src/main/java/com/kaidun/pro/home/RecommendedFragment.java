@@ -9,11 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
+import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.home.adapter.RecommendedAdapter;
 import com.kaidun.pro.home.bean.Recommended;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.utils.KDRequestUtils;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +29,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
@@ -32,6 +43,8 @@ public class RecommendedFragment extends BaseFragment {
     RecyclerView mShowRecommended;
     private RecommendedAdapter mAdapter;
     private List<Recommended> mRecommendeds = new ArrayList<>();
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
 
     public static RecommendedFragment newInstance() {
 
@@ -74,10 +87,42 @@ public class RecommendedFragment extends BaseFragment {
         mRecommendeds.add(recommended);
         mRecommendeds.add(recommended);
         mAdapter.notifyDataSetChanged();
+        try {
+            mLoading.setVisibility(View.VISIBLE);
+            getRecommended();
+        } catch (JSONException e) {
+            mLoading.setVisibility(View.GONE);
+        }
+    }
+
+    private void getRecommended() throws JSONException {
+        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
+        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<KDBaseBean>() {
+            @Override
+            public void onResponse(Call<KDBaseBean> call, Response<KDBaseBean> response) {
+                if (response.body() != null) {
+                    if (!(response.body().getStatusCode() == 100)) {
+                        showToast(response.body().getMessage());
+                    } else {
+                        showToast("请求成功？");
+                    }
+                }
+                mLoading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<KDBaseBean> call, Throwable t) {
+                mLoading.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
     public void initListener() {
 
+    }
+
+    private void showToast(String msg) {
+        ToastUtils.showShort(msg);
     }
 }
