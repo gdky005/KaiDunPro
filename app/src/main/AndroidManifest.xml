@@ -54,7 +54,7 @@
 
         <activity
             android:name=".MesDetailActivity"
-            android:windowSoftInputMode="" />
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".WriteMsgActivity" />
         <activity
             android:name=".notebook.BookDetailActivity"
