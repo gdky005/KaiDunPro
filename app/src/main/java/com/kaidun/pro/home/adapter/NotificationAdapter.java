@@ -14,14 +14,14 @@ import team.zhuoke.sdk.component.ZKAdapter;
  * Created by Administrator on 2018/1/22.
  */
 
-public class NotificationAdapter extends ZKAdapter<Notification, NotificationHolder> {
+public class NotificationAdapter extends ZKAdapter<Notification.ResultBean, NotificationHolder> {
 
-    public NotificationAdapter(int layoutResId, @Nullable List<Notification> data) {
+    public NotificationAdapter(int layoutResId, @Nullable List<Notification.ResultBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(NotificationHolder helper, Notification item) {
+    protected void convert(NotificationHolder helper, Notification.ResultBean item) {
         helper.setData(item);
     }
 

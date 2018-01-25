@@ -90,8 +90,6 @@ public class HomeFragment extends BaseFragment {
     public void initView(View view) {
         ButterKnife.bind(this, view);
         mToolbarTitle.setText("主页");
-        mParentsName.setText("Durian_");
-        mParentsNick.setText("Jaaaelu");
         mHomeLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new HomeAdapter(R.layout.item_home, mHomes);
         mHomeLayout.setAdapter(mAdapter);
@@ -99,8 +97,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-        mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
-        mParentsNick.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+        String[] name = KDAccountManager.getInstance().getUserInfoBean().getStuName().split("/");
+        mParentsName.setText(name[0]);
+        if (name.length > 1) {
+            mParentsNick.setText(name[1]);
+        }
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         try {
             getFamilyInfo();

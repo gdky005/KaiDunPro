@@ -92,6 +92,7 @@ public class RecommendedDialogFragment extends BaseDialogFragment {
                         showToast(response.body().getMessage());
                     } else {
                         cleanInputAndDismiss();
+                        showToast("推荐成功");
                     }
                 }
                 mLoading.setVisibility(View.GONE);

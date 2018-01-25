@@ -40,7 +40,7 @@ import team.zhuoke.sdk.base.BaseFragment;
 public class NotificationFragment extends BaseFragment {
     @BindView(R.id.rv_show_notification)
     RecyclerView mShowNotification;
-    private List<Notification> mNotifications = new ArrayList<>();
+    private List<Notification.ResultBean> mNotifications = new ArrayList<>();
     private NotificationAdapter mAdapter;
     @BindView(R.id.pb_loading)
     ProgressBar mLoading;
@@ -73,20 +73,6 @@ public class NotificationFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-        Notification notification = new Notification("2017/12/26",
-                "凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。",
-                "推荐消息");
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mNotifications.add(notification);
-        mAdapter.notifyDataSetChanged();
         try {
             mLoading.setVisibility(View.VISIBLE);
             getNotification();
@@ -97,21 +83,23 @@ public class NotificationFragment extends BaseFragment {
 
     private void getNotification() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getPushMessage(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<KDBaseBean>() {
+        kdApi.getPushMessage(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<Notification>() {
             @Override
-            public void onResponse(Call<KDBaseBean> call, Response<KDBaseBean> response) {
+            public void onResponse(Call<Notification> call, Response<Notification> response) {
                 if (response.body() != null) {
                     if (!(response.body().getStatusCode() == 100)) {
                         showToast(response.body().getMessage());
                     } else {
-                        showToast("请求成功？");
+                        mNotifications.clear();
+                        mNotifications.addAll(response.body().getResult());
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
                 mLoading.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<KDBaseBean> call, Throwable t) {
+            public void onFailure(Call<Notification> call, Throwable t) {
                 mLoading.setVisibility(View.GONE);
             }
         });

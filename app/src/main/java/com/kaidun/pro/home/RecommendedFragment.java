@@ -42,7 +42,7 @@ public class RecommendedFragment extends BaseFragment {
     @BindView(R.id.rv_show_recommended)
     RecyclerView mShowRecommended;
     private RecommendedAdapter mAdapter;
-    private List<Recommended> mRecommendeds = new ArrayList<>();
+    private List<Recommended.ResultBean> mRecommendeds = new ArrayList<>();
     @BindView(R.id.pb_loading)
     ProgressBar mLoading;
 
@@ -74,19 +74,6 @@ public class RecommendedFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-        Recommended recommended = new Recommended(null, "2017/12/26",
-                "家长", "推荐了 Jam 小朋友加入凯顿幼儿英语。");
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mRecommendeds.add(recommended);
-        mAdapter.notifyDataSetChanged();
         try {
             mLoading.setVisibility(View.VISIBLE);
             getRecommended();
@@ -97,21 +84,23 @@ public class RecommendedFragment extends BaseFragment {
 
     private void getRecommended() throws JSONException {
         KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
-        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<KDBaseBean>() {
+        kdApi.getRecommend(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getBaseInfo()).enqueue(new Callback<Recommended>() {
             @Override
-            public void onResponse(Call<KDBaseBean> call, Response<KDBaseBean> response) {
+            public void onResponse(Call<Recommended> call, Response<Recommended> response) {
                 if (response.body() != null) {
                     if (!(response.body().getStatusCode() == 100)) {
                         showToast(response.body().getMessage());
                     } else {
-                        showToast("请求成功？");
+                        mRecommendeds.clear();
+                        mRecommendeds.addAll(response.body().getResult());
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
                 mLoading.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<KDBaseBean> call, Throwable t) {
+            public void onFailure(Call<Recommended> call, Throwable t) {
                 mLoading.setVisibility(View.GONE);
             }
         });

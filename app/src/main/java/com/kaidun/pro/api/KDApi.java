@@ -7,6 +7,8 @@ import com.kaidun.pro.bean.SubVideoBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
+import com.kaidun.pro.home.bean.Notification;
+import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.home.bean.SchoolNotification;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.notebook.bean.FamilyContact;
@@ -91,13 +93,13 @@ public interface KDApi {
      * 站内信：推送通知消息
      */
     @POST("getPushMessage")
-    Call<KDBaseBean> getPushMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<Notification> getPushMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 站内信：推荐历史纪录
      */
     @POST("getRecommend")
-    Call<KDBaseBean> getRecommend(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<Recommended> getRecommend(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 家长端主页面渲染，获取学员课程类别和对应的书本号

@@ -91,9 +91,8 @@ public class HomeBodyHolder extends HomeHolder {
 
     private void setCourseSpinner(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
         String[] bookCodes = getBookCodeList(courseInfoBean);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_spinner_dropdown_item, bookCodes);
-//        adapter.setDropDownViewResource(R.drawable.xiala_home);
         mCourseSelect.setAdapter(adapter);
     }
 
