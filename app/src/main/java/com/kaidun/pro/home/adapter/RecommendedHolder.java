@@ -38,7 +38,7 @@ public class RecommendedHolder extends ZKViewHolder {
     public void setData(Recommended.ResultBean recommended) {
         mParentsName.setText(recommended.getFamilyName());
         mRecommendedContent.setText("推荐了 " + recommended.getChildName()
-                + " 小朋友假如凯顿幼儿英语。");
+                + " 小朋友加入凯顿幼儿英语。");
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
 //        mRecommendedDate.setText(recommended.date);
     }

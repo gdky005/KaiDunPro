@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationDate;
     private Context mContext;
     private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
+    private static double sScheduleLength = 0;
 
     public HomeBodyHolder(View view) {
         super(view);
@@ -131,11 +133,10 @@ public class HomeBodyHolder extends HomeHolder {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
         //  measure方法的参数值都设为0即可
         layout.measure(0, 0);
-        Log.e("TAG", "getMeasuredWidth = " + layout.getMeasuredWidth());
-        Log.e("TAG", "getWidth = " + layout.getWidth());
-        Log.e("TAG", "getMeasuredWidthAndState = " + layout.getMeasuredWidthAndState());
-        Log.e("TAG", "params.width = " + params.width);
-        params.width = (int) (layout.getWidth() * progress);
+        if (sScheduleLength == 0) {
+            sScheduleLength = layout.getWidth();
+        }
+        params.width = (int) (sScheduleLength * progress);
         layout.setLayoutParams(params);
     }
 }
