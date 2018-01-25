@@ -3,6 +3,7 @@ package com.kaidun.pro.api;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.bean.SubVideoBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.SchoolNotification;
 import com.kaidun.pro.notebook.bean.FamContent;
@@ -36,6 +37,7 @@ public interface KDApi {
      */
     @POST("selectFamilyRole")
     Call<KDBaseBean<List<FamilyRoleBean>>> selectFamilyRole(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
     /**
      * 引导页角色查询
      */
@@ -49,10 +51,16 @@ public interface KDApi {
     Call<SchoolNotification> selectFamilyInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
-     * 获取所有视频
+     * 获取所有的视频消息
      */
     @POST("selectBookCode")
-    Call<VideoBean> getAllVideo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<KDBaseBean<List<VideoBean>>> getAllVideo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+
+    /**
+     * 获取二级视频
+     */
+    @POST("selectDvdSource")
+    Call<KDBaseBean<List<SubVideoBean>>> getAllSubVideo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 查询家长拥有的家联本列表

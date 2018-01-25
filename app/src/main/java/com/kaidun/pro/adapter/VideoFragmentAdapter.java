@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
 /**
  * Created by lmj on 2018/1/23.
  */
@@ -12,11 +14,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class VideoFragmentAdapter extends FragmentPagerAdapter {
 
 
-    private Fragment[] data;
+    private List<Fragment> data;
 
     private String[] titles;
 
-    public VideoFragmentAdapter(FragmentManager fm, Fragment[] data) {
+    public VideoFragmentAdapter(FragmentManager fm, List<Fragment> data) {
         super(fm);
         this.data = data;
     }
@@ -31,12 +33,12 @@ public class VideoFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Nullable

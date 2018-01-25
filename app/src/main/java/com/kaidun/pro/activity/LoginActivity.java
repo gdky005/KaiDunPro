@@ -125,7 +125,9 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
             jsonObject.put("areaCode", areaCode);
             jsonObject.put("loginType", "003");
 
-            KDConnectionManager.getInstance().getZHApi().login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
+            KDConnectionManager.getInstance().getZHApi()
+                    .login(KDRequestUtils.getHeaderMaps(), KDRequestUtils.getRequestBody(jsonObject))
+                    .enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
                     if (baseBean.getStatusCode() == 100) {//登陆成功标识？
