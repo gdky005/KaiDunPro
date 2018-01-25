@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.kaidun.pro.views.ZKImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"

@@ -41,6 +41,9 @@ public class PicFragment extends BaseFragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    private List<PicBean> list;
+    private PicAdapter picAdapter;
+
     public static PicFragment newInstance() {
         PicFragment fragment = new PicFragment();
         Bundle args = new Bundle();
@@ -64,15 +67,17 @@ public class PicFragment extends BaseFragment {
     }
 
     private void initRecyclerView() {
-        List<PicBean> list = new ArrayList<>();
-        for (int i = 0; i < 60; i++) {
-            PicBean itemBean = new PicBean();
-            itemBean.setCourseSortName("2018年01月24日 " + i);
-            list.add(itemBean);
-        }
+        list = new ArrayList<>();
+
+//        for (int i = 0; i < 60; i++) {
+//            PicBean itemBean = new PicBean();
+//            itemBean.setUploadTime("2018年01月24日 " + i);
+//            list.add(itemBean);
+//        }
+        picAdapter = new PicAdapter(list);
 
         picRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
-        picRecycleView.setAdapter(new PicAdapter(list));
+        picRecycleView.setAdapter(picAdapter);
     }
 
     @Override
@@ -81,9 +86,8 @@ public class PicFragment extends BaseFragment {
                 KDRequestUtils.getRequestBody()).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
-
+                picAdapter.setNewData(result);
                 L.d("selectFamilyPicture: " + result.toString());
-
             }
 
             @Override

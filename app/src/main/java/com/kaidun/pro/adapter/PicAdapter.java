@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.PicBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import team.zhuoke.sdk.component.ZKAdapter;
@@ -24,18 +23,18 @@ public class PicAdapter extends ZKAdapter<PicBean, ZKViewHolder> {
 
     @Override
     protected void convert(ZKViewHolder helper, PicBean item) {
-        helper.setText(R.id.time, item.getCourseSortName());
+        helper.setText(R.id.time, item.getUploadTime());
 
         ZKRecycleView itemRecycleView = helper.getView(R.id.item_recycle_view);
 
-        List<PicBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            PicBean itemBean = new PicBean();
-//            itemBean.setName("2018年01月24日 ");
-            list.add(itemBean);
-        }
+//        List<PicBean> list = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            PicBean itemBean = new PicBean();
+////            itemBean.setName("2018年01月24日 ");
+//            list.add(itemBean);
+//        }
 
         itemRecycleView.setLayoutManager(new GridLayoutManager(mContext, 4));
-        itemRecycleView.setAdapter(new PicItemAdapter(list));
+        itemRecycleView.setAdapter(new PicItemAdapter(item.getPictureUrlMap()));
     }
 }
