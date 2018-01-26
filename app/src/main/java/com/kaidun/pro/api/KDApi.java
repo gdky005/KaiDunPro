@@ -12,7 +12,7 @@ import com.kaidun.pro.home.bean.Notification;
 import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.home.bean.SchoolNotification;
 import com.kaidun.pro.notebook.bean.FamContent;
-import com.kaidun.pro.notebook.bean.FamilyContact;
+import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.MsgBean;
 
 import java.util.List;
@@ -69,20 +69,20 @@ public interface KDApi {
     /**
      * 查询家长拥有的家联本列表
      */
-    @POST("selectFamilyContact")
-    Call<FamilyContact> selectFamilyContact(@Body RequestBody requestBody);
+    @POST("selectFamContact")
+    Call<KDBaseBean<List<FamContact>>> selectFamContact(@Body RequestBody requestBody);
 
     /**
      * 家联本内容展示（听说读写完成率）
      */
     @POST("selectFamContContext")
-    Call<FamContent> selectFamContContext(@Body RequestBody requestBody);
+    Call<KDBaseBean<List<FamContent>>> selectFamContContext(@Body RequestBody requestBody);
 
     /**
      * 给班级老师送花
      */
     @POST("sendFolwer")
-    Call<MsgBean> sendFolwer(@Body RequestBody requestBody);
+    Call<KDBaseBean<String>> sendFolwer(@Body RequestBody requestBody);
 
     /**
      * 获取所有的图片

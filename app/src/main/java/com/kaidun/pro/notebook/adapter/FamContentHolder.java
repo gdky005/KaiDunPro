@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.WriteMsgActivity;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
 import com.kaidun.pro.notebook.bean.FamContent;
-import com.kaidun.pro.notebook.bean.MsgBean;
+import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONObject;
@@ -22,9 +24,6 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import team.zhuoke.sdk.component.ZKViewHolder;
 
 /**
@@ -75,7 +74,7 @@ public class FamContentHolder extends ZKViewHolder {
     TextView mFamDate;
     private static double sScheduleLength = 0;
 
-    private FamContent data;
+    private FamContent famContent;
 
     public FamContentHolder(View view) {
         super(view);
@@ -83,16 +82,16 @@ public class FamContentHolder extends ZKViewHolder {
     }
 
     public void setData(FamContent famContent) {
-        this.data = famContent;
-        mFamUnit.setText(famContent.getBookName());
-        addStar(famContent.getStart());
-        mFamText.setText(famContent.getText());
-        addUnitRate(famContent.getUnitCode());
-        setPercentage(mFlListenSchedule, famContent.getListeningRate(), mTvListenPercentage);
-        setPercentage(mFlSpeakSchedule, famContent.getSpeakingRate(), mTvSpeakPercentage);
-        setPercentage(mFlReadSchedule, famContent.getReadingRate(), mTvReadPercentage);
-        setPercentage(mFlWriteSchedule, famContent.getWritingRate(), mTvWritePercentage);
-        mFamDate.setText(famContent.getPractiseTime());
+        this.famContent = famContent;
+        //mFamUnit.setText(famContent.getBookName());课程进度
+        //addStar(famContent.getStart());学员表现
+        //mFamText.setText(famContent.getText());老师评语
+        //addUnitRate(famContent.getUnitCode());小测验
+        setPercentage(mFlListenSchedule, calculatePercentage(famContent.getListingRate()), mTvListenPercentage);
+        setPercentage(mFlSpeakSchedule, calculatePercentage(famContent.getSpeakingRate()), mTvSpeakPercentage);
+        setPercentage(mFlReadSchedule, calculatePercentage(famContent.getReadingRate()), mTvReadPercentage);
+        setPercentage(mFlWriteSchedule, calculatePercentage(famContent.getWritingRate()), mTvWritePercentage);
+        //mFamDate.setText(famContent.getPractiseTime());时间
     }
 
 
@@ -132,7 +131,6 @@ public class FamContentHolder extends ZKViewHolder {
                 break;
             case R.id.fam_message:
                 //TODO:给班级留言
-                //待定
                 view.getContext().startActivity(new Intent(view.getContext(), WriteMsgActivity.class));
                 break;
             case R.id.fam_kcmb:
@@ -143,31 +141,20 @@ public class FamContentHolder extends ZKViewHolder {
     }
 
     private void sendFolwer() {
-//        areaCode（地区编码）	1001
-//        userCode（用户码）	10009010
-//        ccId（课表id）
-        String ccId = "4B93B97398216E08E0531064410ABCF4";
-        int areaCode = 1001;
-        int userCode = 10009010;
-
         try {
             JSONObject jsonObject = new JSONObject();
-            // TODO: 2018/1/25  请删除这里
-//            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-//            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-//            jsonObject.put("userCode", userCode);
-//            jsonObject.put("areaCode", areaCode);
-            jsonObject.put("ccId", ccId);
+            jsonObject.put("ccId", famContent.getCcId());
             KDConnectionManager.getInstance().getZHApi().sendFolwer(
                     KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<MsgBean>() {
+                    .enqueue(new KDCallback<String>() {
+
                         @Override
-                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            //showList(list);
+                        public void onResponse(KDBaseBean<String> baseBean, String result) {
+                            ToastUtils.showShort("送花成功");
                         }
 
                         @Override
-                        public void onFailure(Call<MsgBean> call, Throwable t) {
+                        public void onFailure(Throwable throwable) {
 
                         }
                     });
@@ -175,7 +162,16 @@ public class FamContentHolder extends ZKViewHolder {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private double calculatePercentage(String rate) {
+        String[] num = rate.split("%");
+        if (num == null || num.length == 0) {
+            return 0.00;
+        }
+
+        double percentage = Double.valueOf(num[0]);
+        return (percentage / 100);
 
     }
 
