@@ -11,4 +11,9 @@ public class Constant {
 
     public static final String CHARSET_NAME = "UTF-8";
     public static final String MEDIA_TYPE = "application/json";
+
+    public static final String KEY_ID = "kfmId";
+    public static final String FLAG_READ = "001";
+    public static final String FLAG_UNREAD = "002";
+    public static String INVALID = "";
 }

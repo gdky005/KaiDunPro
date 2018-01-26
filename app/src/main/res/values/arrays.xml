@@ -4,4 +4,8 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="course_name">
+        <item>选择班级</item>
+    </string-array>
 </resources>

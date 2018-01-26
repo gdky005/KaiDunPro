@@ -1,18 +1,25 @@
 package com.kaidun.pro;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.SparseIntArray;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.kaidun.pro.adapter.MsgDetailAdapter;
-import com.kaidun.pro.bean.SwipeBean;
+import com.kaidun.pro.bean.MsgDetailBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
 import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,15 +35,22 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
     public static final int REPLY = 1;
     public static final int MSG = 0;
 
-
+    @BindView(R.id.reply_edit)
+    EditText mReplyedit;
+    @BindView(R.id.tv_title)
+    TextView mToolbarTitle;
     @BindView(R.id.send_img)
     ImageView sendMsg;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.msg_recycler)
     RecyclerView mMsgDetailRecycler;
-    private ArrayList<SwipeBean> mData;
+    private ArrayList<MsgDetailBean.ResultBean> mData;
 
     private SparseIntArray layouts = new SparseIntArray(2);
     private KdNetWorkClient httpUtils;
+    private String keyId = Constant.INVALID;
+    private MsgDetailAdapter adapter;
 
 
     @Override
@@ -46,55 +60,65 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initViews() {
-        layouts.put(REPLY, R.layout.item_msg_detail_reply);
-        layouts.put(MSG, R.layout.item_msg_detail_msg);
+        Intent intent = getIntent();
+        if (intent != null){
+            keyId = intent.getStringExtra(Constant.KEY_ID);
+        }
+        layouts.put(REPLY,R.layout.item_msg_detail_reply);
+        layouts.put(MSG,R.layout.item_msg_detail_msg);
         httpUtils = new KdNetWorkClient();
         ButterKnife.bind(this);
         sendMsg.setOnClickListener(this);
         initDemoData();
 
 
-        MsgDetailAdapter adapter = new MsgDetailAdapter(mData);
-        adapter.setMultiTypeDelegate(new MultiTypeDelegate<SwipeBean>(layouts) {
+
+        adapter = new MsgDetailAdapter(mData);
+        adapter.setMultiTypeDelegate(new MultiTypeDelegate<MsgDetailBean.ResultBean>(layouts) {
             @Override
-            protected int getItemType(SwipeBean swipeBean) {
-                return swipeBean.type;
+            protected int getItemType(MsgDetailBean.ResultBean bean) {
+                return TextUtils.isEmpty(bean.getKmdRole()) ? MSG : REPLY;
             }
         });
 
         mMsgDetailRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third), 1));
+        mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third),1));
         mMsgDetailRecycler.setAdapter(adapter);
-        setTitle(R.string.msg_detail);
+        mToolbarTitle.setText(R.string.msg_detail);
         getDetailDemo();
     }
 
     private void getDetailDemo() {
-        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgDetailBean>() {
 
             @Override
-            public void getSuccessDataCallBack(MsgBean data) {
-
+            public void getSuccessDataCallBack(MsgDetailBean data) {
+                if (data != null ){
+                    List<MsgDetailBean.ResultBean> result = data.getResult();
+                    if (result == null || result.size() <= 0){
+                        showNoMsgTip();
+                        return;
+                    }
+                    mData.clear();
+                    mData.addAll(result);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-
+                //todo  请求失败提醒
             }
         });
-        httpUtils.getMsgDetail("");
+        httpUtils.getMsgDetail(keyId);
+    }
+
+    private void showNoMsgTip() {
+        //todo   无消息提醒
     }
 
     private void initDemoData() {
-        mData = new ArrayList<SwipeBean>(10);
-        String content = "推荐了 Jam 小朋友加入凯顿幼儿英语。凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。";
-        for (int i = 0; i < 10; i++) {
-            SwipeBean bean = new SwipeBean(null, "2017/12/26",
-                    "家长", content, "回复：凯顿" + i, i % 2);
-            mData.add(bean);
-        }
-
-
+        mData = new ArrayList<MsgDetailBean.ResultBean>(10);
     }
 
     @Override
@@ -109,11 +133,17 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view == sendMsg) {
-            httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<SwipeBean>() {
+        if (view == sendMsg){
+            httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
                 @Override
-                public void getSuccessDataCallBack(SwipeBean data) {
-
+                public void getSuccessDataCallBack(MsgBean data) {
+                    if (100 == data.getStatusCode()){
+                        mReplyedit.setText("");
+                        getDetailDemo();    //成功后重新刷新数据
+                        ToastUtils.showShort("发送成功！");
+                    }else {
+                        ToastUtils.showShort("发送失败！");
+                    }
                 }
 
                 @Override
@@ -121,7 +151,7 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
                 }
             });
-            httpUtils.sendMsgDetail("");
+            httpUtils.sendMsgDetail(keyId,mReplyedit.getText().toString());
         }
     }
 

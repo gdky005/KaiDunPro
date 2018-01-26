@@ -1,5 +1,8 @@
 package com.kaidun.pro;
 
+import com.kaidun.pro.bean.ClassBean;
+import com.kaidun.pro.bean.MsgDetailBean;
+import com.kaidun.pro.bean.ReadAndUnReadBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.bean.MsgBean;
@@ -21,31 +24,31 @@ public class KdNetWorkClient {
     /**
      * 留言
      */
-    public void leaveMsg(){
+    public void leaveMsg(String content,String theme,String classId) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("kfmRole", "001");
             jsonObject.put("unitCode", "1");
-            jsonObject.put("kfmMsgTitle", "考试");
-            jsonObject.put("kfmMsgText", "下周考试");
+            jsonObject.put("kfmMsgTitle", theme);
+            jsonObject.put("kfmMsgText", content);
             jsonObject.put("kfmSender", "07147e6f-9315-4cc8-99da-613423288aa8");
-            jsonObject.put("classId", "49b2259f-d73f-4046-9a60-4e9c446bb47a");
+            jsonObject.put("classId", classId);
             KDConnectionManager.getInstance().getZHApi().leaveMessage(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgBean>() {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                              //  mCallBack.getSuccessDataCallBack(response);
+                            if (mCallBack != null && response != null) {
+                                //  mCallBack.getSuccessDataCallBack(response);
                             }
                         }
 
                         @Override
                         public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -58,9 +61,9 @@ public class KdNetWorkClient {
 
 
     /**
-     * 消息详情
+     * 获取消息详情
      */
-    public void getMsgDetail(String keyId){
+    public void getMsgDetail(String keyId) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
@@ -73,17 +76,17 @@ public class KdNetWorkClient {
             KDConnectionManager.getInstance().getZHApi().getMsgDetail(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<MsgBean>() {
+                    .enqueue(new Callback<MsgDetailBean>() {
                         @Override
-                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                              //  mCallBack.getSuccessDataCallBack(response);
+                        public void onResponse(Call<MsgDetailBean> call, Response<MsgDetailBean> response) {
+                            if (mCallBack != null && response != null && response.isSuccessful()) {
+                                mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                        public void onFailure(Call<MsgDetailBean> call, Throwable t) {
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -98,7 +101,7 @@ public class KdNetWorkClient {
     /**
      * 获取未读和已读信息    “001”（已读）“002”（未读）
      */
-    public void getReadMsg(String flag){
+    public void getReadAndUnReadMsg(String flag) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
@@ -110,17 +113,20 @@ public class KdNetWorkClient {
             KDConnectionManager.getInstance().getZHApi().getReadAndUnreadMsg(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<MsgBean>() {
+                    .enqueue(new Callback<ReadAndUnReadBean>() {
                         @Override
-                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                            //    mCallBack.getSuccessDataCallBack(response);
+                        public void onResponse(Call<ReadAndUnReadBean> call, Response<ReadAndUnReadBean> response) {
+                            if (response.isSuccessful()) {
+                                ReadAndUnReadBean body = response.body();
+                                if (mCallBack != null && body != null) {
+                                    mCallBack.getSuccessDataCallBack(body);
+                                }
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                        public void onFailure(Call<ReadAndUnReadBean> call, Throwable t) {
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -134,27 +140,28 @@ public class KdNetWorkClient {
     /**
      * 回复详情消息
      */
-    public void sendMsgDetail(String keyId){
+    public void sendMsgDetail(String keyId, String msg) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("kmdMsgText", "正文");
+            jsonObject.put("kmdMsgText", msg);
             jsonObject.put("kmdKfmId", keyId);
+            jsonObject.put("kfmId", keyId);
             KDConnectionManager.getInstance().getZHApi().sendMsgDetail(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgBean>() {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                                //    mCallBack.getSuccessDataCallBack(response);
+                            if (mCallBack != null && response.isSuccessful()) {
+                                mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -169,26 +176,27 @@ public class KdNetWorkClient {
     /**
      * 删除未读消息
      */
-    public void udpateMessage(String keyId){
+    public void udpateMessage(String keyId) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("kfmId", keyId);
+            jsonObject.put("kmdKfmId", keyId);
             KDConnectionManager.getInstance().getZHApi().udpateMessage(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgBean>() {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                                //    mCallBack.getSuccessDataCallBack(response);
+                            if (mCallBack != null && response != null) {
+                                mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -203,7 +211,7 @@ public class KdNetWorkClient {
     /**
      * 发送消息时点击“+” 查找班级
      */
-    public void selectClassInfo(String keyId){
+    public void selectClassInfo() {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
@@ -211,17 +219,17 @@ public class KdNetWorkClient {
             KDConnectionManager.getInstance().getZHApi().selectClassInfo(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<MsgBean>() {
+                    .enqueue(new Callback<ClassBean>() {
                         @Override
-                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            if (mCallBack != null && response != null){
-                                //    mCallBack.getSuccessDataCallBack(response);
+                        public void onResponse(Call<ClassBean> call, Response<ClassBean> response) {
+                            if (mCallBack != null && response != null) {
+                                    mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<MsgBean> call, Throwable t) {
-                            if (mCallBack != null){
+                        public void onFailure(Call<ClassBean> call, Throwable t) {
+                            if (mCallBack != null) {
                                 mCallBack.getFailDataCallBack(-1);
                             }
                         }
@@ -233,8 +241,7 @@ public class KdNetWorkClient {
     }
 
 
-
-    //---------------------------------------------------
+    //-----------------------回调接口----------------------------
     private DataCallBack mCallBack;
 
     public DataCallBack getmCallBack() {
@@ -245,8 +252,9 @@ public class KdNetWorkClient {
         this.mCallBack = mCallBack;
     }
 
-    public interface DataCallBack<T>{
+    public interface DataCallBack<T> {
         void getSuccessDataCallBack(T data);
+
         void getFailDataCallBack(int failIndex);
 
     }

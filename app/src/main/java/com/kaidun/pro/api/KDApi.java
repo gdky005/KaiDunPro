@@ -1,10 +1,13 @@
 package com.kaidun.pro.api;
 
+import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.KDListBaseBean;
 import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.bean.MsgDetailBean;
 import com.kaidun.pro.bean.PicBean;
+import com.kaidun.pro.bean.ReadAndUnReadBean;
 import com.kaidun.pro.bean.SubVideoBean;
 import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.home.bean.CourseInfo;
@@ -125,21 +128,21 @@ public interface KDApi {
      * 获取已读和未读消息
      */
     @POST("selectMessge")
-    Call<MsgBean> getReadAndUnreadMsg(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<ReadAndUnReadBean> getReadAndUnreadMsg(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
 
     /**
      * 获取消息详情
      */
     @POST("selectMessgeDetail")
-    Call<MsgBean> getMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<MsgDetailBean> getMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
 
     /**
      * 发送消息时点击“+” 查找班级
      */
     @POST("selectClassInfo")
-    Call<MsgBean> selectClassInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<ClassBean> selectClassInfo(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     /**
      * 回复详情消息
