@@ -43,6 +43,8 @@ dependencies {
     implementation deps.butterknife
     annotationProcessor deps.butterknife_compiler
 
+    implementation deps.photo_draweeview
+
     implementation deps.zk_fresco
     implementation deps.okhttp
     implementation deps.fresco
