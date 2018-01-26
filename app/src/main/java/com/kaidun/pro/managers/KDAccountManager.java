@@ -92,6 +92,10 @@ public class KDAccountManager {
 
                     ToastUtils.showShort(throwable.getMessage());
                     L.d("onFailure: " + throwable.getMessage());
+
+                    if (loginFinish != null) {
+                        loginFinish.loginFinish(null);
+                    }
                 }
             });
 
