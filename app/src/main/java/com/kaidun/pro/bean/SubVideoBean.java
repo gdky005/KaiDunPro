@@ -16,6 +16,16 @@ public class SubVideoBean  {
     private String tageTitle;
     private String thumbnallUrl;
 
+    public String getDvdUrl() {
+        return dvdUrl;
+    }
+
+    public void setDvdUrl(String dvdUrl) {
+        this.dvdUrl = dvdUrl;
+    }
+
+    private String dvdUrl;
+
     public String getTageTitle() {
         return tageTitle;
     }
