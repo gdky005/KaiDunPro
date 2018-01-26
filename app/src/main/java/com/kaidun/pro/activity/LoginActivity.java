@@ -15,6 +15,7 @@ import com.kaidun.pro.R;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
 import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.utils.LoadingUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,16 +163,20 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
         KDAccountManager kdAccountManager = KDAccountManager.getInstance();
         kdAccountManager.setLoginFinish(login -> {
             // TODO: 2018/1/25  这里请处理你的逻辑
-            KaiDunSP kaiDunSP = new KaiDunSP();
-            boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
-            if (!isFirst) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            } else {
-                kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
-                ChooseRoleActivity.start(LoginActivity.this);
+            LoadingUtils.dismiss();
+            if (login != null) {
+                KaiDunSP kaiDunSP = new KaiDunSP();
+                boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
+                if (!isFirst) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
+                    ChooseRoleActivity.start(LoginActivity.this);
+                }
+                finish();
             }
-            finish();
         });
+        LoadingUtils.show(this);
         kdAccountManager.login(account, pwd, areaCode, "003");
     }
 

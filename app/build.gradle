@@ -62,4 +62,6 @@ dependencies {
     androidTestImplementation espresso.core
     androidTestImplementation deps.runner
 
+    compile files('libs/pushservice-6.0.0.64.jar')
+
 }
