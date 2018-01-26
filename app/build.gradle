@@ -53,7 +53,7 @@ dependencies {
     implementation deps.stetho_okhttp3
 
     implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.0.4'
-
+    implementation 'cn.jzvd:jiaozivideoplayer:6.2.7'
 
     testImplementation deps.junit
 

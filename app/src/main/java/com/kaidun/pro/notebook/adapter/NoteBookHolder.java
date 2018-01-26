@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kaidun.pro.R;
-import com.kaidun.pro.notebook.bean.FamilyContact;
+import com.kaidun.pro.notebook.bean.FamContact;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,14 +27,14 @@ public class NoteBookHolder extends ZKViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void setData(FamilyContact.ResultBean resultBean) {
-        textView.setText(resultBean.getBookName());
+    public void setData(FamContact resultBean) {
+        textView.setText(resultBean.getCourseSortName());
 
-        if (resultBean.getBookName().equals("暑托班")) {
+        if (resultBean.getCourseSortName().equals("暑托班")) {
             imageView.setImageResource(R.drawable.sc_notebook);
-        } else if (resultBean.getBookName().equals("ABC")) {
+        } else if (resultBean.getCourseSortName().equals("ABC")) {
             imageView.setImageResource(R.drawable.abc_notebook);
-        } else if (resultBean.getBookName().equals("LA")) {
+        } else if (resultBean.getCourseSortName().equals("LA")) {
             imageView.setImageResource(R.drawable.la_notebook);
         } else {
             imageView.setImageResource(R.drawable.other_notebook);

@@ -3,15 +3,17 @@ package com.kaidun.pro.notebook;
 import android.content.Intent;
 
 import com.kaidun.pro.R;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.FamContentAdapter;
+import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.FamContent;
-import com.kaidun.pro.notebook.bean.FamilyContact;
+import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +29,7 @@ public class NoteBookActivity extends BaseActivity {
 
     ZKRecycleView mNoteBookList;
 
-    private FamilyContact.ResultBean resultBean;
+    private FamContact famContact;
     private FamContentAdapter adapter;
 
     @Override
@@ -38,6 +40,7 @@ public class NoteBookActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mNoteBookList = findViewById(R.id.note_book_list);
+        mTitle.setText("家联本内");
     }
 
     @Override
@@ -48,53 +51,45 @@ public class NoteBookActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        resultBean = (FamilyContact.ResultBean) intent.getSerializableExtra("book");
-        setTitle("家联本内");
-
-        ArrayList<FamContent> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            FamContent famContent = new FamContent();
-            famContent.setBookName("ABC" + i);
-            famContent.setStart(3);
-            famContent.setText("我给你讲！写不完作业就别想回家！！！");
-            famContent.setUnitCode(4);
-            famContent.setListeningRate(0.72);
-            famContent.setSpeakingRate(0.34);
-            famContent.setReadingRate(0.67);
-            famContent.setWritingRate(0.12);
-            famContent.setPractiseTime("2018-1-" + i);
-            list.add(famContent);
-        }
+        famContact = (FamContact) intent.getSerializableExtra("book");
+//
+//        ArrayList<FamContent> list = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            FamContent famContent = new FamContent();
+//            famContent.setBookName("ABC" + i);
+//            famContent.setStart(3);
+//            famContent.setText("我给你讲！写不完作业就别想回家！！！");
+//            famContent.setUnitCode(4);
+//            famContent.setListeningRate(0.72);
+//            famContent.setSpeakingRate(0.34);
+//            famContent.setReadingRate(0.67);
+//            famContent.setWritingRate(0.12);
+//            famContent.setPractiseTime("2018-1-" + i);
+//            list.add(famContent);
+//        }
 
         //TODO:请求数据
-        adapter = new FamContentAdapter(R.layout.item_fam_content, list);
-        mNoteBookList.setAdapter(adapter);
-        adapter.setUpFetchEnable(true);
-    }
+        selectFamContContext();
 
+    }
 
     private void selectFamContContext() {
 
-        int unitCode = 1;
-        String courseType = "fd23aa51-dd03-4896-98cf-254864f646a9";
-//        areaCode（地区编码）	1001
-//        userCode（用户码）	10009010
-//        courseType（课程类别）	fd23aa51-dd03-4896-98cf-254864f646a9
-//        unitCode(单元id)（向下拉动查询）	1
-
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("courseType", courseType);
-            jsonObject.put("unitCode", unitCode);
+            jsonObject.put("courseSortId", famContact.getCourseSortId());
             KDConnectionManager.getInstance().getZHApi().selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<FamContent>() {
+                    .enqueue(new KDCallback<List<FamContent>>() {
+
                         @Override
-                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
-                            //showList(list);
+                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
+                            adapter = new FamContentAdapter(R.layout.item_fam_content, result);
+                            mNoteBookList.setAdapter(adapter);
+                            adapter.setUpFetchEnable(true);
                         }
 
                         @Override
-                        public void onFailure(Call<FamContent> call, Throwable t) {
+                        public void onFailure(Throwable throwable) {
 
                         }
                     });
@@ -102,7 +97,5 @@ public class NoteBookActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }

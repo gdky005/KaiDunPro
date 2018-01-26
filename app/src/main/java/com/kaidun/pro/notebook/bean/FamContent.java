@@ -6,31 +6,31 @@ package com.kaidun.pro.notebook.bean;
  */
 public class FamContent {
 
-    private String bookName;//(书本名称)
-    private String ccId;//(课表id)
-    private String classId;//(班级id)
-    private String courseSortId;//(课程类别id)
+    /**
+     * ccId : 6267F9D72CC10203E0530C01000A0B8F
+     * classId : c1ca6da9-670b-4b5e-8610-42289a4fb8cf
+     * courseSortId : 40051078-ce55-45ce-95a3-67aaca1796aa
+     * courseSortName : ABC
+     * limit : 0
+     * listingRate : %
+     * readingRate : %
+     * speakingRate : %
+     * stuId : 44460
+     * unitCode : 1
+     * writingRate : %
+     */
 
-    private int unitCode;//(单元完成率)
-
-    private double listeningRate;//(听完成率)
-    private double speakingRate;//(说完成率)
-    private double readingRate;//(读完成率)
-    private double writingRate;//(写完成率)
-    private String practiseTime;//（评测时间）
-    private String option;//（学员表现）
-
-    private String text;//（评语内容）
-
-    private int start;//（星星数）
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
+    private String ccId;
+    private String classId;
+    private String courseSortId;
+    private String courseSortName;
+    private int limit;
+    private String listingRate;
+    private String readingRate;
+    private String speakingRate;
+    private String stuId;
+    private String unitCode;
+    private String writingRate;
 
     public String getCcId() {
         return ccId;
@@ -56,75 +56,67 @@ public class FamContent {
         this.courseSortId = courseSortId;
     }
 
-    public int getUnitCode() {
-        return unitCode;
+    public String getCourseSortName() {
+        return courseSortName;
     }
 
-    public void setUnitCode(int unitCode) {
-        this.unitCode = unitCode;
+    public void setCourseSortName(String courseSortName) {
+        this.courseSortName = courseSortName;
     }
 
-    public double getListeningRate() {
-        return listeningRate;
+    public int getLimit() {
+        return limit;
     }
 
-    public void setListeningRate(double listeningRate) {
-        this.listeningRate = listeningRate;
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
-    public double getSpeakingRate() {
-        return speakingRate;
+    public String getListingRate() {
+        return listingRate;
     }
 
-    public void setSpeakingRate(double speakingRate) {
-        this.speakingRate = speakingRate;
+    public void setListingRate(String listingRate) {
+        this.listingRate = listingRate;
     }
 
-    public double getReadingRate() {
+    public String getReadingRate() {
         return readingRate;
     }
 
-    public void setReadingRate(double readingRate) {
+    public void setReadingRate(String readingRate) {
         this.readingRate = readingRate;
     }
 
-    public double getWritingRate() {
+    public String getSpeakingRate() {
+        return speakingRate;
+    }
+
+    public void setSpeakingRate(String speakingRate) {
+        this.speakingRate = speakingRate;
+    }
+
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
+
+    public String getUnitCode() {
+        return unitCode;
+    }
+
+    public void setUnitCode(String unitCode) {
+        this.unitCode = unitCode;
+    }
+
+    public String getWritingRate() {
         return writingRate;
     }
 
-    public void setWritingRate(double writingRate) {
+    public void setWritingRate(String writingRate) {
         this.writingRate = writingRate;
-    }
-
-    public String getPractiseTime() {
-        return practiseTime;
-    }
-
-    public void setPractiseTime(String practiseTime) {
-        this.practiseTime = practiseTime;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
     }
 }

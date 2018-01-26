@@ -17,7 +17,6 @@ import com.kaidun.pro.utils.KDRequestUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import team.zhuoke.sdk.base.BaseActivity;
@@ -26,7 +25,6 @@ public class SubVideoActivity extends BaseActivity {
 
     private RecyclerView rvSubVideo;
     private SubVideoAdapter adapter;
-    private List<SubVideoBean> list = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
