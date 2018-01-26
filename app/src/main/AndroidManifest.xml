@@ -147,6 +147,8 @@
             android:name=".activity.VideoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.PhotoViewActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
