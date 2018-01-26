@@ -74,6 +74,12 @@ public class CourseInfo {
             private String courseSortId;
             private List<BookModelsBean> bookModels;
             private List<RateListBean> rateList;
+            public static String comment;
+            public static String teacher;
+            public static String publishTime;
+
+            public ClassCourseInfoBean() {
+            }
 
             public String getClassName() {
                 return className;
@@ -105,6 +111,30 @@ public class CourseInfo {
 
             public void setRateList(List<RateListBean> rateList) {
                 this.rateList = rateList;
+            }
+
+            public String getComment() {
+                return comment;
+            }
+
+            public void setComment(String comment) {
+                this.comment = comment;
+            }
+
+            public String getTeacher() {
+                return teacher;
+            }
+
+            public void setTeacher(String teacher) {
+                this.teacher = teacher;
+            }
+
+            public String getPublishTime() {
+                return publishTime;
+            }
+
+            public void setPublishTime(String publishTime) {
+                this.publishTime = publishTime;
             }
 
             public static class BookModelsBean {

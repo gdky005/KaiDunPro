@@ -60,6 +60,9 @@ public class SchoolNotification extends Home {
         private String releaseContent;
         private String releaseTime;
         private String releaser;
+        private String comment;
+        private String teacher;
+        private String publishTime;
 
         public String getReleaseContent() {
             return releaseContent;
@@ -83,6 +86,30 @@ public class SchoolNotification extends Home {
 
         public void setReleaser(String releaser) {
             this.releaser = releaser;
+        }
+
+        public String getTeacher() {
+            return teacher;
+        }
+
+        public void setTeacher(String teacher) {
+            this.teacher = teacher;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+
+        public String getPublishTime() {
+            return publishTime;
+        }
+
+        public void setPublishTime(String publishTime) {
+            this.publishTime = publishTime;
         }
     }
 }

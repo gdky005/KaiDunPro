@@ -135,6 +135,9 @@ public class HomeFragment extends BaseFragment {
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
                 if (response.body() != null && response.body().getStatusCode() == 100) {
                     mSchoolNotification = response.body();
+                    CourseInfo.ResultBean.ClassCourseInfoBean.comment = mSchoolNotification.getResult().getComment();
+                    CourseInfo.ResultBean.ClassCourseInfoBean.teacher = mSchoolNotification.getResult().getTeacher();
+                    CourseInfo.ResultBean.ClassCourseInfoBean.publishTime = mSchoolNotification.getResult().getPublishTime();
                     mHomes.add(0, mSchoolNotification);
                     mAdapter.notifyDataSetChanged();
                 } else if (response.body() != null && response.body().getMessage() != null) {

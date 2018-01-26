@@ -80,8 +80,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/course_index"
-                    android:paddingBottom="3dp"
-                    android:paddingTop="3dp"
                     android:dropDownSelector="@drawable/xiala_home"/>
 
             </LinearLayout>

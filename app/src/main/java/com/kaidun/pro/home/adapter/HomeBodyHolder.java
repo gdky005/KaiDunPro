@@ -2,6 +2,7 @@ package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
+import com.kaidun.pro.home.bean.SchoolNotification;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +64,7 @@ public class HomeBodyHolder extends HomeHolder {
         mContext = view.getContext();
     }
 
+    @SuppressLint("SetTextI18n")
     public void setData(Home home) {
         if (home instanceof CourseInfo.ResultBean.ClassCourseInfoBean) {
             CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
@@ -83,9 +86,17 @@ public class HomeBodyHolder extends HomeHolder {
 
                 }
             });
+
+            if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
+                mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
+            }
+
+            if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime)
+                    && !TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.teacher) ) {
+                mTeacherEvaluationDate.setText(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime
+                        + " by " + CourseInfo.ResultBean.ClassCourseInfoBean.teacher);
+            }
         }
-        mTeacherEvaluationContent.setText(home.teacherEvaluation);
-        mTeacherEvaluationDate.setText(home.teacherEvaluationDate);
     }
 
     private void setCourseSpinner(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
