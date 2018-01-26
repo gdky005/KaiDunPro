@@ -62,6 +62,7 @@ public class Recommended {
         private String cellPhoneNumber;
         private String childName;
         private String familyName;
+        private String recommendTime;
 
         public String getCellPhoneNumber() {
             return cellPhoneNumber;
@@ -85,6 +86,14 @@ public class Recommended {
 
         public void setFamilyName(String familyName) {
             this.familyName = familyName;
+        }
+
+        public String getRecommendTime() {
+            return recommendTime;
+        }
+
+        public void setRecommendTime(String recommendTime) {
+            this.recommendTime = recommendTime;
         }
     }
 }

@@ -40,7 +40,7 @@ public class RecommendedHolder extends ZKViewHolder {
         mRecommendedContent.setText("推荐了 " + recommended.getChildName()
                 + " 小朋友加入凯顿幼儿英语。");
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
-//        mRecommendedDate.setText(recommended.date);
+        mRecommendedDate.setText(recommended.getRecommendTime());
     }
 
     public void showOrHide(int position) {
