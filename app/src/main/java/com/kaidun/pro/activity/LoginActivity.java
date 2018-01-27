@@ -12,9 +12,16 @@ import android.widget.Spinner;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
+import com.kaidun.pro.bean.AreaBean;
+import com.kaidun.pro.bean.FamilyRoleBean;
+import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
+import com.kaidun.pro.chooserole.bean.ChooseRoleBean;
 import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.retrofit2.KDCallback;
+import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.LoadingUtils;
 
 import java.util.ArrayList;
@@ -36,10 +43,12 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
     EditText accountEt;
     @BindView(R.id.et_login_pwd)
     EditText pwdEt;
-    List<String> areaCodeList;
+    List<AreaBean> areaBeanList;
+    List<String> areaNameList;
     @BindView(R.id.spinner_test_account)
     Spinner spinnerTestAccount;
     private String areaCode;
+    ArrayAdapter<String> arrayAdapter;
 
 
     @Override
@@ -101,7 +110,7 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        areaCode = areaCodeList.get(position);
+        areaCode = areaBeanList.get(position).getAreaCode();
     }
 
     @Override
@@ -112,34 +121,28 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
     @OnClick({R.id.btn_login})
     public void onViewClick(View view) {
         // TODO: 2018/1/25 记得处理这里
-        String account = accountEt.getText().toString();
-        String pwd = pwdEt.getText().toString();
+        switch (view.getId()) {
+            case R.id.btn_login:
+                String account = accountEt.getText().toString();
+                String pwd = pwdEt.getText().toString();
 //        if (checkIsValid(account, pwd, areaCode)) {
 //            login(account, pwd, areaCode);
 //        }
-        // TODO: 2018/1/25  默认账号
-        login(account, pwd, "1001");
+                // TODO: 2018/1/25  默认账号
+                login(account, pwd, "1001");
 //        login("10007027", "10007027", "1001");
+                break;
 
+        }
     }
 
     @Override
     protected void initData() {
-        areaCodeList = new ArrayList<>();
-        List<String> areaList = new ArrayList<>();
-        areaList.add("上海");
-        areaCodeList.add("1001");
-        areaList.add("北京");
-        areaCodeList.add("1002");
-        areaList.add("广州");
-        areaCodeList.add("1003");
-        areaList.add("深圳");
-        areaCodeList.add("1004");
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.support_simple_spinner_dropdown_item, areaList);
-        addrSpinner.setAdapter(arrayAdapter);
-
+        areaBeanList = new ArrayList<>();
+        areaNameList = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<String>(
+                this, R.layout.support_simple_spinner_dropdown_item, areaNameList);
+        getAreaList();
     }
 
     private boolean checkIsValid(String account, String pwd, String areaCode) {
@@ -180,10 +183,37 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
         kdAccountManager.login(account, pwd, areaCode, "003");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    private void getAreaList() {
+        try {
+            KDConnectionManager.getInstance().getZHApi().getAreaList(KDRequestUtils.getRequestBody()).
+                    enqueue(new KDCallback<List<AreaBean>>() {
+                        @Override
+                        public void onResponse(KDBaseBean<List<AreaBean>> baseBean, List<AreaBean> response) {
+                            if (baseBean.getStatusCode() == 100) {
+                                areaBeanList = response;
+                                for (int i = 0; i < response.size(); i++) {
+                                    areaNameList.add(response.get(i).getAreaName());
+                                }
+                                addrSpinner.setAdapter(arrayAdapter);
+
+                            } else {
+                                ToastUtils.showShort(baseBean.getMessage());
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                        }
+
+
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
+
 }

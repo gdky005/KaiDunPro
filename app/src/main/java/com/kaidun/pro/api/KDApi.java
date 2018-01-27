@@ -1,5 +1,6 @@
 package com.kaidun.pro.api;
 
+import com.kaidun.pro.bean.AreaBean;
 import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
@@ -44,6 +45,12 @@ public interface KDApi {
      */
     @POST("selectFamilyRole")
     Call<KDBaseBean<List<FamilyRoleBean>>> selectFamilyRole(@Body RequestBody requestBody);
+
+    /**
+     * 地区编码 名称
+     */
+    @POST("getComboAreaList")
+    Call<KDBaseBean<List<AreaBean>>> getAreaList(@Body RequestBody requestBody);
 
     /**
      * 引导页角色查询
