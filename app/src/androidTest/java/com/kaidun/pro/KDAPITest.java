@@ -9,9 +9,7 @@ import android.util.Log;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
-import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
-import com.kaidun.pro.notebook.bean.MsgBean;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
@@ -22,10 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * KDAPITest
@@ -162,38 +156,38 @@ public class KDAPITest {
 //
 //    }
 
-    @Test
-    public void testSelectFamContContext() {
-
-        KDAccountManager.getInstance().defaultLogin();
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        String ccId = "4B93B97398216E08E0531064410ABCF4";
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("ccId", ccId);
-            KDConnectionManager.getInstance().getZHApi().sendFolwer(
-                    KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<MsgBean>() {
-                        @Override
-                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
-                            Log.d("----", response.toString());
-                        }
-
-                        @Override
-                        public void onFailure(Call<MsgBean> call, Throwable t) {
-
-                        }
-                    });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void testSelectFamContContext() {
+//
+//        KDAccountManager.getInstance().defaultLogin();
+//
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        String ccId = "4B93B97398216E08E0531064410ABCF4";
+//
+//        try {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("ccId", ccId);
+//            KDConnectionManager.getInstance().getZHApi().sendFolwer(
+//                    KDRequestUtils.getRequestBody(jsonObject))
+//                    .enqueue(new Callback<MsgBean>() {
+//                        @Override
+//                        public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
+//                            Log.d("----", response.toString());
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<MsgBean> call, Throwable t) {
+//
+//                        }
+//                    });
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

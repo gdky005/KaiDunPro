@@ -27,13 +27,8 @@ public class KdNetWorkClient {
     public void leaveMsg(String content,String theme,String classId) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("kfmRole", "001");
-            jsonObject.put("unitCode", "1");
             jsonObject.put("kfmMsgTitle", theme);
             jsonObject.put("kfmMsgText", content);
-            jsonObject.put("kfmSender", "07147e6f-9315-4cc8-99da-613423288aa8");
             jsonObject.put("classId", classId);
             KDConnectionManager.getInstance().getZHApi().leaveMessage(
                     KDRequestUtils.getHeaderMaps(),

@@ -1,5 +1,6 @@
 package com.kaidun.pro.notebook.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,16 +29,20 @@ public class NoteBookHolder extends ZKViewHolder {
     }
 
     public void setData(FamContact resultBean) {
-        textView.setText(resultBean.getCourseSortName());
-
-        if (resultBean.getCourseSortName().equals("暑托班")) {
-            imageView.setImageResource(R.drawable.sc_notebook);
-        } else if (resultBean.getCourseSortName().equals("ABC")) {
-            imageView.setImageResource(R.drawable.abc_notebook);
-        } else if (resultBean.getCourseSortName().equals("LA")) {
-            imageView.setImageResource(R.drawable.la_notebook);
-        } else {
-            imageView.setImageResource(R.drawable.other_notebook);
+        if (resultBean != null) {
+            String name = resultBean.getCourseSortName();
+            if (!TextUtils.isEmpty(name)) {
+                textView.setText(name);
+                if (name.equals("暑托班")) {
+                    imageView.setImageResource(R.drawable.sc_notebook);
+                } else if (name.equals("ABC")) {
+                    imageView.setImageResource(R.drawable.abc_notebook);
+                } else if (name.equals("LA")) {
+                    imageView.setImageResource(R.drawable.la_notebook);
+                } else {
+                    imageView.setImageResource(R.drawable.other_notebook);
+                }
+            }
         }
     }
 }
