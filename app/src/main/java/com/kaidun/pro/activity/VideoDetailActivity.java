@@ -82,6 +82,7 @@ public class VideoDetailActivity extends BaseActivity implements View.OnClickLis
                                         Intent intent = new Intent();
                                         intent.setClass(mContext, VideoPlayActivity.class);
                                         intent.putExtra("url", result.get(position).getThumbnallUrl());
+                                        intent.putExtra("videoUrl", result.get(position).getDvdUrl());
                                         intent.putExtra("name", result.get(position).getTageTitle());
                                         startActivity(intent);
                                     }
