@@ -5,9 +5,10 @@ package com.kaidun.pro.home.bean;
  */
 
 public class SchoolNotification extends Home {
+
     /**
      * message : 成功
-     * result : {"releaseContent":"下周考试，请考生做好准备","releaseTime":"2018/01/24\n\t\t00:00:00","releaser":"Stella"}
+     * result : {"inform":{"releaseContent":"下周考试，请考生做好准备","releaseTime":"2018-01-25","releaser":"Crystal"},"comment":{"comment":"If you wish to proceed to the MA,be sure to inform the university of your choice","publishTime":"2018-01-29","teacher":"Cassie"}}
      * statusCode : 100
      * ver : 1
      */
@@ -51,65 +52,99 @@ public class SchoolNotification extends Home {
 
     public static class ResultBean {
         /**
-         * releaseContent : 下周考试，请考生做好准备
-         * releaseTime : 2018/01/24
-         * 00:00:00
-         * releaser : Stella
+         * inform : {"releaseContent":"下周考试，请考生做好准备","releaseTime":"2018-01-25","releaser":"Crystal"}
+         * comment : {"comment":"If you wish to proceed to the MA,be sure to inform the university of your choice","publishTime":"2018-01-29","teacher":"Cassie"}
          */
 
-        private String releaseContent;
-        private String releaseTime;
-        private String releaser;
-        private String comment;
-        private String teacher;
-        private String publishTime;
+        private InformBean inform;
+        private CommentBean comment;
 
-        public String getReleaseContent() {
-            return releaseContent;
+        public InformBean getInform() {
+            return inform;
         }
 
-        public void setReleaseContent(String releaseContent) {
-            this.releaseContent = releaseContent;
+        public void setInform(InformBean inform) {
+            this.inform = inform;
         }
 
-        public String getReleaseTime() {
-            return releaseTime;
-        }
-
-        public void setReleaseTime(String releaseTime) {
-            this.releaseTime = releaseTime;
-        }
-
-        public String getReleaser() {
-            return releaser;
-        }
-
-        public void setReleaser(String releaser) {
-            this.releaser = releaser;
-        }
-
-        public String getTeacher() {
-            return teacher;
-        }
-
-        public void setTeacher(String teacher) {
-            this.teacher = teacher;
-        }
-
-        public String getComment() {
+        public CommentBean getComment() {
             return comment;
         }
 
-        public void setComment(String comment) {
+        public void setComment(CommentBean comment) {
             this.comment = comment;
         }
 
-        public String getPublishTime() {
-            return publishTime;
+        public static class InformBean {
+            /**
+             * releaseContent : 下周考试，请考生做好准备
+             * releaseTime : 2018-01-25
+             * releaser : Crystal
+             */
+
+            private String releaseContent;
+            private String releaseTime;
+            private String releaser;
+
+            public String getReleaseContent() {
+                return releaseContent;
+            }
+
+            public void setReleaseContent(String releaseContent) {
+                this.releaseContent = releaseContent;
+            }
+
+            public String getReleaseTime() {
+                return releaseTime;
+            }
+
+            public void setReleaseTime(String releaseTime) {
+                this.releaseTime = releaseTime;
+            }
+
+            public String getReleaser() {
+                return releaser;
+            }
+
+            public void setReleaser(String releaser) {
+                this.releaser = releaser;
+            }
         }
 
-        public void setPublishTime(String publishTime) {
-            this.publishTime = publishTime;
+        public static class CommentBean {
+            /**
+             * comment : If you wish to proceed to the MA,be sure to inform the university of your choice
+             * publishTime : 2018-01-29
+             * teacher : Cassie
+             */
+
+            private String comment;
+            private String publishTime;
+            private String teacher;
+
+            public String getComment() {
+                return comment;
+            }
+
+            public void setComment(String comment) {
+                this.comment = comment;
+            }
+
+            public String getPublishTime() {
+                return publishTime;
+            }
+
+            public void setPublishTime(String publishTime) {
+                this.publishTime = publishTime;
+            }
+
+            public String getTeacher() {
+                return teacher;
+            }
+
+            public void setTeacher(String teacher) {
+                this.teacher = teacher;
+            }
         }
     }
 }

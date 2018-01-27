@@ -27,9 +27,9 @@ public class HomeHeaderHolder extends HomeHolder {
     @SuppressLint("SetTextI18n")
     public void setData(Home home) {
         if (home instanceof SchoolNotification) {
-            mSchoolNoticeContent.setText(((SchoolNotification) home).getResult().getReleaseContent());
-            mSchoolNoticeDate.setText(((SchoolNotification) home).getResult().getReleaseTime()
-                    + " by " + ((SchoolNotification) home).getResult().getReleaser());
+            mSchoolNoticeContent.setText(((SchoolNotification) home).getResult().getInform().getReleaseContent());
+            mSchoolNoticeDate.setText(((SchoolNotification) home).getResult().getInform().getReleaseTime()
+                    + " by " + ((SchoolNotification) home).getResult().getInform().getReleaser());
         }
     }
 }

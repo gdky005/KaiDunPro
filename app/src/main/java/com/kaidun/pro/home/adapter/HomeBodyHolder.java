@@ -78,7 +78,11 @@ public class HomeBodyHolder extends HomeHolder {
             mCourseSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    setCoursePercentage(courseInfoBean, position);
+                    try {
+                        setCoursePercentage(courseInfoBean, position);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override

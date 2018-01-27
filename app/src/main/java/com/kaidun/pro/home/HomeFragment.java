@@ -141,9 +141,11 @@ public class HomeFragment extends BaseFragment {
                         SchoolNotification.ResultBean resultBean = mSchoolNotification.getResult();
 
                         if (resultBean != null) {
-                            CourseInfo.ResultBean.ClassCourseInfoBean.comment = resultBean.getComment();
-                            CourseInfo.ResultBean.ClassCourseInfoBean.teacher = resultBean.getTeacher();
-                            CourseInfo.ResultBean.ClassCourseInfoBean.publishTime = resultBean.getPublishTime();
+                            if (resultBean.getComment() != null) {
+                                CourseInfo.ResultBean.ClassCourseInfoBean.comment = resultBean.getComment().getComment();
+                                CourseInfo.ResultBean.ClassCourseInfoBean.teacher = resultBean.getComment().getTeacher();
+                                CourseInfo.ResultBean.ClassCourseInfoBean.publishTime = resultBean.getComment().getPublishTime();
+                            }
                             mHomes.add(0, mSchoolNotification);
                             mAdapter.notifyDataSetChanged();
                             return;
