@@ -58,8 +58,11 @@ public class VideoPlayActivity extends BaseActivity {
         Intent intent = getIntent();
         mName = intent.getStringExtra("name");
         String imageUrl = intent.getStringExtra("url");
+        String videoUrl = intent.getStringExtra("videoUrl");
         setTitle(mName);
-        player.setUp(smallUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, mName);
+        if (TextUtils.isEmpty(videoUrl))
+            videoUrl = "hehe";
+        player.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, mName);
         if (TextUtils.isEmpty(smallUrl))
             smallUrl = "path";
         Picasso.with(mContext).load(imageUrl).config(Bitmap.Config.RGB_565).fit().into(player.thumbImageView);

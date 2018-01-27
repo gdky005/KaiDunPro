@@ -57,11 +57,19 @@ public class HomeBodyHolder extends HomeHolder {
     private Context mContext;
     private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
     private static double sScheduleLength = 0;
+    private View mItemView;
 
     public HomeBodyHolder(View view) {
         super(view);
         ButterKnife.bind(this, itemView);
+        mItemView = itemView;
         mContext = view.getContext();
+    }
+
+    @Override
+    public void setEmptyData() {
+        super.setEmptyData();
+        mTeacherEvaluationContent.setText("暂无老师评价");
     }
 
     @SuppressLint("SetTextI18n")
@@ -93,12 +101,24 @@ public class HomeBodyHolder extends HomeHolder {
 
             if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
                 mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
+            } else {
+                mTeacherEvaluationContent.setVisibility(View.GONE);
+                mTeacherEvaluationContent.postDelayed(() -> {
+                    if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
+                        mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
+                    } else {
+                        mTeacherEvaluationContent.setText("暂无老师评价");
+                    }
+                    mTeacherEvaluationContent.setVisibility(View.VISIBLE);
+                }, 500);
             }
 
             if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime)
-                    && !TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.teacher) ) {
+                    && !TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.teacher)) {
                 mTeacherEvaluationDate.setText(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime
                         + " by " + CourseInfo.ResultBean.ClassCourseInfoBean.teacher);
+            } else {
+                mTeacherEvaluationDate.setText("");
             }
         }
     }

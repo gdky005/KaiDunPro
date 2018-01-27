@@ -32,4 +32,10 @@ public class HomeHeaderHolder extends HomeHolder {
                     + " by " + ((SchoolNotification) home).getResult().getInform().getReleaser());
         }
     }
+
+    @Override
+    public void setEmptyData() {
+        mSchoolNoticeContent.setText("暂无校内通知");
+        mSchoolNoticeDate.setText("");
+    }
 }

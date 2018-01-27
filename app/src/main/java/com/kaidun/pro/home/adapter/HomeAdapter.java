@@ -29,6 +29,7 @@ public class HomeAdapter extends ZKAdapter<Home, HomeHolder> {
         try {
             helper.setData(item);
         } catch (Exception e) {
+            helper.setEmptyData();
             e.printStackTrace();
         }
         Log.e("TAG", "getItemCount()" + getItemCount());
