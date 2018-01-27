@@ -1,6 +1,7 @@
 package com.kaidun.pro.adapter;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.kaidun.pro.Constant;
@@ -42,13 +43,23 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
         this.mOnSwipeListener = mOnDelListener;
     }
 
+    private String getData(String time){
+        if (!TextUtils.isEmpty(time)){
+            String[] split = time.split(" ");
+            if (split.length > 0){
+                return split[0];
+            }
+        }
+        return "";
+    }
+
     @Override
     protected void convert(ZKViewHolder helper, ReadAndUnReadBean.ResultBean item) {
 
        if (item != null ) {
-           helper.setText(R.id.tv_parents_name, item.getKfmSender());
-           helper.setText(R.id.tv_recommended_date, item.getKfmMsgTime());
-           helper.setText(R.id.replay_latest, item.getKfmReceiveId());
+           helper.setText(R.id.tv_parents_name, item.getKfmRole());
+           helper.setText(R.id.tv_recommended_date, getData(item.getKfmMsgTime()));
+           helper.setText(R.id.replay_latest, item.getKfmSender());
            helper.setText(R.id.tv_recommended_content, item.getKfmMsgText());
 
            View btnDelete = helper.getView(R.id.btnDelete);

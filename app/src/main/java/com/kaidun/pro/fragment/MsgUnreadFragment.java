@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.fresco.helper.utils.DensityUtil;
@@ -32,6 +33,9 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
     public static final String KEY = "key";
     @BindView(R.id.unread_recle)
     RecyclerView msg_unread_recler;
+
+    @BindView(R.id.no_msg)
+    TextView mTextNoMsg;
     private MessageAdapter messageAdapter;
     private ArrayList<ReadAndUnReadBean.ResultBean> mData;
     private KdNetWorkClient httpUtils;
@@ -90,9 +94,12 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
                 if (data.getResult() != null && data.getResult().size() > 0){
+                    mTextNoMsg.setVisibility(View.GONE);
                     mData.clear();
                     mData.addAll(data.getResult());
                     messageAdapter.notifyDataSetChanged();
+                }else {
+                   // mTextNoMsg.setVisibility(View.VISIBLE);
                 }
             }
 

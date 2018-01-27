@@ -2,6 +2,7 @@ package com.kaidun.pro;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -87,7 +88,6 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initData() {
 
-
     }
 
     @Override
@@ -113,9 +113,12 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
                     isGetClassInfoSuccess = true;
                     if (data.getResult() != null && data.getResult().size() > 0) {
                         tranfToArray(data.getResult());
-                        className = new String[]{"班级A", "班级B", "班级c"};
+//                        className = new String[]{"班级A", "班级B", "班级c"};
                         ArrayAdapter adapter = new ArrayAdapter<String>(mContext,
-                                R.layout.item_class_select,R.id.class_name,className);
+                                R.layout.spinner_item,R.id.class_name,className);
+
+                        adapter.setDropDownViewResource(R.layout.item_class_select);
+
                         spinnerClass.setAdapter(adapter);
                     }
                 }else {
@@ -170,36 +173,4 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
 
     //-------------------
-
-    public class SimpleSpinnerAdapter extends ArrayAdapter {
-        public SimpleSpinnerAdapter(@NonNull Context context, int resource) {
-            super(context, resource);
-        }
-
-
-
-       /* @Override
-        public int getCount() {
-            return className.length;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return className[i];
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View mView = LayoutInflater.from(WriteMsgActivity.this).inflate(R.layout.item_class_select, viewGroup, false);
-            ((TextView) mView.findViewById(R.id.class_name)).setText(className[i]);
-            return mView;
-        }*/
-    }
-
-
 }

@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/no_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_msg"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/dp_40"
+        />
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

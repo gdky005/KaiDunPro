@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.Constant;
@@ -33,6 +34,8 @@ public class MsgReadFragment extends BaseFragment {
     public static final String KEY = "key";
 
 
+    @BindView(R.id.no_msg)
+    TextView mTextNoMsg;
     @BindView(R.id.read_recle)
     RecyclerView msg_read_recler;
     private MessageAdapter messageAdapter;
@@ -86,9 +89,12 @@ public class MsgReadFragment extends BaseFragment {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
               if (data.getResult() != null && data.getResult().size() > 0){
+                  mTextNoMsg.setVisibility(View.GONE);
                   mData.clear();
                   mData.addAll(data.getResult());
                   messageAdapter.notifyDataSetChanged();
+              }else {
+                 // mTextNoMsg.setVisibility(View.VISIBLE);
               }
             }
 

@@ -9,6 +9,8 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -29,7 +31,7 @@ import team.zhuoke.sdk.base.BaseActivity;
  * Created by lmj on 2018/1/23.
  */
 
-public class MesDetailActivity extends BaseActivity implements View.OnClickListener {
+public class MesDetailActivity extends BaseActivity implements View.OnClickListener, View.OnLayoutChangeListener {
 
 
     public static final int REPLY = 1;
@@ -51,6 +53,8 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
     private KdNetWorkClient httpUtils;
     private String keyId = Constant.INVALID;
     private MsgDetailAdapter adapter;
+    @BindView(R.id.root_layout)
+    RelativeLayout rootLayout;
 
 
     @Override
@@ -60,14 +64,15 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initViews() {
+        ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent != null){
             keyId = intent.getStringExtra(Constant.KEY_ID);
         }
+        rootLayout.addOnLayoutChangeListener(this);
         layouts.put(REPLY,R.layout.item_msg_detail_reply);
         layouts.put(MSG,R.layout.item_msg_detail_msg);
         httpUtils = new KdNetWorkClient();
-        ButterKnife.bind(this);
         sendMsg.setOnClickListener(this);
         initDemoData();
 
@@ -88,6 +93,9 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
         getDetailDemo();
     }
 
+
+
+
     private void getDetailDemo() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgDetailBean>() {
 
@@ -102,6 +110,7 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
                     mData.clear();
                     mData.addAll(result);
                     adapter.notifyDataSetChanged();
+                    mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
                 }
             }
 
@@ -161,5 +170,16 @@ public class MesDetailActivity extends BaseActivity implements View.OnClickListe
         super.onDestroy();
         httpUtils.setmCallBack(null);
         httpUtils = null;
+    }
+
+    @Override
+    public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+        mMsgDetailRecycler.requestLayout();
+        mMsgDetailRecycler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
     }
 }
