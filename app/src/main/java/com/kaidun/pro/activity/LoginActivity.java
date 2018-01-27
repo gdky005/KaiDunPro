@@ -1,7 +1,6 @@
 package com.kaidun.pro.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,10 +12,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.AreaBean;
-import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
-import com.kaidun.pro.chooserole.bean.ChooseRoleBean;
 import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -70,6 +67,7 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
     private void testAccount() {
         // TODO: 2018/1/25  这里是测试的，记得删除了
         List<String> areaList = new ArrayList<>();
+        areaList.add("10009010");
         areaList.add("10007027");
         areaList.add("8009030410");
         areaList.add("8009030324");
