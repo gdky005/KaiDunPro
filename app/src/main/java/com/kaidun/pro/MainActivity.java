@@ -210,7 +210,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initListener() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        containerViewPager.setOffscreenPageLimit(2);
+        containerViewPager.setOffscreenPageLimit(1);
         containerViewPager.addOnPageChangeListener(onPageChangeListener);
         containerViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
     }
