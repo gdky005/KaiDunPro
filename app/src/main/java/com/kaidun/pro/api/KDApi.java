@@ -15,6 +15,7 @@ import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Notification;
 import com.kaidun.pro.home.bean.Recommended;
 import com.kaidun.pro.home.bean.SchoolNotification;
+import com.kaidun.pro.notebook.bean.BookDetail;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.MsgBean;
@@ -87,6 +88,13 @@ public interface KDApi {
      */
     @POST("selectFamContContext")
     Call<KDBaseBean<List<FamContent>>> selectFamContContext(@Body RequestBody requestBody);
+
+    /**
+     * 家联本课程目标）
+     */
+    @POST("selectCourseObject")
+    Call<KDBaseBean<BookDetail>> selectCourseObject(@Body RequestBody requestBody);
+
 
     /**
      * 给班级老师送花

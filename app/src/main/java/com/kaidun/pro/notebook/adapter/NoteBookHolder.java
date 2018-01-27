@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.kaidun.pro.R;
 import com.kaidun.pro.notebook.bean.FamContact;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,17 +32,15 @@ public class NoteBookHolder extends ZKViewHolder {
     public void setData(FamContact resultBean) {
         if (resultBean != null) {
             String name = resultBean.getCourseSortName();
+            String imgUrl = resultBean.getCsUrl();
             if (!TextUtils.isEmpty(name)) {
                 textView.setText(name);
-                if (name.equals("暑托班")) {
-                    imageView.setImageResource(R.drawable.sc_notebook);
-                } else if (name.equals("ABC")) {
-                    imageView.setImageResource(R.drawable.abc_notebook);
-                } else if (name.equals("LA")) {
-                    imageView.setImageResource(R.drawable.la_notebook);
-                } else {
-                    imageView.setImageResource(R.drawable.other_notebook);
-                }
+            }
+
+            if (!TextUtils.isEmpty(imgUrl)) {
+                Picasso.with(imageView.getContext()).load(imgUrl).into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.other_notebook);
             }
         }
     }

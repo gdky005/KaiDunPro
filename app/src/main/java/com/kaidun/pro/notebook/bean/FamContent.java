@@ -7,30 +7,61 @@ package com.kaidun.pro.notebook.bean;
 public class FamContent {
 
     /**
-     * ccId : 6267F9D72CC10203E0530C01000A0B8F
-     * classId : c1ca6da9-670b-4b5e-8610-42289a4fb8cf
-     * courseSortId : 40051078-ce55-45ce-95a3-67aaca1796aa
-     * courseSortName : ABC
+     * ccId : 52680E066308C7DAE0530B01000A694E
+     * classId : 6e46cc79-0440-4fe2-a5df-7a1366960236
+     * courseSortName : ABC 22.Review3-4
+     * csUrl :
+     * kwcmSendTime : 2018-01-25
      * limit : 0
-     * listingRate : %
-     * readingRate : %
-     * speakingRate : %
-     * stuId : 44460
-     * unitCode : 1
-     * writingRate : %
+     * listingRate : 0%
+     * option : A
+     * readingRate : 0%
+     * speakingRate : 0%
+     * start : 1
+     * text : When a teacher, Nie, visits Wawa's home with a pair of red rain boots for Naxiang, Wawa's secret is revealed
+     * writingRate : 0%
      */
 
     private String ccId;
     private String classId;
-    private String courseSortId;
     private String courseSortName;
+    private String csUrl;
+    private String kwcmSendTime;
     private int limit;
     private String listingRate;
+    private String option;
     private String readingRate;
     private String speakingRate;
-    private String stuId;
-    private String unitCode;
+    private int start;
+    private int testRate;
+    private String text;
     private String writingRate;
+    private String unitName;
+    private String className;
+
+    public int getTestRate() {
+        return testRate;
+    }
+
+    public void setTestRate(int testRate) {
+        this.testRate = testRate;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public String getCcId() {
         return ccId;
@@ -48,20 +79,28 @@ public class FamContent {
         this.classId = classId;
     }
 
-    public String getCourseSortId() {
-        return courseSortId;
-    }
-
-    public void setCourseSortId(String courseSortId) {
-        this.courseSortId = courseSortId;
-    }
-
     public String getCourseSortName() {
         return courseSortName;
     }
 
     public void setCourseSortName(String courseSortName) {
         this.courseSortName = courseSortName;
+    }
+
+    public String getCsUrl() {
+        return csUrl;
+    }
+
+    public void setCsUrl(String csUrl) {
+        this.csUrl = csUrl;
+    }
+
+    public String getKwcmSendTime() {
+        return kwcmSendTime;
+    }
+
+    public void setKwcmSendTime(String kwcmSendTime) {
+        this.kwcmSendTime = kwcmSendTime;
     }
 
     public int getLimit() {
@@ -80,6 +119,14 @@ public class FamContent {
         this.listingRate = listingRate;
     }
 
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+
     public String getReadingRate() {
         return readingRate;
     }
@@ -96,20 +143,20 @@ public class FamContent {
         this.speakingRate = speakingRate;
     }
 
-    public String getStuId() {
-        return stuId;
+    public int getStart() {
+        return start;
     }
 
-    public void setStuId(String stuId) {
-        this.stuId = stuId;
+    public void setStart(int start) {
+        this.start = start;
     }
 
-    public String getUnitCode() {
-        return unitCode;
+    public String getText() {
+        return text;
     }
 
-    public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getWritingRate() {

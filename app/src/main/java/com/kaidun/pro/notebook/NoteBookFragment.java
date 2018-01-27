@@ -2,9 +2,7 @@ package com.kaidun.pro.notebook;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
@@ -110,7 +108,6 @@ public class NoteBookFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FamContact famContact = (FamContact) adapter.getItem(position);
-                //TODO:跳转到家联本详情页
                 Intent intent = new Intent(getContext(), NoteBookActivity.class);
                 intent.putExtra("book", famContact);
                 startActivity(intent);
@@ -120,7 +117,6 @@ public class NoteBookFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
     }
 
     @Override

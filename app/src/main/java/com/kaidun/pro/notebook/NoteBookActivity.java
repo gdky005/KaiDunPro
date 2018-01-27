@@ -1,7 +1,9 @@
 package com.kaidun.pro.notebook;
 
 import android.content.Intent;
+import android.util.Log;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -15,9 +17,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseActivity;
 import team.zhuoke.sdk.component.ZKRecycleView;
 
@@ -52,40 +51,21 @@ public class NoteBookActivity extends BaseActivity {
     protected void initData() {
         Intent intent = getIntent();
         famContact = (FamContact) intent.getSerializableExtra("book");
-//
-//        ArrayList<FamContent> list = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            FamContent famContent = new FamContent();
-//            famContent.setBookName("ABC" + i);
-//            famContent.setStart(3);
-//            famContent.setText("我给你讲！写不完作业就别想回家！！！");
-//            famContent.setUnitCode(4);
-//            famContent.setListeningRate(0.72);
-//            famContent.setSpeakingRate(0.34);
-//            famContent.setReadingRate(0.67);
-//            famContent.setWritingRate(0.12);
-//            famContent.setPractiseTime("2018-1-" + i);
-//            list.add(famContent);
-//        }
-
-        //TODO:请求数据
         selectFamContContext();
-
     }
 
     private void selectFamContContext() {
-
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("courseSortId", famContact.getCourseSortId());
-            KDConnectionManager.getInstance().getZHApi().selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
+            KDConnectionManager.getInstance().getZHApi()
+                    .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new KDCallback<List<FamContent>>() {
 
                         @Override
                         public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
-                            adapter = new FamContentAdapter(R.layout.item_fam_content, result);
+                            adapter = new FamContentAdapter(R.layout.item_fam_content, result, famContact);
                             mNoteBookList.setAdapter(adapter);
-                            adapter.setUpFetchEnable(true);
                         }
 
                         @Override
