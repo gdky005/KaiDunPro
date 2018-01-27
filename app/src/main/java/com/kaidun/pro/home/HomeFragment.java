@@ -133,21 +133,33 @@ public class HomeFragment extends BaseFragment {
         mKdApi.selectFamilyInfo(KDRequestUtils.getRequestBody()).enqueue(new Callback<SchoolNotification>() {
             @Override
             public void onResponse(Call<SchoolNotification> call, Response<SchoolNotification> response) {
-                if (response.body() != null && response.body().getStatusCode() == 100) {
-                    mSchoolNotification = response.body();
-                    CourseInfo.ResultBean.ClassCourseInfoBean.comment = mSchoolNotification.getResult().getComment();
-                    CourseInfo.ResultBean.ClassCourseInfoBean.teacher = mSchoolNotification.getResult().getTeacher();
-                    CourseInfo.ResultBean.ClassCourseInfoBean.publishTime = mSchoolNotification.getResult().getPublishTime();
-                    mHomes.add(0, mSchoolNotification);
-                    mAdapter.notifyDataSetChanged();
-                } else if (response.body() != null && response.body().getMessage() != null) {
-                    ToastUtils.showShort(response.body().getMessage());
+                String msg = "请求错误";
+                mSchoolNotification = response.body();
+
+                if (mSchoolNotification != null) {
+                    if ( mSchoolNotification.getStatusCode() == 100) {
+                        SchoolNotification.ResultBean resultBean = mSchoolNotification.getResult();
+
+                        if (resultBean != null) {
+                            CourseInfo.ResultBean.ClassCourseInfoBean.comment = resultBean.getComment();
+                            CourseInfo.ResultBean.ClassCourseInfoBean.teacher = resultBean.getTeacher();
+                            CourseInfo.ResultBean.ClassCourseInfoBean.publishTime = resultBean.getPublishTime();
+                            mHomes.add(0, mSchoolNotification);
+                            mAdapter.notifyDataSetChanged();
+                            return;
+                        }
+                    } else {
+                        msg = mSchoolNotification.getMessage();
+                    }
                 }
+
+                ToastUtils.showShort(msg);
             }
 
             @Override
             public void onFailure(Call<SchoolNotification> call, Throwable t) {
                 t.printStackTrace();
+                ToastUtils.showShort(t.getMessage());
             }
         });
     }
