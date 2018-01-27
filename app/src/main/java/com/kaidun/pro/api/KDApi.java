@@ -166,7 +166,7 @@ public interface KDApi {
     /**
      * 给班级留言
      */
-    @POST("leaveMessage")
+    @POST("sendMessagetoTea")
     Call<MsgBean> leaveMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
     Call<KDBaseBean> selectBookFinishRate(@Body RequestBody requestBody);
