@@ -6,6 +6,7 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
     android:orientation="vertical">
 
     <TextView
@@ -14,18 +15,20 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="FB-1"
+        android:textColor="@color/white_text"
+        android:textSize="@dimen/sp_14"
         app:layout_constraintEnd_toEndOf="@+id/iv_sub"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/iv_sub"
-        app:layout_constraintTop_toBottomOf="@+id/iv_sub" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_sub"/>
 
     <com.kaidun.pro.views.ZKImageView
         android:id="@+id/iv_sub"
-        android:layout_width="66dp"
-        android:layout_height="63dp"
+        android:layout_width="55dp"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/icon_video" />
+        app:srcCompat="@mipmap/icon_video"/>
 
 </android.support.constraint.ConstraintLayout>

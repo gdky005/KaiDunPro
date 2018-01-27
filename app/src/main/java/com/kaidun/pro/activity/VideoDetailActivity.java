@@ -3,6 +3,8 @@ package com.kaidun.pro.activity;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
@@ -21,25 +23,26 @@ import java.util.List;
 
 import team.zhuoke.sdk.base.BaseActivity;
 
-public class SubVideoActivity extends BaseActivity {
+public class VideoDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView rvSubVideo;
     private SubVideoAdapter adapter;
+    private ImageView ivBack;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_sub_video;
+        return R.layout.activity_video_detail;
     }
 
     @Override
     protected void initViews() {
-        setTitle("二级视频列表");
         rvSubVideo = findViewById(R.id.rv_subVideo);
+        ivBack = findViewById(R.id.iv_back);
     }
 
     @Override
     protected void initListener() {
-
+        ivBack.setOnClickListener(this);
     }
 
     @Override
@@ -68,19 +71,37 @@ public class SubVideoActivity extends BaseActivity {
 
                         if (baseBean.getStatusCode() == 100) {
 
+                            SubVideoBean subVideoBean = new SubVideoBean();
+                            result.add(0, subVideoBean);
                             adapter = new SubVideoAdapter(mContext, result, new RvListener() {
                                 @Override
                                 public void onItemClick(int id, int position) {
                                     //TODO 点击事件
-                                    Intent intent = new Intent();
-                                    intent.setClass(mContext, VideoPlayActivity.class);
-                                    intent.putExtra("url", result.get(position).getThumbnallUrl());
-                                    intent.putExtra("name", result.get(position).getTageTitle());
-                                    startActivity(intent);
+
+                                    if (position != 0) {
+                                        Intent intent = new Intent();
+                                        intent.setClass(mContext, VideoPlayActivity.class);
+                                        intent.putExtra("url", result.get(position).getThumbnallUrl());
+                                        intent.putExtra("name", result.get(position).getTageTitle());
+                                        startActivity(intent);
+                                    }
+
 
                                 }
                             });
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 12);
+                            GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
+                                @Override
+                                public int getSpanSize(int position) {
+                                    if (position == 0)
+                                        return 12;
+                                    else if (position == 1 || position == 2 || position == 3)
+                                        return 4;
+                                    else
+                                        return 3;
+                                }
+                            };
+                            gridLayoutManager.setSpanSizeLookup(spanSizeLookup);
                             rvSubVideo.setLayoutManager(gridLayoutManager);
                             rvSubVideo.setAdapter(adapter);
 
@@ -94,5 +115,11 @@ public class SubVideoActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (ivBack == v)
+            finish();
     }
 }

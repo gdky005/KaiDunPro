@@ -16,8 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.005"
-        app:tabIndicatorColor="@color/yellow"
-        app:tabSelectedTextColor="@color/yellow"
+        app:tabIndicatorColor="#ffcc4b"
+        app:tabSelectedTextColor="#ffcc4b"
         app:tabTextAppearance="@style/Design.Tab.Custom"
         app:tabTextColor="@color/black_text">
 

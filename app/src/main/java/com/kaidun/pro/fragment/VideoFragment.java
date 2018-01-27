@@ -57,8 +57,7 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void initData(Bundle bundle) {
         try {
-            if (list.isEmpty())
-                getVideo();
+            getVideo();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -73,12 +72,12 @@ public class VideoFragment extends BaseFragment {
                     public void onResponse(KDBaseBean<List<VideoBean>> baseBean, List<VideoBean> result) {
 
                         if (baseBean.getStatusCode() == 100) {
-
-                            List<Fragment> fragments = new ArrayList<>(result.size());
-                            String[] titles = new String[result.size()];
-
-                            for (int i = 0; i < result.size(); i++) {
-                                VideoBean videoBean = result.get(i);
+                            list.clear();
+                            list.addAll(result);
+                            List<Fragment> fragments = new ArrayList<>(list.size());
+                            String[] titles = new String[list.size()];
+                            for (int i = 0; i < list.size(); i++) {
+                                VideoBean videoBean = list.get(i);
                                 SubVideoFragment sub = new SubVideoFragment();
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("sub", videoBean);

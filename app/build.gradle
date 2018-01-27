@@ -56,6 +56,7 @@ dependencies {
 
     implementation 'com.github.ZhuoKeTeam:zhuoke-sdk:1.0.4'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.7'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     testImplementation deps.junit
 

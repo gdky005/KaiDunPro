@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.kaidun.pro.R;
-import com.kaidun.pro.activity.SubVideoActivity;
+import com.kaidun.pro.activity.VideoDetailActivity;
 import com.kaidun.pro.adapter.RvListener;
 import com.kaidun.pro.adapter.VideoAdapter;
 import com.kaidun.pro.bean.VideoBean;
@@ -41,13 +41,14 @@ public class SubVideoFragment extends BaseFragment {
     @Override
     public void initData(Bundle bundle) {
         VideoBean videoBean = getArguments().getParcelable("sub");
+        dvdList.clear();
         dvdList.addAll(videoBean.getDvdList());
         videoAdapter = new VideoAdapter(mContext, dvdList, new RvListener() {
             @Override
             public void onItemClick(int id, int position) {
                 //TODO 点击事件
                 Intent intent = new Intent();
-                intent.setClass(mContext, SubVideoActivity.class);
+                intent.setClass(mContext, VideoDetailActivity.class);
                 intent.putExtra("id", dvdList.get(position).getCourseSortId());
                 intent.putExtra("code", dvdList.get(position).getBookCode());
                 startActivity(intent);

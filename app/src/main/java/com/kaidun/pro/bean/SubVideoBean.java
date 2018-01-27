@@ -6,7 +6,7 @@ package com.kaidun.pro.bean;
  * email fat_chao@163.com.
  */
 
-public class SubVideoBean  {
+public class SubVideoBean {
 
     /**
      * tageTitle : sour

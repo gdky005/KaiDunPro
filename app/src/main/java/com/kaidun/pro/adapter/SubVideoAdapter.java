@@ -21,7 +21,22 @@ public class SubVideoAdapter extends RvAdapter<SubVideoBean> {
 
     @Override
     protected int getLayoutId(int viewType) {
-        return R.layout.item_sub_video;
+        int itemId = -1;
+        switch (viewType) {
+            case -1:
+                itemId = R.layout.item_sub_video;
+                break;
+            case 0:
+                itemId = R.layout.item_image;
+                break;
+
+        }
+        return itemId;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? 0 : -1;
     }
 
     @Override

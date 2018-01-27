@@ -21,17 +21,25 @@ public class SubVideoHolder extends RvHolder<SubVideoBean> {
 
     public SubVideoHolder(View itemView, int type, RvListener listener) {
         super(itemView, type, listener);
-        tvTitle = itemView.findViewById(R.id.tv_video);
-        zkImageView = itemView.findViewById(R.id.iv_sub);
+        switch (type) {
+            case -1:
+                tvTitle = itemView.findViewById(R.id.tv_video);
+                zkImageView = itemView.findViewById(R.id.iv_sub);
+                break;
+            case 0:
+                break;
+
+        }
+
     }
 
     @Override
     public void bindHolder(SubVideoBean dvdListBean, int position) {
         String tageTitle = dvdListBean.getTageTitle();
         String thumbnallUrl = dvdListBean.getThumbnallUrl();
-        if (!TextUtils.isEmpty(tageTitle))
+        if (!TextUtils.isEmpty(tageTitle) && tvTitle != null)
             tvTitle.setText(tageTitle);
-        if (!TextUtils.isEmpty(thumbnallUrl))
+        if (!TextUtils.isEmpty(thumbnallUrl) && zkImageView != null)
             zkImageView.setImageURI(thumbnallUrl);
 
     }
