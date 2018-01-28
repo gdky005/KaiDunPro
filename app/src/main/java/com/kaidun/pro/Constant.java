@@ -15,5 +15,7 @@ public class Constant {
     public static final String KEY_ID = "kfmId";
     public static final String FLAG_READ = "001";
     public static final String FLAG_UNREAD = "002";
+    public static final String CLASS_ID = "classId";
+    public static final String CLASS_Name = "className";
     public static String INVALID = "";
 }

@@ -71,6 +71,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:dropDownVerticalOffset="@dimen/dp_40"
             android:entries="@array/course_name"
             android:padding="5dp"
             android:textColorHint="@color/text_second"

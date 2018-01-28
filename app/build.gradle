@@ -64,5 +64,6 @@ dependencies {
     androidTestImplementation deps.runner
 
     compile files('libs/pushservice-6.0.0.64.jar')
+    compile 'com.github.anzaizai:EasyRefreshLayout:1.3.1'
 
 }

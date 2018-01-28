@@ -9,6 +9,7 @@ import com.kaidun.pro.MesDetailActivity;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.ReadAndUnReadBean;
 import com.kaidun.pro.bean.SwipeBean;
+import com.kaidun.pro.managers.KDAccountManager;
 
 import java.util.List;
 
@@ -57,9 +58,9 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
     protected void convert(ZKViewHolder helper, ReadAndUnReadBean.ResultBean item) {
 
        if (item != null ) {
-           helper.setText(R.id.tv_parents_name, item.getKfmRole());
+           helper.setText(R.id.tv_parents_name, item.getKfmSender());
            helper.setText(R.id.tv_recommended_date, getData(item.getKfmMsgTime()));
-           helper.setText(R.id.replay_latest, item.getKfmSender());
+           helper.setText(R.id.replay_latest, "回复："+ KDAccountManager.getInstance().getUserInfoBean().getStuName());
            helper.setText(R.id.tv_recommended_content, item.getKfmMsgText());
 
            View btnDelete = helper.getView(R.id.btnDelete);

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.WriteMsgActivity;
 import com.kaidun.pro.bean.KDBaseBean;
@@ -162,8 +163,8 @@ public class FamContentHolder extends ZKViewHolder {
             case R.id.fam_message:
                 //TODO:给班级留言
                 Intent intent = new Intent(view.getContext(), WriteMsgActivity.class);
-                intent.putExtra("classId", famContent.getClassId());
-                intent.putExtra("className", "班级Name");
+                intent.putExtra(Constant.CLASS_ID, famContent.getClassId());
+                intent.putExtra(Constant.CLASS_Name, "班级Name");
                 view.getContext().startActivity(intent);
                 break;
             case R.id.fam_kcmb:

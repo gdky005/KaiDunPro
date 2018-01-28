@@ -37,7 +37,7 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
                             if (mCallBack != null && response != null) {
-                                //  mCallBack.getSuccessDataCallBack(response);
+                                  mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
 

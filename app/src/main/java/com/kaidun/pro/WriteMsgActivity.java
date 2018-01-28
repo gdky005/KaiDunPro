@@ -1,9 +1,11 @@
 package com.kaidun.pro;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.ArrayMap;
@@ -23,6 +25,7 @@ import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
 
 import java.security.cert.TrustAnchor;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +60,9 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
     private KdNetWorkClient httpUtils;
     private HashMap<String,String> classInfos = new HashMap<String,String>();  //默认大小应该足够了
     private boolean isGetClassInfoSuccess = false;
-    private String[] className;
+    private ArrayList<String> className = new ArrayList<>();
+    private String classId;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected int getLayoutId() {
@@ -71,8 +76,10 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
         cancel.setOnClickListener(this);
         send.setOnClickListener(this);
         mToolbarTitle.setText(R.string.write_msg);
-        getClasses();
 
+        adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item,R.id.class_name,className);
+        adapter.setDropDownViewResource(R.layout.item_class_select);
+        spinnerClass.setAdapter(adapter);
     }
 
     @Override
@@ -87,7 +94,15 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        if (intent != null && (classId = intent.getStringExtra(Constant.CLASS_ID)) != null){
+//            String classId = intent.getStringExtra(Constant.CLASS_ID);
+//            className[0] = intent.getStringExtra(Constant.CLASS_Name;
+            className.add(intent.getStringExtra(Constant.CLASS_Name));
+            adapter.notifyDataSetChanged();
+        }else {  //默认界面跳过来需要先请求班级
+            getClasses();
+        }
     }
 
     @Override
@@ -113,13 +128,7 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
                     isGetClassInfoSuccess = true;
                     if (data.getResult() != null && data.getResult().size() > 0) {
                         tranfToArray(data.getResult());
-//                        className = new String[]{"班级A", "班级B", "班级c"};
-                        ArrayAdapter adapter = new ArrayAdapter<String>(mContext,
-                                R.layout.spinner_item,R.id.class_name,className);
-
-                        adapter.setDropDownViewResource(R.layout.item_class_select);
-
-                        spinnerClass.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
                 }else {
                     ToastUtils.showShort("无法获取到班级信息");
@@ -136,19 +145,31 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
 
     private void tranfToArray(List<ClassBean.ResultBean> result) {
-        className = new String[result.size()];
+        className.clear();
+      //  className = new String[result.size()];
         for (int i = 0; i < result.size(); i++) {
             ClassBean.ResultBean bean = result.get(i);
             classInfos.put(bean.getClassName(),bean.getClassId());
-            className[i] = bean.getClassName();
+//            className[i] = bean.getClassName();
+            className.add(bean.getClassName());
         }
     }
 
+    private Handler mHandler = new Handler();
     private void sendClassMsg() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
             @Override
             public void getSuccessDataCallBack(MsgBean data) {
+                if (data != null && data.getStatusCode() == 100){
+                    ToastUtils.showLong("留言成功");
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    },1000);
 
+                }
             }
 
             @Override
@@ -157,10 +178,10 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
             }
         });
         String className = spinnerClass.getSelectedItem().toString();
-        String classId = classInfos.get(className);
+        String tempclassId = classId != null ? classId : classInfos.get(className);
         String content = mEditContent.getText().toString();
         String theme = mEditTheme.getText().toString();
-        httpUtils.leaveMsg(content,theme,classId);
+        httpUtils.leaveMsg(content,theme,tempclassId);
     }
 
 

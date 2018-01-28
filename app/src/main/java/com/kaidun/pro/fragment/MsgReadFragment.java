@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
@@ -29,13 +31,13 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by WangQing on 2018/1/22.
  */
 
-public class MsgReadFragment extends BaseFragment {
+public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent {
 
     public static final String KEY = "key";
 
 
-    @BindView(R.id.no_msg)
-    TextView mTextNoMsg;
+    @BindView(R.id.refresh_layout)
+    EasyRefreshLayout mRefreshLayout;
     @BindView(R.id.read_recle)
     RecyclerView msg_read_recler;
     private MessageAdapter messageAdapter;
@@ -70,6 +72,9 @@ public class MsgReadFragment extends BaseFragment {
         msg_read_recler.setAdapter(messageAdapter);
         httpUtils = new KdNetWorkClient();
         getReadMsg();
+
+        mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
+        mRefreshLayout.addEasyEvent(this);
     }
 
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
@@ -89,18 +94,19 @@ public class MsgReadFragment extends BaseFragment {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
               if (data.getResult() != null && data.getResult().size() > 0){
-                  mTextNoMsg.setVisibility(View.GONE);
                   mData.clear();
+                  mRefreshLayout.refreshComplete();
                   mData.addAll(data.getResult());
                   messageAdapter.notifyDataSetChanged();
               }else {
-                 // mTextNoMsg.setVisibility(View.VISIBLE);
+                    mRefreshLayout.refreshComplete();
               }
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
+                mRefreshLayout.refreshComplete();
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ);
@@ -122,5 +128,15 @@ public class MsgReadFragment extends BaseFragment {
         super.onDestroy();
         httpUtils.setmCallBack(null);
         httpUtils = null;
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        getReadMsg();
     }
 }
