@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
@@ -31,7 +32,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by WangQing on 2018/1/22.
  */
 
-public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent {
+public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent, MessageAdapter.onSwipeListener {
 
     public static final String KEY = "key";
 
@@ -42,7 +43,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     RecyclerView msg_read_recler;
     private MessageAdapter messageAdapter;
     private KdNetWorkClient httpUtils;
-    private ArrayList mData;
+    private ArrayList<ReadAndUnReadBean.ResultBean> mData;
 
 
     public static MsgReadFragment newInstance() {
@@ -62,6 +63,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
         ButterKnife.bind(this, view);
 
         messageAdapter = new MessageAdapter(getSampleData(), R.layout.item_msg_read);
+        messageAdapter.setOnDelListener(this);
        /* DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL);*/
         RecDividerItemDecoration decoration = new RecDividerItemDecoration(
@@ -138,5 +140,35 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     @Override
     public void onRefreshing() {
         getReadMsg();
+    }
+
+    @Override
+    public void onDel(int pos) {
+        String kfmId = mData.get(pos).getKfmId();
+
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
+            @Override
+            public void getSuccessDataCallBack(MsgBean data) {
+                if (data != null && 100 == data.getStatusCode()){
+//                    initUnreadData();
+                    mData.remove(pos);
+                    messageAdapter.notifyItemRemoved(pos);
+                    ToastUtils.showShort("删除成功");
+                }else {
+                    ToastUtils.showShort("删除失败");
+                }
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+
+            }
+        });
+        httpUtils.udpateMessage(kfmId);
+    }
+
+    @Override
+    public void onTop(int pos) {
+
     }
 }

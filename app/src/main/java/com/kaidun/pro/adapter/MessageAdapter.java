@@ -63,6 +63,7 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
            helper.setText(R.id.replay_latest, "回复："+ KDAccountManager.getInstance().getUserInfoBean().getStuName());
            helper.setText(R.id.tv_recommended_content, item.getKfmMsgText());
 
+
            View btnDelete = helper.getView(R.id.btnDelete);
            if (btnDelete != null) {
                btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +89,13 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
                helper.getView(R.id.xxtx_msg).setVisibility(View.VISIBLE);
            } else {
                helper.getView(R.id.xxtx_msg).setVisibility(View.INVISIBLE);
+           }
+
+           int adapterPosition = helper.getAdapterPosition();
+           if (adapterPosition % 2 == 0 ){
+               helper.getView(R.id.btnDelete).setVisibility(View.GONE);
+           }else {
+               helper.getView(R.id.btnDelete).setVisibility(View.VISIBLE);
            }
        }
 
