@@ -68,6 +68,8 @@ public class LoginActivity extends BaseActivity implements AdapterView.OnItemSel
         // TODO: 2018/1/25  这里是测试的，记得删除了
         List<String> areaList = new ArrayList<>();
         areaList.add("10009010");
+        areaList.add("10047341");
+        areaList.add("7007342");
         areaList.add("10007027");
         areaList.add("8009030410");
         areaList.add("8009030324");
