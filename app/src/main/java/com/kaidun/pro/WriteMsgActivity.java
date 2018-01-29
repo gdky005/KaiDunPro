@@ -1,30 +1,18 @@
 package com.kaidun.pro;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.util.ArrayMap;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
 
-import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,8 +45,13 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.edit_theme)
     EditText mEditTheme;
 
+    @BindView(R.id.class_icon)
+    ImageView mClassIcon;
+    @BindView(R.id.class_tag)
+    TextView mClassTag;
+
     private KdNetWorkClient httpUtils;
-    private HashMap<String,String> classInfos = new HashMap<String,String>();  //默认大小应该足够了
+    private HashMap<String, String> classInfos = new HashMap<String, String>();  //默认大小应该足够了
     private boolean isGetClassInfoSuccess = false;
     private ArrayList<String> className = new ArrayList<>();
     private String classId;
@@ -77,7 +70,7 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
         send.setOnClickListener(this);
         mToolbarTitle.setText(R.string.write_msg);
 
-        adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item,R.id.class_name,className);
+        adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_item, R.id.class_name, className);
         adapter.setDropDownViewResource(R.layout.item_class_select);
         spinnerClass.setAdapter(adapter);
     }
@@ -95,12 +88,17 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if (intent != null && (classId = intent.getStringExtra(Constant.CLASS_ID)) != null){
-//            String classId = intent.getStringExtra(Constant.CLASS_ID);
-//            className[0] = intent.getStringExtra(Constant.CLASS_Name;
-            className.add(intent.getStringExtra(Constant.CLASS_Name));
-            adapter.notifyDataSetChanged();
-        }else {  //默认界面跳过来需要先请求班级
+        if (intent != null && (classId = intent.getStringExtra(Constant.CLASS_ID)) != null) {
+            classId = intent.getStringExtra(Constant.CLASS_ID);
+            //className[0] = intent.getStringExtra(Constant.CLASS_Name;
+            //className.add(intent.getStringExtra(Constant.CLASS_Name));
+
+            //家联本内容跳转过来无班级名称，隐藏吧
+            mClassTag.setVisibility(View.GONE);
+            mClassIcon.setVisibility(View.GONE);
+            spinnerClass.setVisibility(View.GONE);
+            //adapter.notifyDataSetChanged();
+        } else {  //默认界面跳过来需要先请求班级
             getClasses();
         }
     }
@@ -111,8 +109,8 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
             sendClassMsg();
         } else if (view == cancel) {
             finish();
-        }else if(view == spinnerClass){
-            if (isGetClassInfoSuccess){
+        } else if (view == spinnerClass) {
+            if (isGetClassInfoSuccess) {
                 return;
             }
             getClasses();
@@ -130,7 +128,7 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
                         tranfToArray(data.getResult());
                         adapter.notifyDataSetChanged();
                     }
-                }else {
+                } else {
                     ToastUtils.showShort("无法获取到班级信息");
                 }
             }
@@ -143,31 +141,31 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
         httpUtils.selectClassInfo();
     }
 
-
     private void tranfToArray(List<ClassBean.ResultBean> result) {
         className.clear();
-      //  className = new String[result.size()];
+        //  className = new String[result.size()];
         for (int i = 0; i < result.size(); i++) {
             ClassBean.ResultBean bean = result.get(i);
-            classInfos.put(bean.getClassName(),bean.getClassId());
+            classInfos.put(bean.getClassName(), bean.getClassId());
 //            className[i] = bean.getClassName();
             className.add(bean.getClassName());
         }
     }
 
     private Handler mHandler = new Handler();
+
     private void sendClassMsg() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
             @Override
             public void getSuccessDataCallBack(MsgBean data) {
-                if (data != null && data.getStatusCode() == 100){
+                if (data != null && data.getStatusCode() == 100) {
                     ToastUtils.showLong("留言成功");
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             finish();
                         }
-                    },1000);
+                    }, 1000);
 
                 }
             }
@@ -177,13 +175,18 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
             }
         });
-        String className = spinnerClass.getSelectedItem().toString();
-        String tempclassId = classId != null ? classId : classInfos.get(className);
+        String tempclassId;
+        if (spinnerClass.getSelectedItem() != null) {
+            String className = spinnerClass.getSelectedItem().toString();
+            tempclassId = classId != null ? classId : classInfos.get(className);
+        } else {//从家联本跳转过来的没有班级名称
+            tempclassId = classId;
+        }
+
         String content = mEditContent.getText().toString();
         String theme = mEditTheme.getText().toString();
-        httpUtils.leaveMsg(content,theme,tempclassId);
+        httpUtils.leaveMsg(content, theme, tempclassId);
     }
-
 
     @Override
     protected void onDestroy() {

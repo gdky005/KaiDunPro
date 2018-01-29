@@ -2,15 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/widget_toolbar"/>
+    <include layout="@layout/widget_toolbar" />
 
-    <team.zhuoke.sdk.component.ZKRecycleView
-        android:id="@+id/note_book_list"
+    <com.ajguan.library.EasyRefreshLayout
+        android:id="@+id/note_book_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="LinearLayoutManager" />
+        android:layout_height="wrap_content">
+
+        <team.zhuoke.sdk.component.ZKRecycleView
+            android:id="@+id/note_book_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="LinearLayoutManager" />
+    </com.ajguan.library.EasyRefreshLayout>
 </LinearLayout>

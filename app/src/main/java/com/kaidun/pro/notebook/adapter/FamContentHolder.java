@@ -132,7 +132,6 @@ public class FamContentHolder extends ZKViewHolder {
      * @param unitCode
      */
     private void addUnitRate(int unitCode) {
-
         mFamUnitRate.removeAllViews();
         for (int i = 0; i < unitCode; i++) {
             View view = LayoutInflater.from(mFamUnitRate.getContext()).inflate(R.layout.item_unit_rate, mFamUnitRate, false);
@@ -157,22 +156,22 @@ public class FamContentHolder extends ZKViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fam_flower:
-                //TODO:送花
                 sendFolwer();
                 break;
             case R.id.fam_message:
-                //TODO:给班级留言
                 Intent intent = new Intent(view.getContext(), WriteMsgActivity.class);
                 intent.putExtra(Constant.CLASS_ID, famContent.getClassId());
-                intent.putExtra(Constant.CLASS_Name, "班级Name");
+                //intent.putExtra(Constant.CLASS_Name, "班级Name");
                 view.getContext().startActivity(intent);
                 break;
             case R.id.fam_kcmb:
-                //TODO:跳课程目标，要带参数
                 if (famContent != null) {
                     Intent toDetailIntent = new Intent(view.getContext(), BookDetailActivity.class);
-                    toDetailIntent.putExtra("ccId", famContent.getCcId());
-                    toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
+//                    toDetailIntent.putExtra("ccId", famContent.getCcId());
+//                    toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
+                    //测试数据
+                    toDetailIntent.putExtra("ccId", "52F4DE182D9DF774E0530B01000A1F5A");
+                    toDetailIntent.putExtra("courseSortId", "40051078-ce55-45ce-95a3-67aaca1796aa");
                     toDetailIntent.putExtra("bookName", famContent.getCourseSortName());
                     toDetailIntent.putExtra("bookImg", famBookData.getCsUrl());
                     toDetailIntent.putExtra("unitName", famContent.getUnitName());

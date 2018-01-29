@@ -1,9 +1,8 @@
 package com.kaidun.pro.notebook;
 
 import android.content.Intent;
-import android.util.Log;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.ajguan.library.EasyRefreshLayout;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -24,12 +23,14 @@ import team.zhuoke.sdk.component.ZKRecycleView;
  * @author Yunr
  * @date 2018/01/23 15:26
  */
-public class NoteBookActivity extends BaseActivity {
+public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.EasyEvent {
 
     ZKRecycleView mNoteBookList;
 
     private FamContact famContact;
     private FamContentAdapter adapter;
+    private EasyRefreshLayout mNoteBookRefresh;
+    private List<FamContent> data;
 
     @Override
     protected int getLayoutId() {
@@ -39,7 +40,10 @@ public class NoteBookActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mNoteBookList = findViewById(R.id.note_book_list);
+        mNoteBookRefresh = findViewById(R.id.note_book_refresh);
         mTitle.setText("家联本内");
+        mNoteBookRefresh.setEnablePullToRefresh(true);
+        mNoteBookRefresh.addEasyEvent(this);
     }
 
     @Override
@@ -58,14 +62,75 @@ public class NoteBookActivity extends BaseActivity {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("courseSortId", famContact.getCourseSortId());
+            jsonObject.put("slideCode", 0);
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new KDCallback<List<FamContent>>() {
 
                         @Override
                         public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
+                            data = result;
+                            page = 0;
                             adapter = new FamContentAdapter(R.layout.item_fam_content, result, famContact);
                             mNoteBookList.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+
+                        }
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    int page = 0;
+
+    @Override
+    public void onLoadMore() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("courseSortId", famContact.getCourseSortId());
+            jsonObject.put("slideCode", page++);
+            KDConnectionManager.getInstance().getZHApi()
+                    .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
+                    .enqueue(new KDCallback<List<FamContent>>() {
+
+                        @Override
+                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
+                            adapter.getData().addAll(result);
+                            adapter.notifyDataSetChanged();
+                            mNoteBookRefresh.loadMoreComplete();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRefreshing() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("courseSortId", famContact.getCourseSortId());
+            jsonObject.put("slideCode", 0);
+            KDConnectionManager.getInstance().getZHApi()
+                    .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
+                    .enqueue(new KDCallback<List<FamContent>>() {
+
+                        @Override
+                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
+                            data = result;
+                            page = 0;
+                            mNoteBookRefresh.refreshComplete();
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
