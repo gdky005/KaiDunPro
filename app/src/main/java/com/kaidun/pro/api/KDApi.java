@@ -93,7 +93,7 @@ public interface KDApi {
      * 家联本课程目标）
      */
     @POST("selectCourseObject")
-    Call<KDBaseBean<BookDetail>> selectCourseObject(@Body RequestBody requestBody);
+    Call<KDBaseBean<List<BookDetail>>> selectCourseObject(@Body RequestBody requestBody);
 
 
     /**

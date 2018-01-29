@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import team.zhuoke.sdk.base.BaseActivity;
@@ -78,10 +80,11 @@ public class BookDetailActivity extends BaseActivity {
             jsonObject.put("courseSortId", courseSortId);
             KDConnectionManager.getInstance().getZHApi()
                     .selectCourseObject(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<BookDetail>() {
+                    .enqueue(new KDCallback<List<BookDetail>>() {
+
                         @Override
-                        public void onResponse(KDBaseBean<BookDetail> baseBean, BookDetail result) {
-                            showData(result);
+                        public void onResponse(KDBaseBean<List<BookDetail>> baseBean, List<BookDetail> result) {
+                            showData(result.get(0));
                         }
 
                         @Override
