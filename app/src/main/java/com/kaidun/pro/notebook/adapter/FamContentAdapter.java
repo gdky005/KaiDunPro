@@ -16,7 +16,8 @@ import team.zhuoke.sdk.component.ZKAdapter;
 public class FamContentAdapter extends ZKAdapter<FamContent.ResultBean.FamilyContactListBean, FamContentHolder> {
     private FamContact famContact;
 
-    public FamContentAdapter(int layoutResId, @Nullable List<FamContent.ResultBean.FamilyContactListBean> data, FamContact famContact) {
+    public FamContentAdapter(int layoutResId, @Nullable List<FamContent.ResultBean.FamilyContactListBean> data,
+                             FamContact famContact) {
         super(layoutResId, data);
         this.famContact = famContact;
     }

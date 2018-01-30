@@ -103,13 +103,11 @@ public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.
                     .enqueue(new Callback<FamContent>() {
                         @Override
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {
-
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {
                                 adapter.getData().addAll(response.body().getResult().getFamilyContactList());
                                 adapter.notifyDataSetChanged();
                                 mNoteBookRefresh.loadMoreComplete();
                             }
-
                         }
 
                         @Override

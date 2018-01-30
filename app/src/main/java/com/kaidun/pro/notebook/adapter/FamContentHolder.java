@@ -20,6 +20,7 @@ import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
+import com.kaidun.pro.notebook.OptionUtil;
 import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.retrofit2.KDCallback;
@@ -118,7 +119,7 @@ public class FamContentHolder extends ZKViewHolder {
         mFamUnit.setText(famContent.getCourseSortName());//课程进度
         addStar(famContent.getStart());//学员表现
         mFamText.setText(famContent.getText());//老师评语
-        //addUnitRate(famContent.getUnitCode());//小测验
+        addUnitRate(famContent.getOption());//小测验
         setPercentage(mFlListenSchedule, calculatePercentage(famContent.getListingRate()), mTvListenPercentage);
         setPercentage(mFlSpeakSchedule, calculatePercentage(famContent.getSpeakingRate()), mTvSpeakPercentage);
         setPercentage(mFlReadSchedule, calculatePercentage(famContent.getReadingRate()), mTvReadPercentage);
@@ -128,12 +129,11 @@ public class FamContentHolder extends ZKViewHolder {
 
     /**
      * 添加小测验徽章
-     *
-     * @param unitCode
      */
-    private void addUnitRate(int unitCode) {
+    private void addUnitRate(String option) {
         mFamUnitRate.removeAllViews();
-        for (int i = 0; i < unitCode; i++) {
+        int count = OptionUtil.check(option);
+        for (int i = 0; i < count; i++) {
             View view = LayoutInflater.from(mFamUnitRate.getContext()).inflate(R.layout.item_unit_rate, mFamUnitRate, false);
             mFamUnitRate.addView(view);
         }
