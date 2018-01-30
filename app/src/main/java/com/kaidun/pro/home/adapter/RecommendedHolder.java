@@ -43,7 +43,7 @@ public class RecommendedHolder extends ZKViewHolder {
         mRecommendedDate.setText(recommended.getRecommendTime());
     }
 
-    public void showOrHide(int position) {
+    void showOrHide(int position) {
         if (position == 0) {
             mLine.setVisibility(View.VISIBLE);
         } else {
