@@ -21,8 +21,8 @@ import team.zhuoke.sdk.base.BaseActivity;
 public class VideoPlayActivity extends BaseActivity {
     private JZVideoPlayerStandard player;
     private ImageView ivDownload;
-    // private String smallUrl = "http://zkteam.cc/movies/%E6%9B%9D%E9%99%88%E4%BC%9F%E9%9C%86%E7%83%AD%E5%B7%B4%E6%9C%89%E8%BF%87%E5%9C%B0%E4%B8%8B%E6%83%85%20%E5%9B%A0%E5%B7%B4%E8%A5%BF%E5%A5%B3%E6%A8%A1%E7%89%B9%E8%80%8C%E5%88%86%E6%89%8B%20180106.mp4";
-    private String smallUrl = "http://211.152.60.252:8088/course/ABC/FB1/mv/FB1_1_1.mp4";
+    private String smallUrl = "http://zkteam.cc/movies/%E6%9B%9D%E9%99%88%E4%BC%9F%E9%9C%86%E7%83%AD%E5%B7%B4%E6%9C%89%E8%BF%87%E5%9C%B0%E4%B8%8B%E6%83%85%20%E5%9B%A0%E5%B7%B4%E8%A5%BF%E5%A5%B3%E6%A8%A1%E7%89%B9%E8%80%8C%E5%88%86%E6%89%8B%20180106.mp4";
+    //    private String smallUrl = "http://211.152.60.252:8088/course/ABC/FB1/mv/FB1_1_1.mp4";
     private String mName;
     private long mEnqueue = -1L;
 
