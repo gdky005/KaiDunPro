@@ -92,7 +92,7 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
            }
 
            int adapterPosition = helper.getAdapterPosition();
-           if (adapterPosition % 2 == 0 ){
+           if ("N".equals(item.getIsRemove())){
                helper.getView(R.id.btnDelete).setVisibility(View.GONE);
            }else {
                helper.getView(R.id.btnDelete).setVisibility(View.VISIBLE);

@@ -11,7 +11,7 @@ public class ReadAndUnReadBean {
 
     /**
      * message : 成功
-     * result : [{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","kfmBackout":"001","kfmCode":"1209","kfmId":"780844cd-c70d-49f7-86da-16553ee874a0","kfmMsgText":"你有一asd只小asda毛驴aaa，从腊月asdasads也不骑","kfmMsgTime":"2018/01/23 15:39:58","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","kfmBackout":"001","kfmCode":"1208","kfmId":"2a1d77df-7a07-4601-813c-b57420bf8b8c","kfmMsgText":"你有一asd只小asda毛驴aaa，从腊月asdas也不骑","kfmMsgTime":"2018/01/23 15:39:56","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","kfmBackout":"001","kfmCode":"1207","kfmId":"6ee254a7-fd3d-4ef2-9476-042dfafa94e2","kfmMsgText":"你有一asd只小asda毛驴aaa，从腊月也不骑","kfmMsgTime":"2018/01/23 15:39:53","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","kfmBackout":"001","kfmCode":"1206","kfmId":"172d81ba-0dec-4dd5-8ec3-ec96d63b8643","kfmMsgText":"你有一asd只小毛驴aaa，从腊月也不骑","kfmMsgTime":"2018/01/23 15:39:51","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","kfmBackout":"001","kfmCode":"1205","kfmId":"47bf4fd9-bcd0-466e-9ec7-de553092fdbd","kfmMsgText":"你有一asd只小毛驴，从腊月也不骑","kfmMsgTime":"2018/01/23 15:39:48","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0}]
+     * result : [{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","isRemove":"Y","kfmBackout":"001","kfmCode":"1420","kfmId":"38c19066-7c1c-4b30-82b9-f9e9472e4c6e","kfmMsgText":"阿鲁YY","kfmMsgTime":"2018/01/30 13:47:01","kfmMsgTitle":"循序渐进","kfmRole":"002","kfmSender":"c8390c74-5aea-4952-aa0c-89e623c3c29a","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseId":"63E6C5E6A6A3BD38E0530C01000A8339","courseUnit":"11.Review1-2","isRemove":"N","kfmBackout":"001","kfmCode":"1409","kfmId":"8240bd27-f5f9-4cf5-ac95-6f067eb02ca5","kfmMsgText":"你们好吗？","kfmMsgTime":"2018/01/29 17:17:01","kfmMsgTitle":"同学们","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"9ce48b68-7b32-4389-90d2-5a42328a8986","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseId":"63E6C5E6A6A3BD38E0530C01000A8339","courseUnit":"11.Review1-2","isRemove":"N","kfmBackout":"001","kfmCode":"1395","kfmId":"04ad1ac2-8d94-4227-a8c3-81b329222abe","kfmMsgText":"近来可好","kfmMsgTime":"2018/01/29 16:30:10","kfmMsgTitle":"？？？","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"9ce48b68-7b32-4389-90d2-5a42328a8986","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","isRemove":"N","kfmBackout":"002","kfmCode":"1210","kfmId":"6c569aa0-886a-429f-9cd6-302db0e28217","kfmMsgText":"你有ss一asd只小asda毛驴aaa，从腊月asdasads也不骑","kfmMsgTime":"2018/01/23 15:40:38","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0},{"classId":"c1ca6da9-670b-4b5e-8610-42289a4fb8cf","className":"ABC1000-1","courseUnit":"6.UNIT5","isRemove":"N","kfmBackout":"002","kfmCode":"1209","kfmId":"780844cd-c70d-49f7-86da-16553ee874a0","kfmMsgText":"你有一asd只小asda毛驴aaa，从腊月asdasads也不骑","kfmMsgTime":"2018/01/23 15:39:58","kfmMsgTitle":"测试asaaaaadaa数aaaaaasaaaadasd据","kfmReceiveId":"c8390c74-5aea-4952-aa0c-89e623c3c29a","kfmRole":"","kfmSender":"230d99d4-8c50-4df0-b827-a1c6ad654ad7","limit":0}]
      * statusCode : 100
      * ver : 1
      */
@@ -57,32 +57,36 @@ public class ReadAndUnReadBean {
         /**
          * classId : c1ca6da9-670b-4b5e-8610-42289a4fb8cf
          * className : ABC1000-1
-         * courseUnit : 6.UNIT5
+         * isRemove : Y
          * kfmBackout : 001
-         * kfmCode : 1209
-         * kfmId : 780844cd-c70d-49f7-86da-16553ee874a0
-         * kfmMsgText : 你有一asd只小asda毛驴aaa，从腊月asdasads也不骑
-         * kfmMsgTime : 2018/01/23 15:39:58
-         * kfmMsgTitle : 测试asaaaaadaa数aaaaaasaaaadasd据
-         * kfmReceiveId : c8390c74-5aea-4952-aa0c-89e623c3c29a
-         * kfmRole :
-         * kfmSender : 230d99d4-8c50-4df0-b827-a1c6ad654ad7
+         * kfmCode : 1420
+         * kfmId : 38c19066-7c1c-4b30-82b9-f9e9472e4c6e
+         * kfmMsgText : 阿鲁YY
+         * kfmMsgTime : 2018/01/30 13:47:01
+         * kfmMsgTitle : 循序渐进
+         * kfmRole : 002
+         * kfmSender : c8390c74-5aea-4952-aa0c-89e623c3c29a
          * limit : 0
+         * courseId : 63E6C5E6A6A3BD38E0530C01000A8339
+         * courseUnit : 11.Review1-2
+         * kfmReceiveId : c8390c74-5aea-4952-aa0c-89e623c3c29a
          */
 
         private String classId;
         private String className;
-        private String courseUnit;
+        private String isRemove;
         private String kfmBackout;
         private String kfmCode;
         private String kfmId;
         private String kfmMsgText;
         private String kfmMsgTime;
         private String kfmMsgTitle;
-        private String kfmReceiveId;
         private String kfmRole;
         private String kfmSender;
         private int limit;
+        private String courseId;
+        private String courseUnit;
+        private String kfmReceiveId;
 
         public String getClassId() {
             return classId;
@@ -100,12 +104,12 @@ public class ReadAndUnReadBean {
             this.className = className;
         }
 
-        public String getCourseUnit() {
-            return courseUnit;
+        public String getIsRemove() {
+            return isRemove;
         }
 
-        public void setCourseUnit(String courseUnit) {
-            this.courseUnit = courseUnit;
+        public void setIsRemove(String isRemove) {
+            this.isRemove = isRemove;
         }
 
         public String getKfmBackout() {
@@ -156,14 +160,6 @@ public class ReadAndUnReadBean {
             this.kfmMsgTitle = kfmMsgTitle;
         }
 
-        public String getKfmReceiveId() {
-            return kfmReceiveId;
-        }
-
-        public void setKfmReceiveId(String kfmReceiveId) {
-            this.kfmReceiveId = kfmReceiveId;
-        }
-
         public String getKfmRole() {
             return kfmRole;
         }
@@ -186,6 +182,30 @@ public class ReadAndUnReadBean {
 
         public void setLimit(int limit) {
             this.limit = limit;
+        }
+
+        public String getCourseId() {
+            return courseId;
+        }
+
+        public void setCourseId(String courseId) {
+            this.courseId = courseId;
+        }
+
+        public String getCourseUnit() {
+            return courseUnit;
+        }
+
+        public void setCourseUnit(String courseUnit) {
+            this.courseUnit = courseUnit;
+        }
+
+        public String getKfmReceiveId() {
+            return kfmReceiveId;
+        }
+
+        public void setKfmReceiveId(String kfmReceiveId) {
+            this.kfmReceiveId = kfmReceiveId;
         }
     }
 }
