@@ -9,12 +9,12 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.adapter.MsgDetailAdapter;
 import com.kaidun.pro.bean.MsgDetailBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
@@ -25,13 +25,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by lmj on 2018/1/23.
  */
 
-public class MesDetailActivity extends BaseActivity implements View.OnClickListener, View.OnLayoutChangeListener {
+public class MesDetailActivity extends KDBaseActivity implements View.OnClickListener, View.OnLayoutChangeListener {
 
 
     public static final int REPLY = 1;

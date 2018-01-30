@@ -27,7 +27,7 @@ import team.zhuoke.sdk.base.BaseActivity;
  * Created by Doraemon on 2018/1/24.
  */
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends KDBaseActivity {
     @BindView(R.id.ll_indicate)
     LinearLayout navLay;
     @BindView(R.id.vp_welcome)

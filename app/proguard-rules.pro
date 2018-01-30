@@ -19,3 +19,24 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# ProGuard configurations for Bugtags
+-keepattributes LineNumberTable,SourceFile
+
+-keep class com.bugtags.library.** {*;}
+-dontwarn com.bugtags.library.**
+-keep class io.bugtags.** {*;}
+-dontwarn io.bugtags.**
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+
+# End Bugtags
+
+
+# okhttp
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+# End okhttp

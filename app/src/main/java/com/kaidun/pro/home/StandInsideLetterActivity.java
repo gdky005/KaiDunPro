@@ -7,16 +7,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by Administrator on 2018/1/22.
  */
 
-public class StandInsideLetterActivity extends BaseActivity {
+public class StandInsideLetterActivity extends KDBaseActivity {
     @BindView(R.id.vp_inside_letter)
     ViewPager mInsideLetter;
     @BindView(R.id.tl_letter_type_tab)

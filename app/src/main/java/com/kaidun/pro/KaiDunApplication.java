@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.bugtags.library.Bugtags;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.DumperPluginsProvider;
 import com.facebook.stetho.Stetho;
@@ -28,6 +29,9 @@ public class KaiDunApplication extends Application {
 
         mContext = this;
         Fresco.initialize(mContext);
+
+        //在这里初始化
+        Bugtags.start("fedc05f31e8d57fd6a20bb9d1fa7349c", this, Bugtags.BTGInvocationEventBubble);
 
         ZKBase.init(this, BuildConfig.DEBUG);
 

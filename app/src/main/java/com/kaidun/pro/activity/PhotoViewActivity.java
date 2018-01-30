@@ -11,14 +11,13 @@ import com.kaidun.pro.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.relex.photodraweeview.PhotoDraweeView;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * PhotoViewActivity
  * Created by WangQing on 2018/1/26.
  */
 
-public class PhotoViewActivity extends BaseActivity {
+public class PhotoViewActivity extends KDBaseActivity {
 
     public static final String FLAG_PIC_PATH_KEY = "flag_pic_path_key";
 

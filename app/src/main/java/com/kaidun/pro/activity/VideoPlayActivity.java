@@ -18,7 +18,7 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import team.zhuoke.sdk.base.BaseActivity;
 
-public class VideoPlayActivity extends BaseActivity {
+public class VideoPlayActivity extends KDBaseActivity {
 
     /**
      * 视频的名称

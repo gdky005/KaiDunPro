@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.bean.BookDetail;
 import com.kaidun.pro.utils.KDRequestUtils;
@@ -18,13 +19,12 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * @author Yunr
  * @date 2018/01/24 15:03
  */
-public class BookDetailActivity extends BaseActivity {
+public class BookDetailActivity extends KDBaseActivity {
 
     @BindView(R.id.detail_book_img)
     ImageView mDetailBookImg;

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.adapter.RoleAdapter;
@@ -25,13 +26,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by Doraemon on 2018/1/24.
  */
 
-public class ChooseRoleActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class ChooseRoleActivity extends KDBaseActivity implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.rv_roles)
     RecyclerView rolesRecyclerView;
     private RoleAdapter roleAdapter;

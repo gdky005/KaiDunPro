@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.FamContentAdapter;
 import com.kaidun.pro.notebook.bean.FamContact;
@@ -17,14 +18,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import team.zhuoke.sdk.base.BaseActivity;
 import team.zhuoke.sdk.component.ZKRecycleView;
 
 /**
  * @author Yunr
  * @date 2018/01/23 15:26
  */
-public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.EasyEvent {
+public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayout.EasyEvent {
 
     ZKRecycleView mNoteBookList;
 

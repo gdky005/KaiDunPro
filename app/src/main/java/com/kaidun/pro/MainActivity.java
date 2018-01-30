@@ -18,6 +18,7 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
 import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.VideoFragment;
@@ -26,9 +27,8 @@ import com.kaidun.pro.notebook.NoteBookFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.base.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends KDBaseActivity {
 
     public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;

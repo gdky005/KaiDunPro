@@ -8,18 +8,18 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SizeUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.utils.QRCodeUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by Administrator on 2018/1/22.
  */
 
-public class QRActivity extends BaseActivity {
+public class QRActivity extends KDBaseActivity {
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)

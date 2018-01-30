@@ -23,7 +23,7 @@ import java.util.List;
 
 import team.zhuoke.sdk.base.BaseActivity;
 
-public class VideoDetailActivity extends BaseActivity implements View.OnClickListener {
+public class VideoDetailActivity extends KDBaseActivity implements View.OnClickListener {
 
     private RecyclerView rvSubVideo;
     private SubVideoAdapter adapter;

@@ -33,7 +33,7 @@ import team.zhuoke.sdk.base.BaseActivity;
  * Created by Doraemon on 2018/1/23.
  */
 
-public class LoginActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemSelectedListener {
     @BindView(R.id.spinner_addr)
     Spinner addrSpinner;
     @BindView(R.id.et_login_account)

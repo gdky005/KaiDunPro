@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
 
@@ -19,13 +20,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by lmj on 2018/1/24.
  */
 
-public class WriteMsgActivity extends BaseActivity implements View.OnClickListener {
+public class WriteMsgActivity extends KDBaseActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_title)
     TextView mToolbarTitle;
