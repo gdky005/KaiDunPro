@@ -9,11 +9,10 @@ import java.util.List;
 
 public class PicBean {
 
-
     /**
-     * pictureUrlMap : [{"kflId":"c419d7df-12e3-4d22-8497-23dff2c0450a","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123142427_0.jpg"},{"kflId":"862e6c81-89d7-4ea7-b8be-3a408c37aa61","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123142415_0.jpg"},{"kflId":"619a468e-2dc3-4c70-be3a-2a0d4fdd795f","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123135033_0.jpg"},{"kflId":"70247623-be1e-4f53-9b31-c0fc0005ad36","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123142110.jpg"},{"kflId":"1a0ecda1-542b-4047-a25d-2a3f7a80512b","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123135033_0.jpg"},{"kflId":"7346cf45-e3dc-46d1-add2-7f05e7d45b12","teacSendUrl":"https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123135033_0.jpg"}]
-     * stuId : c8390c74-5aea-4952-aa0c-89e623c3c29a
-     * uploadTime : 2018-01-23
+     * pictureUrlMap : [{"kflId":"c398ebed-2cd5-41e0-accb-88b0ef1fc54d","sendSmallUrl":"https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018130112646_101.jpg","teacSendUrl":"https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018130112646.mp4"},{"kflId":"524a0637-536b-4c79-a14d-7e0d79119122","sendSmallUrl":"https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_201813011261_101.jpg","teacSendUrl":"https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_201813011262.mp4"},{"kflId":"29ba6fa6-490d-4211-9acb-8fd92ead3567","sendSmallUrl":"http://211.152.60.252:8088/A.png","teacSendUrl":"http://211.152.60.252:8088/WeChat_20180127154725.mp4"}]
+     * stuId : 19d0d795-a939-4d66-b4b6-c11ec25e0d3a
+     * uploadTime : 2018-01-30
      */
 
     private String stuId;
@@ -46,11 +45,13 @@ public class PicBean {
 
     public static class PictureUrlMapBean {
         /**
-         * kflId : c419d7df-12e3-4d22-8497-23dff2c0450a
-         * teacSendUrl : https://teacherpicture-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018123142427_0.jpg
+         * kflId : c398ebed-2cd5-41e0-accb-88b0ef1fc54d
+         * sendSmallUrl : https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018130112646_101.jpg
+         * teacSendUrl : https://teachervideo-1255920593.cos.ap-shanghai.myqcloud.com/kd2405_2018130112646.mp4
          */
 
         private String kflId;
+        private String sendSmallUrl;
         private String teacSendUrl;
 
         public String getKflId() {
@@ -59,6 +60,14 @@ public class PicBean {
 
         public void setKflId(String kflId) {
             this.kflId = kflId;
+        }
+
+        public String getSendSmallUrl() {
+            return sendSmallUrl;
+        }
+
+        public void setSendSmallUrl(String sendSmallUrl) {
+            this.sendSmallUrl = sendSmallUrl;
         }
 
         public String getTeacSendUrl() {
