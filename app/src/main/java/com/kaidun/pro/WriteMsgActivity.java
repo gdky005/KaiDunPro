@@ -90,14 +90,14 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
         Intent intent = getIntent();
         if (intent != null && (classId = intent.getStringExtra(Constant.CLASS_ID)) != null) {
             classId = intent.getStringExtra(Constant.CLASS_ID);
-            //className[0] = intent.getStringExtra(Constant.CLASS_Name;
-            //className.add(intent.getStringExtra(Constant.CLASS_Name));
+            className.add(intent.getStringExtra(Constant.CLASS_Name));
+            className.add(intent.getStringExtra(Constant.CLASS_Name));
 
-            //家联本内容跳转过来无班级名称，隐藏吧
-            mClassTag.setVisibility(View.GONE);
-            mClassIcon.setVisibility(View.GONE);
-            spinnerClass.setVisibility(View.GONE);
-            //adapter.notifyDataSetChanged();
+//            //家联本内容跳转过来无班级名称，隐藏吧
+//            mClassTag.setVisibility(View.GONE);
+//            mClassIcon.setVisibility(View.GONE);
+//            spinnerClass.setVisibility(View.GONE);
+            adapter.notifyDataSetChanged();
         } else {  //默认界面跳过来需要先请求班级
             getClasses();
         }
@@ -175,13 +175,12 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
 
             }
         });
-        String tempclassId;
-        if (spinnerClass.getSelectedItem() != null) {
-            String className = spinnerClass.getSelectedItem().toString();
-            tempclassId = classId != null ? classId : classInfos.get(className);
-        } else {//从家联本跳转过来的没有班级名称
-            tempclassId = classId;
-        }
+//        if (spinnerClass.getSelectedItem() != null) {
+        String className = spinnerClass.getSelectedItem().toString();
+        String tempclassId = classId != null ? classId : classInfos.get(className);
+//        } else {//从家联本跳转过来的没有班级名称
+//            tempclassId = classId;
+//        }
 
         String content = mEditContent.getText().toString();
         String theme = mEditTheme.getText().toString();
@@ -194,7 +193,6 @@ public class WriteMsgActivity extends BaseActivity implements View.OnClickListen
         httpUtils.setmCallBack(null);
         httpUtils = null;
     }
-
 
     //-------------------
 }

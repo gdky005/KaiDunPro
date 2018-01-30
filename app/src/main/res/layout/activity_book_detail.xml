@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:text="ABC fun book 6"
                 android:textColor="#1b1a16"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/detail_unit"
@@ -41,7 +41,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="Unit 18"
                 android:textColor="#1b1a16"
                 android:textSize="24sp" />
 
@@ -51,6 +50,140 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!--课程目标-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/book_detail_msg_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="课程目标"
+                        android:textColor="#1b1a16"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/book_detail_objective"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#433d2e"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/dotted_line"
+                        android:layerType="software" />
+                </LinearLayout>
+
+                <!--常用句型-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Sentence Pattern"
+                        android:textColor="#1b1a16"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/book_detail_sentence"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#433d2e"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/dotted_line"
+                        android:layerType="software" />
+                </LinearLayout>
+                <!--Vocabulary-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Vocabulary"
+                        android:textColor="#1b1a16"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/book_detail_vocabulary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#433d2e"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/dotted_line"
+                        android:layerType="software" />
+                </LinearLayout>
+                <!--Phonice-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Phonice"
+                        android:textColor="#1b1a16"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/book_detail_phonice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#433d2e"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/dotted_line"
+                        android:layerType="software" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

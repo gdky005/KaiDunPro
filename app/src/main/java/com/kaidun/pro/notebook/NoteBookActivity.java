@@ -4,18 +4,19 @@ import android.content.Intent;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.kaidun.pro.R;
-import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.adapter.FamContentAdapter;
 import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.FamContent;
-import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseActivity;
 import team.zhuoke.sdk.component.ZKRecycleView;
 
@@ -30,7 +31,7 @@ public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.
     private FamContact famContact;
     private FamContentAdapter adapter;
     private EasyRefreshLayout mNoteBookRefresh;
-    private List<FamContent> data;
+    private List<FamContent.ResultBean.FamilyContactListBean> data;
 
     @Override
     protected int getLayoutId() {
@@ -59,24 +60,27 @@ public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.
     }
 
     private void selectFamContContext() {
+
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("courseSortId", famContact.getCourseSortId());
             jsonObject.put("slideCode", 0);
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<List<FamContent>>() {
+                    .enqueue(new Callback<FamContent>() {
 
                         @Override
-                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
-                            data = result;
-                            page = 0;
-                            adapter = new FamContentAdapter(R.layout.item_fam_content, result, famContact);
-                            mNoteBookList.setAdapter(adapter);
+                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
+                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
+                                data = response.body().getResult().getFamilyContactList();
+                                page = 0;
+                                adapter = new FamContentAdapter(R.layout.item_fam_content, data, famContact);
+                                mNoteBookList.setAdapter(adapter);
+                            }
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure(Call<FamContent> call, Throwable t) {
 
                         }
                     });
@@ -96,17 +100,20 @@ public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.
             jsonObject.put("slideCode", page++);
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<List<FamContent>>() {
-
+                    .enqueue(new Callback<FamContent>() {
                         @Override
-                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
-                            adapter.getData().addAll(result);
-                            adapter.notifyDataSetChanged();
-                            mNoteBookRefresh.loadMoreComplete();
+                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
+
+                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
+                                adapter.getData().addAll(response.body().getResult().getFamilyContactList());
+                                adapter.notifyDataSetChanged();
+                                mNoteBookRefresh.loadMoreComplete();
+                            }
+
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure(Call<FamContent> call, Throwable t) {
 
                         }
                     });
@@ -123,18 +130,20 @@ public class NoteBookActivity extends BaseActivity implements EasyRefreshLayout.
             jsonObject.put("slideCode", 0);
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<List<FamContent>>() {
+                    .enqueue(new Callback<FamContent>() {
 
                         @Override
-                        public void onResponse(KDBaseBean<List<FamContent>> baseBean, List<FamContent> result) {
-                            data = result;
-                            page = 0;
-                            mNoteBookRefresh.refreshComplete();
-                            adapter.notifyDataSetChanged();
+                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
+                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
+                                data = response.body().getResult().getFamilyContactList();
+                                page = 0;
+                                mNoteBookRefresh.refreshComplete();
+                                adapter.notifyDataSetChanged();
+                            }
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure(Call<FamContent> call, Throwable t) {
 
                         }
                     });

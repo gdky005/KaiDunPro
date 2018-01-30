@@ -82,7 +82,7 @@ public class FamContentHolder extends ZKViewHolder {
     View famFirstGone;
 
     private static double sScheduleLength = 0;
-    private FamContent famContent;
+    private FamContent.ResultBean.FamilyContactListBean famContent;
     private String name;//学员名称
     private String headImg;//学院头像地址
     private FamContact famBookData;
@@ -100,7 +100,7 @@ public class FamContentHolder extends ZKViewHolder {
         headImg = userBean.getStuHeadImg();
     }
 
-    public void setData(FamContent famContent) {
+    public void setData(FamContent.ResultBean.FamilyContactListBean famContent) {
         this.famContent = famContent;
         if (getLayoutPosition() == 0) {
             famFirstGone.setBackgroundColor(Color.WHITE);
@@ -161,7 +161,7 @@ public class FamContentHolder extends ZKViewHolder {
             case R.id.fam_message:
                 Intent intent = new Intent(view.getContext(), WriteMsgActivity.class);
                 intent.putExtra(Constant.CLASS_ID, famContent.getClassId());
-                //intent.putExtra(Constant.CLASS_Name, "班级Name");
+                intent.putExtra(Constant.CLASS_Name, famContent.getClassName());
                 view.getContext().startActivity(intent);
                 break;
             case R.id.fam_kcmb:
@@ -174,7 +174,7 @@ public class FamContentHolder extends ZKViewHolder {
                     toDetailIntent.putExtra("courseSortId", "40051078-ce55-45ce-95a3-67aaca1796aa");
                     toDetailIntent.putExtra("bookName", famContent.getCourseSortName());
                     toDetailIntent.putExtra("bookImg", famBookData.getCsUrl());
-                    toDetailIntent.putExtra("unitName", famContent.getUnitName());
+                    // toDetailIntent.putExtra("unitName", famContent.getUnitName());
                     view.getContext().startActivity(toDetailIntent);
                 }
                 break;

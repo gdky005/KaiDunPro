@@ -31,11 +31,11 @@ public class NoteBookHolder extends ZKViewHolder {
 
     public void setData(FamContact resultBean) {
         if (resultBean != null) {
-            //String name = resultBean.getCourseSortName();
+            String name = resultBean.getCourseSortName();
             String imgUrl = resultBean.getCsUrl();
-//            if (!TextUtils.isEmpty(name)) {
-//                textView.setText(name);
-//            }
+            if (!TextUtils.isEmpty(name)) {
+                textView.setText(name);
+            }
 
             if (!TextUtils.isEmpty(imgUrl)) {
                 Picasso.with(imageView.getContext()).load(imgUrl).into(imageView);

@@ -1,54 +1,117 @@
 package com.kaidun.pro.notebook.bean;
 
+import java.util.List;
+
 /**
  * @author Yunr
  * @date 2018/01/27 21:48
  */
 public class BookDetail {
 
-    private String courseObjective;//课程目标
-    private String courseSentencePattern;//学习常用句型
-    private String courserPhonice;//Phonice
-    private String courseVocabulary;//Vocabulary
-    private String courseSentence;//Sentence
 
-    public String getCourseObjective() {
-        return courseObjective;
+    /**
+     * message : 成功
+     * result : {"courseObject":"然小朋友烤饼干","courseObjectList":[{"courseSentencePattern":"what can you do?i can dance","courseVocabulary":"dance","courserPhonice":"dance"},{"courseSentencePattern":"waht can you do?ican paint","courseVocabulary":"paint","courserPhonice":"paint"},{"courseSentencePattern":"what can you do?i can read","courseVocabulary":"read","courserPhonice":"read"},{"courseSentencePattern":"what can you do?i can sing","courseVocabulary":"sing","courserPhonice":"sing"}]}
+     * statusCode : 100
+     * ver : 1
+     */
+
+    private String message;
+    private ResultBean result;
+    private int statusCode;
+    private int ver;
+
+    public String getMessage() {
+        return message;
     }
 
-    public void setCourseObjective(String courseObjective) {
-        this.courseObjective = courseObjective;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getCourseSentencePattern() {
-        return courseSentencePattern;
+    public ResultBean getResult() {
+        return result;
     }
 
-    public void setCourseSentencePattern(String courseSentencePattern) {
-        this.courseSentencePattern = courseSentencePattern;
+    public void setResult(ResultBean result) {
+        this.result = result;
     }
 
-    public String getCourserPhonice() {
-        return courserPhonice;
+    public int getStatusCode() {
+        return statusCode;
     }
 
-    public void setCourserPhonice(String courserPhonice) {
-        this.courserPhonice = courserPhonice;
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public String getCourseVocabulary() {
-        return courseVocabulary;
+    public int getVer() {
+        return ver;
     }
 
-    public void setCourseVocabulary(String courseVocabulary) {
-        this.courseVocabulary = courseVocabulary;
+    public void setVer(int ver) {
+        this.ver = ver;
     }
 
-    public String getCourseSentence() {
-        return courseSentence;
-    }
+    public static class ResultBean {
+        /**
+         * courseObject : 然小朋友烤饼干
+         * courseObjectList : [{"courseSentencePattern":"what can you do?i can dance","courseVocabulary":"dance","courserPhonice":"dance"},{"courseSentencePattern":"waht can you do?ican paint","courseVocabulary":"paint","courserPhonice":"paint"},{"courseSentencePattern":"what can you do?i can read","courseVocabulary":"read","courserPhonice":"read"},{"courseSentencePattern":"what can you do?i can sing","courseVocabulary":"sing","courserPhonice":"sing"}]
+         */
 
-    public void setCourseSentence(String courseSentence) {
-        this.courseSentence = courseSentence;
+        private String courseObject;
+        private List<CourseObjectListBean> courseObjectList;
+
+        public String getCourseObject() {
+            return courseObject;
+        }
+
+        public void setCourseObject(String courseObject) {
+            this.courseObject = courseObject;
+        }
+
+        public List<CourseObjectListBean> getCourseObjectList() {
+            return courseObjectList;
+        }
+
+        public void setCourseObjectList(List<CourseObjectListBean> courseObjectList) {
+            this.courseObjectList = courseObjectList;
+        }
+
+        public static class CourseObjectListBean {
+            /**
+             * courseSentencePattern : what can you do?i can dance
+             * courseVocabulary : dance
+             * courserPhonice : dance
+             */
+
+            private String courseSentencePattern;
+            private String courseVocabulary;
+            private String courserPhonice;
+
+            public String getCourseSentencePattern() {
+                return courseSentencePattern;
+            }
+
+            public void setCourseSentencePattern(String courseSentencePattern) {
+                this.courseSentencePattern = courseSentencePattern;
+            }
+
+            public String getCourseVocabulary() {
+                return courseVocabulary;
+            }
+
+            public void setCourseVocabulary(String courseVocabulary) {
+                this.courseVocabulary = courseVocabulary;
+            }
+
+            public String getCourserPhonice() {
+                return courserPhonice;
+            }
+
+            public void setCourserPhonice(String courserPhonice) {
+                this.courserPhonice = courserPhonice;
+            }
+        }
     }
 }

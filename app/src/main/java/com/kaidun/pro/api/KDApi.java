@@ -87,13 +87,13 @@ public interface KDApi {
      * 家联本内容展示（听说读写完成率）
      */
     @POST("selectFamContContext")
-    Call<KDBaseBean<List<FamContent>>> selectFamContContext(@Body RequestBody requestBody);
+    Call<FamContent> selectFamContContext(@Body RequestBody requestBody);
 
     /**
      * 家联本课程目标）
      */
     @POST("selectCourseObject")
-    Call<KDBaseBean<List<BookDetail>>> selectCourseObject(@Body RequestBody requestBody);
+    Call<BookDetail> selectCourseObject(@Body RequestBody requestBody);
 
 
     /**

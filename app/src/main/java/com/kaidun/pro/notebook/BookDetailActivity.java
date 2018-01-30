@@ -1,25 +1,23 @@
 package com.kaidun.pro.notebook;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kaidun.pro.R;
-import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.bean.BookDetail;
-import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseActivity;
 
 /**
@@ -36,14 +34,21 @@ public class BookDetailActivity extends BaseActivity {
     TextView mDetailUnit;
     @BindView(R.id.detail_msg_group)
     LinearLayout mDetailMsgGroup;
+    @BindView(R.id.book_detail_objective)
+    TextView mBookDetailObjective;
+    @BindView(R.id.book_detail_sentence)
+    TextView mBookDetailSentence;
+    @BindView(R.id.book_detail_vocabulary)
+    TextView mBookDetailVocabulary;
+    @BindView(R.id.book_detail_phonice)
+    TextView mBookDetailPhonice;
     private String ccId;
     private String courseSortId;
     private String bookName;
-    private String unitName;
+    //private String unitName;
     private String bookImg;
 
-    private String[] titles = {"课程目标", "学习常用句型", "Phonice", "Vocabulary", "Sentence"};
-    private String[] desc = new String[titles.length];
+    private String[] titles = {"课程目标", "Sentence", "Vocabulary", "Phonice"};
 
     @Override
     protected int getLayoutId() {
@@ -67,12 +72,12 @@ public class BookDetailActivity extends BaseActivity {
         ccId = toDetailIntent.getStringExtra("ccId");
         courseSortId = toDetailIntent.getStringExtra("courseSortId");
         bookName = toDetailIntent.getStringExtra("bookName");
-        unitName = toDetailIntent.getStringExtra("unitName");
+        //unitName = toDetailIntent.getStringExtra("unitName");
         bookImg = toDetailIntent.getStringExtra("bookImg");
 
         Picasso.with(mContext).load(bookImg).into(mDetailBookImg);
         mDetailBookName.setText(bookName);
-        mDetailUnit.setText(unitName);
+        //mDetailUnit.setText(unitName);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -80,15 +85,17 @@ public class BookDetailActivity extends BaseActivity {
             jsonObject.put("courseSortId", courseSortId);
             KDConnectionManager.getInstance().getZHApi()
                     .selectCourseObject(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new KDCallback<List<BookDetail>>() {
+                    .enqueue(new Callback<BookDetail>() {
 
                         @Override
-                        public void onResponse(KDBaseBean<List<BookDetail>> baseBean, List<BookDetail> result) {
-                            showData(result.get(0));
+                        public void onResponse(Call<BookDetail> call, Response<BookDetail> response) {
+                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
+                                showData(response.body().getResult());
+                            }
                         }
 
                         @Override
-                        public void onFailure(Throwable throwable) {
+                        public void onFailure(Call<BookDetail> call, Throwable t) {
 
                         }
                     });
@@ -97,27 +104,45 @@ public class BookDetailActivity extends BaseActivity {
         }
     }
 
-    private void showData(BookDetail result) {
-        desc[0] = result.getCourseObjective();
-        desc[1] = result.getCourseSentencePattern();
-        desc[2] = result.getCourserPhonice();
-        desc[3] = result.getCourseVocabulary();
-        desc[4] = result.getCourseSentence();
+    private void showData(BookDetail.ResultBean bookDetail) {
+        mBookDetailObjective.setText(bookDetail.getCourseObject());
 
-        for (int i = 0; i < titles.length; i++) {
-            View msgView = getLayoutInflater().inflate(R.layout.item_book_detail_msg,
-                    mDetailMsgGroup, false);
-            TextView titleView = msgView.findViewById(R.id.book_detail_msg_title);
-            TextView descView = msgView.findViewById(R.id.book_detail_msg_desc);
-            View lineView = msgView.findViewById(R.id.book_detail_msg_line);
+        StringBuilder sentence = new StringBuilder();
+        StringBuilder vocabulary = new StringBuilder();
+        StringBuilder phonice = new StringBuilder();
 
-            titleView.setText(titles[i]);
-            descView.setText(desc[i]);
-            if (i == 10 - 1) {
-                lineView.setVisibility(View.GONE);
-            }
-
-            mDetailMsgGroup.addView(msgView);
+        for (int i = 0; i < bookDetail.getCourseObjectList().size(); i++) {
+            BookDetail.ResultBean.CourseObjectListBean listBean = bookDetail.getCourseObjectList().get(i);
+            sentence.append(listBean.getCourseSentencePattern()).append("\n");
+            vocabulary.append(listBean.getCourseVocabulary()).append(",");
+            phonice.append(listBean.getCourserPhonice()).append(",");
         }
+
+        sentence.deleteCharAt(sentence.length() - 1);
+        vocabulary.deleteCharAt(vocabulary.length() - 1);
+        phonice.deleteCharAt(phonice.length() - 1);
+
+        mBookDetailSentence.setText(sentence);
+        mBookDetailVocabulary.setText(vocabulary);
+        mBookDetailPhonice.setText(phonice);
     }
+
+//    private void showData(BookDetail result) {
+//        for (int i = 0; i < titles.length; i++) {
+//            View msgView = getLayoutInflater().inflate(R.layout.item_book_detail_msg,
+//                    mDetailMsgGroup, false);
+//            TextView titleView = msgView.findViewById(R.id.book_detail_msg_title);
+//            TextView descView = msgView.findViewById(R.id.book_detail_msg_desc);
+//            View lineView = msgView.findViewById(R.id.book_detail_msg_line);
+//
+//            titleView.setText(titles[i]);
+//            descView.setText(desc[i]);
+//            if (i == 10 - 1) {
+//                lineView.setVisibility(View.GONE);
+//            }
+//
+//            mDetailMsgGroup.addView(msgView);
+//        }
+//    }
+
 }
