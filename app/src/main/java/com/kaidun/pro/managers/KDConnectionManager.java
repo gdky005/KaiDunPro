@@ -74,24 +74,25 @@ public class KDConnectionManager {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             //设置Debug Log模式
             builder.addInterceptor(httpLoggingInterceptor);
-            builder.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
-
-                    Request.Builder requestBuilder = original.newBuilder();
-
-                    Map<String, String> map = KDRequestUtils.getHeaderMaps();
-                    for (Map.Entry<String, String> entry:
-                            map.entrySet()) {
-                        requestBuilder.header(entry.getKey(), entry.getValue());
-                    }
-
-                    Request request = requestBuilder.build();
-                    return chain.proceed(request);
-                }
-            });
         }
+
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request.Builder requestBuilder = original.newBuilder();
+
+                Map<String, String> map = KDRequestUtils.getHeaderMaps();
+                for (Map.Entry<String, String> entry:
+                        map.entrySet()) {
+                    requestBuilder.header(entry.getKey(), entry.getValue());
+                }
+
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        });
 
         return new Retrofit.Builder()
                 .baseUrl(Constant.KAIDUN_API_URL)
