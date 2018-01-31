@@ -41,6 +41,12 @@
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 # End okhttp
 
+#baidu push
+-libraryjars libs/pushservice-VERSION.jar
+-dontwarn com.baidu.**
+-keep class com.baidu.**{*; }
+#end baidu push
+
 
 # retrofit2
 # Retain generic type information for use by reflection by converters and adapters.
