@@ -27,7 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import team.zhuoke.sdk.base.BaseActivity;
 
 /**
  * Created by Doraemon on 2018/1/23.
@@ -173,7 +172,6 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                 if (!isFirst) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
-                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
                     ChooseRoleActivity.start(LoginActivity.this);
                 }
                 finish();

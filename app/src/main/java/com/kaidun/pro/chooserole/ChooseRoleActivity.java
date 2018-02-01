@@ -14,6 +14,7 @@ import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.adapter.RoleAdapter;
 import com.kaidun.pro.chooserole.bean.ChooseRoleBean;
+import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
@@ -137,6 +138,8 @@ public class ChooseRoleActivity extends KDBaseActivity implements BaseQuickAdapt
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {
                             if (baseBean.getStatusCode() == 100) {
+                                KaiDunSP kaiDunSP = new KaiDunSP();
+                                kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
                                 startActivity(new Intent(ChooseRoleActivity.this, MainActivity.class));
                                 finish();
                             } else {
