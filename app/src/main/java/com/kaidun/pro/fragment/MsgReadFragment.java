@@ -128,8 +128,10 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     @Override
     public void onDestroy() {
         super.onDestroy();
-        httpUtils.setmCallBack(null);
-        httpUtils = null;
+        if (httpUtils != null) {
+            httpUtils.setmCallBack(null);
+            httpUtils = null;
+        }
     }
 
     @Override
