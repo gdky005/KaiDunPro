@@ -3,6 +3,8 @@ package com.kaidun.pro.notebook;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.activity.KDBaseActivity;
@@ -30,13 +32,18 @@ import static com.kaidun.pro.Constant.CLASS_ID;
  * @author Yunr
  * @date 2018/02/02 15:03
  */
-public class PicActivity extends KDBaseActivity {
+public class PicActivity extends KDBaseActivity implements EasyRefreshLayout.EasyEvent{
 
     @BindView(R.id.pic_recycle_view)
     ZKRecycleView picRecycleView;
 
+    private EasyRefreshLayout mNoteBookRefresh;
+
     private List<PicBean> list;
     private PicAdapter picAdapter;
+
+    private String ccId;
+    private String classId;
 
     @Override
     protected int getLayoutId() {
@@ -48,6 +55,14 @@ public class PicActivity extends KDBaseActivity {
         ButterKnife.bind(this);
         mTitle.setText("照片");
         initRecyclerView();
+
+        mNoteBookRefresh = findViewById(R.id.pic_refresh);
+        mNoteBookRefresh.setEnablePullToRefresh(true);
+        mNoteBookRefresh.addEasyEvent(this);
+        mNoteBookRefresh.setLoadMoreModel(LoadModel.NONE);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+
     }
 
     private void initRecyclerView() {
@@ -71,8 +86,13 @@ public class PicActivity extends KDBaseActivity {
 
     @Override
     public void initData() {
-        String ccId = getIntent().getStringExtra(CC_ID);
-        String classId = getIntent().getStringExtra(CLASS_ID);
+        ccId = getIntent().getStringExtra(CC_ID);
+        classId = getIntent().getStringExtra(CLASS_ID);
+        refreshData();
+
+    }
+
+    private void refreshData() {
         JSONObject jsonObject = new JSONObject();
         if (!TextUtils.isEmpty(ccId) && TextUtils.isEmpty(classId)) {
             try {
@@ -88,14 +108,29 @@ public class PicActivity extends KDBaseActivity {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
                 picAdapter.setNewData(result);
+
+                if (mNoteBookRefresh != null) {
+                    mNoteBookRefresh.refreshComplete();
+                }
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 ToastUtils.showShort(throwable.getMessage());
+                if (mNoteBookRefresh != null) {
+                    mNoteBookRefresh.refreshComplete();
+                }
             }
         });
+    }
+
+    @Override
+    public void onLoadMore() {
 
     }
 
+    @Override
+    public void onRefreshing() {
+        refreshData();
+    }
 }

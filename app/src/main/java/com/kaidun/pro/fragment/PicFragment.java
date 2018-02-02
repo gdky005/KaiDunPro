@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.PicAdapter;
@@ -30,10 +32,11 @@ import team.zhuoke.sdk.utils.L;
  * Created by WangQing on 2018/1/24.
  */
 
-public class PicFragment extends BaseFragment {
+public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent {
     @BindView(R.id.pic_recycle_view)
     ZKRecycleView picRecycleView;
     Unbinder unbinder;
+    private EasyRefreshLayout mNoteBookRefresh;
 
     private List<PicBean> list;
     private PicAdapter picAdapter;
@@ -55,6 +58,13 @@ public class PicFragment extends BaseFragment {
     public void initView(View view) {
         initRecyclerView();
 
+        mNoteBookRefresh = view.findViewById(R.id.pic_refresh);
+        mNoteBookRefresh.setEnablePullToRefresh(true);
+        mNoteBookRefresh.addEasyEvent(this);
+        mNoteBookRefresh.setLoadMoreModel(LoadModel.NONE);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+
     }
 
     private void initRecyclerView() {
@@ -73,20 +83,29 @@ public class PicFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
+        refreshData();
+    }
+
+    private void refreshData() {
         KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(
                 KDRequestUtils.getRequestBody()).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
                 picAdapter.setNewData(result);
+                if (mNoteBookRefresh != null) {
+                    mNoteBookRefresh.refreshComplete();
+                }
                 L.d("selectFamilyPicture: " + result.toString());
             }
 
             @Override
             public void onFailure(Throwable throwable) {
+                if (mNoteBookRefresh != null) {
+                    mNoteBookRefresh.refreshComplete();
+                }
                 ToastUtils.showShort(throwable.getMessage());
             }
         });
-
     }
 
     @Override
@@ -106,5 +125,15 @@ public class PicFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        refreshData();
     }
 }
