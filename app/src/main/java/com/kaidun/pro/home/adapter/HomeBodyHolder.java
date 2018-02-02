@@ -192,7 +192,7 @@ public class HomeBodyHolder extends HomeHolder {
             sScheduleLength = layout.getWidth();
         }
 
-        //防止数据超过100%时出现进度条超过布局宽度的问题
+        //  防止数据超过100%时出现进度条超过布局宽度的问题
         if (progress > 1) {
             progress = 1;
         }
