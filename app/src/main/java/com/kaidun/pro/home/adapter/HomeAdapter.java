@@ -27,12 +27,11 @@ public class HomeAdapter extends ZKAdapter<Home, HomeHolder> {
     @Override
     protected void convert(HomeHolder helper, Home item) {
         try {
-            helper.setData(item);
+            helper.setData(item, getItemCount());
         } catch (Exception e) {
-            helper.setEmptyData();
+            helper.setEmptyData(getItemCount());
             e.printStackTrace();
         }
-        Log.e("TAG", "getItemCount()" + getItemCount());
     }
 
     @Override

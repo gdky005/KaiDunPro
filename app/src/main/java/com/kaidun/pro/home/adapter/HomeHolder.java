@@ -24,4 +24,12 @@ public class HomeHolder extends ZKViewHolder {
     public void setEmptyData() {
 
     }
+
+    public void setData(Home item, int itemCount) {
+        setData(item);
+    }
+
+    public void setEmptyData(int itemCount) {
+        setEmptyData();
+    }
 }

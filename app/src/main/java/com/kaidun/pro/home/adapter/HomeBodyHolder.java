@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -54,6 +55,8 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationContent;
     @BindView(R.id.tv_teacher_evaluation_date)
     TextView mTeacherEvaluationDate;
+    @BindView(R.id.rl_teacher_evaluation)
+    RelativeLayout mTeacherEvaluationLayout;
     private Context mContext;
     private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
     private static double sScheduleLength = 0;
@@ -67,13 +70,15 @@ public class HomeBodyHolder extends HomeHolder {
     }
 
     @Override
-    public void setEmptyData() {
-        super.setEmptyData();
+    public void setEmptyData(int count) {
         mTeacherEvaluationContent.setText("暂无老师评价");
+        if (getAdapterPosition() != (count - 1)) {
+            mTeacherEvaluationLayout.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    public void setData(Home home) {
+    public void setData(Home home, int count) {
         if (home instanceof CourseInfo.ResultBean.ClassCourseInfoBean) {
             CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
                     = (CourseInfo.ResultBean.ClassCourseInfoBean) home;
@@ -98,28 +103,43 @@ public class HomeBodyHolder extends HomeHolder {
 
                 }
             });
+            teacherEvaluation(count);
+        }
+    }
 
-            if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
-                mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
-            } else {
-                mTeacherEvaluationContent.setVisibility(View.GONE);
-                mTeacherEvaluationContent.postDelayed(() -> {
-                    if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
-                        mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
-                    } else {
-                        mTeacherEvaluationContent.setText("暂无老师评价");
-                    }
-                    mTeacherEvaluationContent.setVisibility(View.VISIBLE);
-                }, 500);
-            }
+    public void teacherEvaluation(int count) {
+        if (getAdapterPosition() == (count - 1)) {
+            Log.e("T", getAdapterPosition() + "");
+            mTeacherEvaluationLayout.setVisibility(View.VISIBLE);
+            loadTeacherEvaluation();
+        } else {
+            Log.e("T", getAdapterPosition() + "");
+            mTeacherEvaluationLayout.setVisibility(View.GONE);
+        }
+    }
 
-            if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime)
-                    && !TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.teacher)) {
-                mTeacherEvaluationDate.setText(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime
-                        + " by " + CourseInfo.ResultBean.ClassCourseInfoBean.teacher);
-            } else {
-                mTeacherEvaluationDate.setText("");
-            }
+    @SuppressLint("SetTextI18n")
+    private void loadTeacherEvaluation() {
+        if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
+            mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
+        } else {
+            mTeacherEvaluationContent.setVisibility(View.GONE);
+            mTeacherEvaluationContent.postDelayed(() -> {
+                if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.comment)) {
+                    mTeacherEvaluationContent.setText(CourseInfo.ResultBean.ClassCourseInfoBean.comment);
+                } else {
+                    mTeacherEvaluationContent.setText("暂无老师评价");
+                }
+                mTeacherEvaluationContent.setVisibility(View.VISIBLE);
+            }, 500);
+        }
+
+        if (!TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime)
+                && !TextUtils.isEmpty(CourseInfo.ResultBean.ClassCourseInfoBean.teacher)) {
+            mTeacherEvaluationDate.setText(CourseInfo.ResultBean.ClassCourseInfoBean.publishTime
+                    + " by " + CourseInfo.ResultBean.ClassCourseInfoBean.teacher);
+        } else {
+            mTeacherEvaluationDate.setText("");
         }
     }
 
