@@ -3,6 +3,8 @@ package com.kaidun.pro.notebook;
 import android.content.Intent;
 
 import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -24,7 +26,7 @@ import team.zhuoke.sdk.component.ZKRecycleView;
  * @author Yunr
  * @date 2018/01/23 15:26
  */
-public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayout.EasyEvent {
+public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayout.EasyEvent, BaseQuickAdapter.RequestLoadMoreListener {
 
     ZKRecycleView mNoteBookList;
 
@@ -45,8 +47,10 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
         mTitle.setText("家联本内");
         mNoteBookRefresh.setEnablePullToRefresh(true);
         mNoteBookRefresh.addEasyEvent(this);
+        mNoteBookRefresh.setLoadMoreModel(LoadModel.NONE);
         mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
         mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+
     }
 
     @Override
@@ -78,6 +82,8 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
                                 nextPage = response.body().getResult().getSlideCode();
                                 adapter = new FamContentAdapter(R.layout.item_fam_content, data, famContact);
                                 mNoteBookList.setAdapter(adapter);
+                                adapter.setEnableLoadMore(true);
+                                adapter.setOnLoadMoreListener(NoteBookActivity.this, mNoteBookList);
                             }
                         }
 
@@ -94,44 +100,6 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
     }
 
     int nextPage = 0;
-
-    @Override
-    public void onLoadMore() {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("courseSortId", famContact.getCourseSortId());
-            jsonObject.put("slideCode", nextPage);
-
-            KDConnectionManager.getInstance().getZHApi()
-                    .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
-                    .enqueue(new Callback<FamContent>() {
-                        @Override
-                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
-                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
-                                List<FamContent.ResultBean.FamilyContactListBean> list =
-                                        response.body().getResult().getFamilyContactList();
-                                if (list == null || list.size() == 0) {
-                                    mNoteBookRefresh.loadNothing();
-                                    // mNoteBookRefresh.setLoadMoreModel(LoadModel.NONE);
-
-                                    return;
-                                }
-                                nextPage = response.body().getResult().getSlideCode();
-                                adapter.getData().addAll(list);
-                                adapter.notifyDataSetChanged();
-                                mNoteBookRefresh.loadMoreComplete();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<FamContent> call, Throwable t) {
-
-                        }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onRefreshing() {
@@ -160,5 +128,46 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("courseSortId", famContact.getCourseSortId());
+            jsonObject.put("slideCode", nextPage);
+
+            KDConnectionManager.getInstance().getZHApi()
+                    .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
+                    .enqueue(new Callback<FamContent>() {
+                        @Override
+                        public void onResponse(Call<FamContent> call, Response<FamContent> response) {
+                            if (response.isSuccessful() && response.body().getStatusCode() == 100) {
+                                List<FamContent.ResultBean.FamilyContactListBean> list =
+                                        response.body().getResult().getFamilyContactList();
+                                if (list == null || list.size() == 0) {
+                                    adapter.loadMoreEnd();
+                                    return;
+                                }
+                                nextPage = response.body().getResult().getSlideCode();
+                                adapter.getData().addAll(list);
+                                // adapter.notifyDataSetChanged();
+                                adapter.loadMoreComplete();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<FamContent> call, Throwable t) {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 }
