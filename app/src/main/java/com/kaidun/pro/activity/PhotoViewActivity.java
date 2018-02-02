@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.blankj.utilcode.util.IntentUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.utils.ImgUtils;
@@ -27,6 +29,8 @@ public class PhotoViewActivity extends KDBaseActivity {
     @BindView(R.id.zk_image_view)
     PhotoDraweeView zkImageView;
 
+    private String picUrl;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_photo_view;
@@ -36,12 +40,37 @@ public class PhotoViewActivity extends KDBaseActivity {
     protected void initViews() {
         ButterKnife.bind(this);
         setTitle("预览大图");
+        setRight(R.menu.item_pic);
     }
 
     @Override
     protected void onLeftClick() {
         super.onLeftClick();
-        finish();
+    }
+
+    @Override
+    public void onRightText(MenuItem item) {
+        switch (item.getItemId()) {
+//            case R.id.right_save_pic:
+//                onSavePic(picUrl);
+//                break;
+            case R.id.right_share_pic:
+                Bitmap bitmap = ImgUtils.getBitmap(picUrl);
+                String picPath = ImgUtils.saveImageToFile(mContext, bitmap);
+
+//                Intent intent=new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain"); // 分享发送的数据类型
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "掌上生活"); // 分享的主题
+//                intent.putExtra(Intent.EXTRA_TEXT, "掌上生活，你的日常生活护理专家！\nPocketLife,make your life in the pocket!"); // 分享的内容
+//
+//
+//                startActivity(Intent.createChooser(intent, "分享"));
+
+                Intent intent = IntentUtils.getShareImageIntent("我分享了一个图片", picPath);
+//                Intent intent = IntentUtils.getShareTextIntent("我分享了一个图片");
+                startActivity(Intent.createChooser(intent, "分享"));
+                break;
+        }
     }
 
     @Override
@@ -52,10 +81,7 @@ public class PhotoViewActivity extends KDBaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        String picUrl = intent.getStringExtra(FLAG_PIC_PATH_KEY);
-
-        // TODO: 2018/2/2  添加分享功能
-//        IntentUtils.getShareImageIntent();
+        picUrl = intent.getStringExtra(FLAG_PIC_PATH_KEY);
 
         if (!TextUtils.isEmpty(picUrl)) {
             Uri uri = Uri.parse(picUrl);
@@ -65,14 +91,7 @@ public class PhotoViewActivity extends KDBaseActivity {
             zkImageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Bitmap bitmap = ImgUtils.getBitmap(picUrl);
-                    boolean b = ImgUtils.saveImageToGallery(mContext, bitmap);
-
-                    if (b) {
-                        ToastUtils.showShort("保存图片到本地成功");
-                    } else {
-                        ToastUtils.showShort("保存图片到本地失败");
-                    }
+                    boolean b = onSavePic(picUrl);
                     return b;
                 }
             });
@@ -97,10 +116,23 @@ public class PhotoViewActivity extends KDBaseActivity {
         }
     }
 
+    private boolean onSavePic(String picUrl) {
+        Bitmap bitmap = ImgUtils.getBitmap(picUrl);
+        boolean b = ImgUtils.saveImageToGallery(mContext, bitmap);
+
+        if (b) {
+            ToastUtils.showShort("保存图片到本地成功");
+        } else {
+            ToastUtils.showShort("保存图片到本地失败");
+        }
+        return b;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
 }
