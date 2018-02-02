@@ -56,6 +56,8 @@ public class FamContentHolder extends ZKViewHolder {
     LinearLayout mFamOption;
     @BindView(R.id.fam_text)
     TextView mFamText;
+    @BindView(R.id.hour_num)
+    TextView mHourNumText;
     @BindView(R.id.fam_unit_rate)
     LinearLayout mFamUnitRate;
     @BindView(R.id.fl_listen_schedule)
@@ -116,6 +118,7 @@ public class FamContentHolder extends ZKViewHolder {
             mFamIcon.setImageResource(R.drawable.head_portrait_znx);
         }
 
+        mHourNumText.setText(famContent.getHourNum()+"");//课时
         mFamUnit.setText(famContent.getCourseSortName());//课程进度
         addStar(famContent.getStart());//学员表现
         mFamText.setText(famContent.getText());//老师评语
@@ -228,6 +231,11 @@ public class FamContentHolder extends ZKViewHolder {
         if (sScheduleLength == 0) {
             sScheduleLength = layout.getWidth();
         }
+        //防止数据超过100%时出现进度条超过布局宽度的问题
+        if (progress > 1) {
+            progress = 1;
+        }
+
         params.width = (int) (sScheduleLength * progress);
         layout.setLayoutParams(params);
     }
