@@ -1,12 +1,15 @@
 package com.kaidun.pro.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
+import com.kaidun.pro.utils.ImgUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +59,22 @@ public class PhotoViewActivity extends KDBaseActivity {
             Uri uri = Uri.parse(picUrl);
 
             zkImageView.setPhotoUri(uri);
+
+            zkImageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Bitmap bitmap = ImgUtils.getBitmap(picUrl);
+                    boolean b = ImgUtils.saveImageToGallery(mContext, bitmap);
+
+                    if (b) {
+                        ToastUtils.showShort("保存图片到本地成功");
+                    } else {
+                        ToastUtils.showShort("保存图片到本地失败");
+                    }
+                    return b;
+                }
+            });
+
 
 //            PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
 //            controller.setUri(uri);
