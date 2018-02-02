@@ -110,8 +110,17 @@ public class FamContent {
             private int slideCode;
             private String speakingRate;
             private int start;
+            private int hourNum;
             private String text;
             private String writingRate;
+
+            public int getHourNum() {
+                return hourNum;
+            }
+
+            public void setHourNum(int hourNum) {
+                this.hourNum = hourNum;
+            }
 
             public String getCcId() {
                 return ccId;

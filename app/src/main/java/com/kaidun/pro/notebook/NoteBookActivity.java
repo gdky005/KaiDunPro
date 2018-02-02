@@ -129,7 +129,6 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<FamContent>() {
-
                         @Override
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {

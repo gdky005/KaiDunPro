@@ -64,6 +64,7 @@
                 android:background="#eeeeee" />
 
             <TextView
+                android:id="@+id/hour_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -92,9 +93,10 @@
 
             <ImageView
                 android:id="@+id/fam_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_marginRight="8dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/head_portrait_znx" />
 
             <TextView
