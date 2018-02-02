@@ -54,6 +54,8 @@ public class PhotoViewActivity extends KDBaseActivity {
         Intent intent = getIntent();
         String picUrl = intent.getStringExtra(FLAG_PIC_PATH_KEY);
 
+        // TODO: 2018/2/2  添加分享功能
+//        IntentUtils.getShareImageIntent();
 
         if (!TextUtils.isEmpty(picUrl)) {
             Uri uri = Uri.parse(picUrl);
