@@ -60,6 +60,12 @@ public interface KDApi {
     Call<KDBaseBean<String>> updateFamilyRole(@Body RequestBody requestBody);
 
     /**
+     * 判断设备是否已经绑定身份
+     */
+    @POST("selectRoleByMachine")
+    Call<KDBaseBean<String>> selectRoleByMachine(@Body RequestBody requestBody);
+
+    /**
      * 家长端主页面校区通知，老师评语
      */
     @POST("selectFamilyInfo")
