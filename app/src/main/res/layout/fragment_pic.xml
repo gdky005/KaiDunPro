@@ -7,9 +7,15 @@
     android:orientation="vertical">
 
 
-    <team.zhuoke.sdk.component.ZKRecycleView
-        android:id="@+id/pic_recycle_view"
+    <com.ajguan.library.EasyRefreshLayout
+        android:id="@+id/pic_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
+
+        <team.zhuoke.sdk.component.ZKRecycleView
+            android:id="@+id/pic_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.ajguan.library.EasyRefreshLayout>
 
 </LinearLayout>
