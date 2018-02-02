@@ -14,12 +14,13 @@ import com.kaidun.pro.R;
 import com.kaidun.pro.bean.AreaBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
-import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.LoadingUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,14 +168,15 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
             // TODO: 2018/1/25  这里请处理你的逻辑
             LoadingUtils.dismiss();
             if (login != null) {
-                KaiDunSP kaiDunSP = new KaiDunSP();
-                boolean isFirst = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
-                if (!isFirst) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                } else {
-                    ChooseRoleActivity.start(LoginActivity.this);
-                }
-                finish();
+                //无退出登录 ，判断本地数据，切换账号会有问题
+//                KaiDunSP kaiDunSP = new KaiDunSP();
+//                boolean isFirstChooseRole = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
+//                if (!isFirstChooseRole) {
+//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                    finish();
+//                } else {
+                chargeSelectRole(account, areaCode);
+//                }
             }
         });
         LoadingUtils.show(this);
@@ -214,4 +216,46 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
 
     }
 
+    /**
+     * 设备是否绑定了身份
+     *
+     * @param userCode
+     * @param areaCode
+     */
+    private void chargeSelectRole(String userCode, String areaCode) {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("areaCode", areaCode);
+            jsonObject.put("userCode", userCode);
+
+            KDConnectionManager.getInstance().getZHApi().selectRoleByMachine(KDRequestUtils.getRequestBody(jsonObject)).enqueue(
+                    new KDCallback<String>() {
+                        @Override
+                        public void onResponse(KDBaseBean<String> baseBean, String result) {
+                            if (baseBean.getStatusCode() == 100) {
+                                if (TextUtils.equals("002", result)) {
+                                    ChooseRoleActivity.start(LoginActivity.this);
+                                } else {
+//                                    KaiDunSP kaiDunSP = new KaiDunSP();
+//                                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                }
+                                finish();
+                            } else {
+                                ToastUtils.showShort(baseBean.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
