@@ -21,6 +21,7 @@ import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
 import com.kaidun.pro.notebook.OptionUtil;
+import com.kaidun.pro.notebook.PicActivity;
 import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.retrofit2.KDCallback;
@@ -118,7 +119,7 @@ public class FamContentHolder extends ZKViewHolder {
             mFamIcon.setImageResource(R.drawable.head_portrait_znx);
         }
 
-        mHourNumText.setText(famContent.getHourNum()+"");//课时
+        mHourNumText.setText(famContent.getHourNum() + "");//课时
         mFamUnit.setText(famContent.getCourseSortName());//课程进度
         addStar(famContent.getStart());//学员表现
         mFamText.setText(famContent.getText());//老师评语
@@ -155,7 +156,7 @@ public class FamContentHolder extends ZKViewHolder {
         }
     }
 
-    @OnClick({R.id.fam_flower, R.id.fam_message, R.id.fam_kcmb})
+    @OnClick({R.id.fam_flower, R.id.fam_message, R.id.fam_kcmb, R.id.fam_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fam_flower:
@@ -170,16 +171,21 @@ public class FamContentHolder extends ZKViewHolder {
             case R.id.fam_kcmb:
                 if (famContent != null) {
                     Intent toDetailIntent = new Intent(view.getContext(), BookDetailActivity.class);
-//                    toDetailIntent.putExtra("ccId", famContent.getCcId());
-//                    toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
+                    toDetailIntent.putExtra("ccId", famContent.getCcId());
+                    toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
                     //测试数据
-                    toDetailIntent.putExtra("ccId", "52F4DE182D9DF774E0530B01000A1F5A");
-                    toDetailIntent.putExtra("courseSortId", "40051078-ce55-45ce-95a3-67aaca1796aa");
+//                    toDetailIntent.putExtra("ccId", "52F4DE182D9DF774E0530B01000A1F5A");
+//                    toDetailIntent.putExtra("courseSortId", "40051078-ce55-45ce-95a3-67aaca1796aa");
                     toDetailIntent.putExtra("bookName", famContent.getCourseSortName());
                     toDetailIntent.putExtra("bookImg", famBookData.getCsUrl());
-                    // toDetailIntent.putExtra("unitName", famContent.getUnitName());
                     view.getContext().startActivity(toDetailIntent);
                 }
+                break;
+            case R.id.fam_pic:
+                Intent picIntent = new Intent(view.getContext(), PicActivity.class);
+                picIntent.putExtra("ccId", famContent.getCcId());
+                picIntent.putExtra("courseSortId", famBookData.getCourseSortId());
+                view.getContext().startActivity(picIntent);
                 break;
         }
     }

@@ -118,13 +118,20 @@ public class BookDetailActivity extends KDBaseActivity {
             phonice.append(listBean.getCourserPhonice()).append(",");
         }
 
-        sentence.deleteCharAt(sentence.length() - 1);
-        vocabulary.deleteCharAt(vocabulary.length() - 1);
-        phonice.deleteCharAt(phonice.length() - 1);
+        if (sentence.length() > 0) {
+            sentence.deleteCharAt(sentence.length() - 1);
+            mBookDetailSentence.setText(sentence);
+        }
 
-        mBookDetailSentence.setText(sentence);
-        mBookDetailVocabulary.setText(vocabulary);
-        mBookDetailPhonice.setText(phonice);
+        if (vocabulary.length() > 0) {
+            vocabulary.deleteCharAt(vocabulary.length() - 1);
+            mBookDetailVocabulary.setText(vocabulary);
+        }
+
+        if (phonice.length() > 0) {
+            phonice.deleteCharAt(phonice.length() - 1);
+            mBookDetailPhonice.setText(phonice);
+        }
     }
 
 //    private void showData(BookDetail result) {

@@ -1,13 +1,11 @@
-package com.kaidun.pro.fragment;
+package com.kaidun.pro.notebook;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
+import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.adapter.PicAdapter;
 import com.kaidun.pro.bean.KDListBaseBean;
 import com.kaidun.pro.bean.PicBean;
@@ -15,46 +13,41 @@ import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDListCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import team.zhuoke.sdk.base.BaseFragment;
 import team.zhuoke.sdk.component.ZKRecycleView;
-import team.zhuoke.sdk.utils.L;
+
+import static com.kaidun.pro.Constant.CC_ID;
+import static com.kaidun.pro.Constant.CLASS_ID;
 
 /**
- * PicFragment
- * Created by WangQing on 2018/1/24.
+ * @author Yunr
+ * @date 2018/02/02 15:03
  */
+public class PicActivity extends KDBaseActivity {
 
-public class PicFragment extends BaseFragment {
     @BindView(R.id.pic_recycle_view)
     ZKRecycleView picRecycleView;
-    Unbinder unbinder;
 
     private List<PicBean> list;
     private PicAdapter picAdapter;
 
-    public static PicFragment newInstance() {
-        PicFragment fragment = new PicFragment();
-        Bundle args = new Bundle();
-//        args.putInt(KEY, navType);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_pic;
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.fragment_pic;
-    }
-
-    @Override
-    public void initView(View view) {
+    protected void initViews() {
+        ButterKnife.bind(this);
+        mTitle.setText("照片");
         initRecyclerView();
-
     }
 
     private void initRecyclerView() {
@@ -72,13 +65,29 @@ public class PicFragment extends BaseFragment {
     }
 
     @Override
-    public void initData(Bundle bundle) {
+    protected void initListener() {
+
+    }
+
+    @Override
+    public void initData() {
+        String ccId = getIntent().getStringExtra(CC_ID);
+        String classId = getIntent().getStringExtra(CLASS_ID);
+        JSONObject jsonObject = new JSONObject();
+        if (!TextUtils.isEmpty(ccId) && TextUtils.isEmpty(classId)) {
+            try {
+                jsonObject.put("ccId", ccId);
+                jsonObject.put("classId", classId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(
-                KDRequestUtils.getRequestBody()).enqueue(new KDListCallback<PicBean>() {
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
                 picAdapter.setNewData(result);
-                L.d("selectFamilyPicture: " + result.toString());
             }
 
             @Override
@@ -89,22 +98,4 @@ public class PicFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void initListener() {
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

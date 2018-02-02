@@ -45,6 +45,8 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
         mTitle.setText("家联本内");
         mNoteBookRefresh.setEnablePullToRefresh(true);
         mNoteBookRefresh.addEasyEvent(this);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
+        mNoteBookRefresh.setHideLoadViewAnimatorDuration(1000);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {
                                 data = response.body().getResult().getFamilyContactList();
-                                page = 0;
+                                nextPage = response.body().getResult().getSlideCode();
                                 adapter = new FamContentAdapter(R.layout.item_fam_content, data, famContact);
                                 mNoteBookList.setAdapter(adapter);
                             }
@@ -86,25 +88,36 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
                     });
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
 
-    int page = 0;
+    int nextPage = 0;
 
     @Override
     public void onLoadMore() {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("courseSortId", famContact.getCourseSortId());
-            jsonObject.put("slideCode", page++);
+            jsonObject.put("slideCode", nextPage);
+
             KDConnectionManager.getInstance().getZHApi()
                     .selectFamContContext(KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<FamContent>() {
                         @Override
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {
-                                adapter.getData().addAll(response.body().getResult().getFamilyContactList());
+                                List<FamContent.ResultBean.FamilyContactListBean> list =
+                                        response.body().getResult().getFamilyContactList();
+                                if (list == null || list.size() == 0) {
+                                    mNoteBookRefresh.loadNothing();
+                                    // mNoteBookRefresh.setLoadMoreModel(LoadModel.NONE);
+
+                                    return;
+                                }
+                                nextPage = response.body().getResult().getSlideCode();
+                                adapter.getData().addAll(list);
                                 adapter.notifyDataSetChanged();
                                 mNoteBookRefresh.loadMoreComplete();
                             }
@@ -133,7 +146,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
                         public void onResponse(Call<FamContent> call, Response<FamContent> response) {
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {
                                 data = response.body().getResult().getFamilyContactList();
-                                page = 0;
+                                nextPage = response.body().getResult().getSlideCode();
                                 mNoteBookRefresh.refreshComplete();
                                 adapter.notifyDataSetChanged();
                             }
@@ -144,7 +157,6 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
 
                         }
                     });
-
         } catch (Exception e) {
             e.printStackTrace();
         }
