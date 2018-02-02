@@ -2,6 +2,7 @@ package com.kaidun.pro.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.PicAdapter;
 import com.kaidun.pro.bean.KDListBaseBean;
@@ -16,6 +18,9 @@ import com.kaidun.pro.bean.PicBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDListCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +45,21 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
 
     private List<PicBean> list;
     private PicAdapter picAdapter;
+    private String ccId;
+    private String classId;
 
     public static PicFragment newInstance() {
         PicFragment fragment = new PicFragment();
         Bundle args = new Bundle();
-//        args.putInt(KEY, navType);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static PicFragment newInstance(String ccId, String classId) {
+        PicFragment fragment = new PicFragment();
+        Bundle args = new Bundle();
+        args.putString(Constant.CC_ID, ccId);
+        args.putString(Constant.CLASS_ID, classId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,12 +98,29 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
 
     @Override
     public void initData(Bundle bundle) {
+        Bundle data = getArguments();
+        if (data != null && data.getString(Constant.CC_ID) != null
+                && data.getString(Constant.CLASS_ID) != null) {
+            ccId = data.getString(Constant.CC_ID);
+            classId = data.getString(Constant.CLASS_ID);
+        }
+
         refreshData();
     }
 
     private void refreshData() {
+        JSONObject jsonObject = new JSONObject();
+        if (!TextUtils.isEmpty(ccId) && !TextUtils.isEmpty(classId)) {
+            try {
+                jsonObject.put("ccId", ccId);
+                jsonObject.put("classId", classId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(
-                KDRequestUtils.getRequestBody()).enqueue(new KDListCallback<PicBean>() {
+                KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
                 picAdapter.setNewData(result);

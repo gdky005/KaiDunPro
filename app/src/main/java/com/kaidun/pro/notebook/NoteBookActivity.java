@@ -66,7 +66,6 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
     }
 
     private void selectFamContContext() {
-
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("courseSortId", famContact.getCourseSortId());
@@ -122,7 +121,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
 
                         @Override
                         public void onFailure(Call<FamContent> call, Throwable t) {
-
+                            mNoteBookRefresh.refreshComplete();
                         }
                     });
         } catch (Exception e) {
@@ -158,7 +157,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
 
                         @Override
                         public void onFailure(Call<FamContent> call, Throwable t) {
-
+                            adapter.loadMoreEnd();
                         }
                     });
         } catch (Exception e) {

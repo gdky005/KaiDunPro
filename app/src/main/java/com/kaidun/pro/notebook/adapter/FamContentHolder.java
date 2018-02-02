@@ -184,7 +184,7 @@ public class FamContentHolder extends ZKViewHolder {
             case R.id.fam_pic:
                 Intent picIntent = new Intent(view.getContext(), PicActivity.class);
                 picIntent.putExtra("ccId", famContent.getCcId());
-                picIntent.putExtra("courseSortId", famBookData.getCourseSortId());
+                picIntent.putExtra("classId", famContent.getClassId());
                 view.getContext().startActivity(picIntent);
                 break;
         }
