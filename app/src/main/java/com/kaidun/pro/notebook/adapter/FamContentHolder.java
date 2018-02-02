@@ -118,7 +118,7 @@ public class FamContentHolder extends ZKViewHolder {
             mFamIcon.setImageResource(R.drawable.head_portrait_znx);
         }
 
-        mHourNumText.setText(famContent.getHourNum());//课时
+        mHourNumText.setText(famContent.getHourNum()+"");//课时
         mFamUnit.setText(famContent.getCourseSortName());//课程进度
         addStar(famContent.getStart());//学员表现
         mFamText.setText(famContent.getText());//老师评语
