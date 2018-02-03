@@ -36,7 +36,7 @@ public class RecommendedHolder extends ZKViewHolder {
 
     @SuppressLint("SetTextI18n")
     public void setData(Recommended.ResultBean recommended) {
-        mParentsName.setText(recommended.getFamilyName());
+        mParentsName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
         mRecommendedContent.setText("推荐了 " + recommended.getChildName()
                 + " 小朋友加入凯顿幼儿英语。");
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
