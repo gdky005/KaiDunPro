@@ -91,8 +91,6 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
         if (intent != null && (classId = intent.getStringExtra(Constant.CLASS_ID)) != null) {
             classId = intent.getStringExtra(Constant.CLASS_ID);
             className.add(intent.getStringExtra(Constant.CLASS_Name));
-            className.add(intent.getStringExtra(Constant.CLASS_Name));
-
 //            //家联本内容跳转过来无班级名称，隐藏吧
 //            mClassTag.setVisibility(View.GONE);
 //            mClassIcon.setVisibility(View.GONE);

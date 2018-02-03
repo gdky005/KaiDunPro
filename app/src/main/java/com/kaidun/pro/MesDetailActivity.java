@@ -142,6 +142,12 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view == sendMsg){
+            String msg = mReplyedit.getText().toString();
+            if (TextUtils.isEmpty(msg)){
+                ToastUtils.showShort("输入内容不能为空");
+                return;
+            }
+
             httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
                 @Override
                 public void getSuccessDataCallBack(MsgBean data) {
@@ -152,14 +158,16 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                     }else {
                         ToastUtils.showShort("发送失败！");
                     }
+                    sendMsg.setClickable(true);
                 }
 
                 @Override
                 public void getFailDataCallBack(int failIndex) {
-
+                    sendMsg.setClickable(true);
                 }
             });
-            httpUtils.sendMsgDetail(keyId,mReplyedit.getText().toString());
+            httpUtils.sendMsgDetail(keyId, msg);
+            sendMsg.setClickable(false);
         }
     }
 
