@@ -13,8 +13,9 @@ public class Constant {
     public static final String MEDIA_TYPE = "application/json";
 
     public static final String KEY_ID = "kfmId";
-    public static final String FLAG_READ = "001";
-    public static final String FLAG_UNREAD = "002";
+    // TODO: 2018/2/5 根据服务器新修改的
+    public static final String FLAG_READ = "002";
+    public static final String FLAG_UNREAD = "001";
     public static final String CC_ID = "ccId";
     public static final String CLASS_ID = "classId";
     public static final String CLASS_Name = "className";

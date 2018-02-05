@@ -65,8 +65,9 @@ public class KdNetWorkClient {
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("emId", keyId);
             jsonObject.put("kfmId", keyId);    //主键id
-            jsonObject.put("slideStatus", "down");
-            jsonObject.put("kmdCode", "10000048");
+            // TODO: 2018/2/5 test 需要修改这里
+//            jsonObject.put("slideStatus", "down");
+//            jsonObject.put("kmdCode", "10000048");
             jsonObject.put("messageContent", "内容");
             KDConnectionManager.getInstance().getZHApi().getMsgDetail(
                     KDRequestUtils.getHeaderMaps(),

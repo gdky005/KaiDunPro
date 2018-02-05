@@ -1,83 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-         android:background="@android:color/white"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_parents_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher_round" />
+
+
+    <TextView
+        android:id="@+id/replay_latest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_parents_name"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/iv_parents_avatar"
+        android:layout_toRightOf="@id/iv_parents_avatar"
+        android:textColor="@color/text_main"
+        android:textSize="10sp"
+        tools:text="回复" />
+
+    <TextView
+        android:id="@+id/tv_recommended_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/iv_parents_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:id="@+id/tv_parents_name"
-            android:layout_width="80dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/iv_parents_avatar"
-            android:layout_toRightOf="@id/iv_parents_avatar"
-            android:textColor="@color/text_main"
-            android:textSize="16sp"
-            tools:text="推送消息" />
-
-
-        <TextView
-            android:id="@+id/replay_latest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/iv_parents_avatar"
-            android:layout_toRightOf="@id/iv_parents_avatar"
-            android:textColor="@color/text_main"
-            android:layout_below="@id/tv_parents_name"
-            android:textSize="10sp"
-            android:layout_marginTop="5dp"
-            tools:text="回复" />
-        <TextView
-            android:id="@+id/tv_recommended_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/replay_latest"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/iv_parents_avatar"
-            android:layout_toRightOf="@id/iv_parents_avatar"
-            android:textColor="@color/text_second"
-            android:textSize="14sp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验欢迎各位家长带孩子来体验，活动免费开放四天。" />
+        android:layout_below="@id/replay_latest"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/iv_parents_avatar"
+        android:layout_toRightOf="@id/iv_parents_avatar"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/text_second"
+        android:textSize="14sp"
+        tools:text="凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验欢迎各位家长带孩子来体验，活动免费开放四天。" />
 
     <TextView
         android:id="@+id/tv_recommended_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/xxtx_msg"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/xxtx_msg"
-        android:drawableRight="@drawable/jiantou_message"
+        android:layout_alignParentRight="true"
         android:drawablePadding="2dp"
+        android:drawableRight="@drawable/jiantou_message"
         android:textColor="@color/text_third"
         android:textSize="14sp"
         tools:ignore="RelativeOverlap"
         tools:text="2017/12/26" />
 
-        <ImageView
-            android:id="@+id/xxtx_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/xxtx_message"
-            android:layout_below="@id/tv_recommended_date"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            />
+    <TextView
+        android:id="@+id/tv_parents_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_parents_avatar"
+        android:layout_toLeftOf="@+id/tv_recommended_date"
+        android:layout_toRightOf="@id/iv_parents_avatar"
+        android:layout_toStartOf="@+id/tv_recommended_date"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/text_main"
+        android:textSize="16sp"
+        tools:text="推送消息" />
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/xxtx_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_recommended_date"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/xxtx_message" />
+
+</RelativeLayout>

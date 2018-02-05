@@ -71,11 +71,16 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         msg_unread_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_unread_recler.setAdapter(messageAdapter);
         messageAdapter.setOnDelListener(this);
-        initUnreadData();
 
         refreshLayout.addEasyEvent(this);
         refreshLayout.setLoadMoreModel(LoadModel.NONE);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initUnreadData();
     }
 
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
