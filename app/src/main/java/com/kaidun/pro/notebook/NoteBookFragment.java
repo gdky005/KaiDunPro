@@ -35,6 +35,8 @@ public class NoteBookFragment extends BaseFragment {
     ZKRecycleView mNoteBookGrid;
     Unbinder unbinder;
     private NoteBookAdapter adapter;
+    private boolean adapterIsReady = false;
+    private boolean gridIsReady = true;
 
     public static NoteBookFragment newInstance(int index) {
         NoteBookFragment fragment = new NoteBookFragment();
@@ -56,26 +58,6 @@ public class NoteBookFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle1) {
-//
-//        ArrayList<FamContact> list = new ArrayList<>();
-//        FamContact resultBean = new FamContact.ResultBean();
-//        resultBean.setBookName("ABC");
-//        list.add(resultBean);
-//
-//        FamContact.ResultBean resultBean2 = new FamContact.ResultBean();
-//        resultBean2.setBookName("暑托班");
-//        list.add(resultBean2);
-//
-//        FamContact.ResultBean resultBean3 = new FamContact.ResultBean();
-//        resultBean3.setBookName("LA");
-//        list.add(resultBean3);
-//
-//        FamContact.ResultBean resultBean4 = new FamContact.ResultBean();
-//        resultBean4.setBookName("敬请期待...");
-//        list.add(resultBean4);
-
-
-        //TODO:请求数据
         selectFamilyContact();
     }
 
@@ -112,8 +94,26 @@ public class NoteBookFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        if (adapter != null && mNoteBookGrid != null) {
-            mNoteBookGrid.setAdapter(adapter);
+        if (adapter != null) {
+            adapterIsReady = true;
+            if (mNoteBookGrid != null) {
+                mNoteBookGrid.setAdapter(adapter);
+                gridIsReady = true;
+            } else {
+                gridIsReady = false;
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adapterIsReady) {
+            if (!gridIsReady) {
+                mNoteBookGrid.setAdapter(adapter);
+            }
+        } else {
+            selectFamilyContact();
         }
     }
 
