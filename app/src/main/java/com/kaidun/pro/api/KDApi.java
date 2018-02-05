@@ -2,6 +2,7 @@ package com.kaidun.pro.api;
 
 import com.kaidun.pro.bean.AreaBean;
 import com.kaidun.pro.bean.ClassBean;
+import com.kaidun.pro.bean.CourseSchedule;
 import com.kaidun.pro.bean.FamilyRoleBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.KDListBaseBean;
@@ -183,5 +184,6 @@ public interface KDApi {
     @POST("sendMessagetoTea")
     Call<MsgBean> leaveMessage(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
 
-    Call<KDBaseBean> selectBookFinishRate(@Body RequestBody requestBody);
+    @POST("selectBookFinshRate")
+    Call<CourseSchedule> selectBookFinishRate(@Body RequestBody requestBody);
 }

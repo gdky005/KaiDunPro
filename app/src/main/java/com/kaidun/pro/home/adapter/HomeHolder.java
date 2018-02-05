@@ -4,6 +4,8 @@ import android.view.View;
 
 import com.kaidun.pro.home.bean.Home;
 
+import org.json.JSONException;
+
 import butterknife.ButterKnife;
 import team.zhuoke.sdk.component.ZKViewHolder;
 
@@ -25,7 +27,7 @@ public class HomeHolder extends ZKViewHolder {
 
     }
 
-    public void setData(Home item, int itemCount) {
+    public void setData(Home item, int itemCount) throws JSONException {
         setData(item);
     }
 

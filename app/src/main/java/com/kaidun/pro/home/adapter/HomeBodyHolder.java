@@ -9,18 +9,29 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
+import com.kaidun.pro.api.KDApi;
+import com.kaidun.pro.bean.CourseSchedule;
 import com.kaidun.pro.home.bean.CourseInfo;
 import com.kaidun.pro.home.bean.Home;
-import com.kaidun.pro.home.bean.SchoolNotification;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.utils.KDRequestUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2018/1/23.
@@ -57,6 +68,10 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationDate;
     @BindView(R.id.rl_teacher_evaluation)
     RelativeLayout mTeacherEvaluationLayout;
+    @BindView(R.id.ll_course_schedule)
+    LinearLayout mCourseScheduleLayout;
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
     private Context mContext;
     private CourseInfo.ResultBean.ClassCourseInfoBean mCourseInfo;
     private static double sScheduleLength = 0;
@@ -74,25 +89,46 @@ public class HomeBodyHolder extends HomeHolder {
         mTeacherEvaluationContent.setText("暂无老师评价");
         if (getAdapterPosition() != (count - 1)) {
             mTeacherEvaluationLayout.setVisibility(View.GONE);
+        } else {
+            mTeacherEvaluationLayout.setVisibility(View.VISIBLE);
         }
+        showCourseSchedule();
+        mCourseName.setText("暂无");
+        setCoursePercentageWithEmpty();
+        setCourseSpinnerWithEmpty();
+    }
+
+    private void showCourseSchedule() {
+        mLoading.setVisibility(View.GONE);
+        mCourseScheduleLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideCourseSchedule() {
+        mLoading.setVisibility(View.VISIBLE);
+        mCourseScheduleLayout.setVisibility(View.INVISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
-    public void setData(Home home, int count) {
+    public void setData(Home home, int count) throws JSONException {
         if (home instanceof CourseInfo.ResultBean.ClassCourseInfoBean) {
+            hideCourseSchedule();
             CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
                     = (CourseInfo.ResultBean.ClassCourseInfoBean) home;
             mCourseInfo = courseInfoBean;
-            mCourseName.setText(courseInfoBean.getClassName());
-            mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(0).getBookUrl());
-
-            setCoursePercentage(courseInfoBean, 0);
+            changeShowBook(courseInfoBean, 0);
+            String bookCode = courseInfoBean.getBookModels().get(0).getBookCode();
+            String courseSortId = courseInfoBean.getCourseSortId();
+            requestCourseSchedule(bookCode, courseSortId);
             setCourseSpinner(courseInfoBean);
             mCourseSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
-                        setCoursePercentage(courseInfoBean, position);
+                        hideCourseSchedule();
+                        String bookCode = courseInfoBean.getBookModels().get(position).getBookCode();
+                        String courseSortId = courseInfoBean.getCourseSortId();
+                        requestCourseSchedule(bookCode, courseSortId);
+                        changeShowBook(courseInfoBean, position);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -105,6 +141,40 @@ public class HomeBodyHolder extends HomeHolder {
             });
             teacherEvaluation(count);
         }
+    }
+
+    private void requestCourseSchedule(String bookCode, String courseSortId) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSortId", courseSortId);
+        jsonObject.put("bookCode", bookCode);
+        KDApi kdApi = KDConnectionManager.getInstance().getZHApi();
+        kdApi.selectBookFinishRate(KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<CourseSchedule>() {
+            @Override
+            public void onResponse(Call<CourseSchedule> call, Response<CourseSchedule> response) {
+                if (response.body() != null) {
+                    if (!(response.body().getStatusCode() == 100)) {
+                        showToast(response.body().getMessage());
+                    } else {
+                        setCoursePercentage(response.body().getResult().get(0));
+                    }
+                }
+                showCourseSchedule();
+            }
+
+            @Override
+            public void onFailure(Call<CourseSchedule> call, Throwable t) {
+                showCourseSchedule();
+            }
+        });
+    }
+
+    private void showToast(String msg) {
+        ToastUtils.showShort(msg);
+    }
+
+    private void changeShowBook(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean, int position) {
+        mCourseName.setText(courseInfoBean.getClassName());
+        mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(position).getBookUrl());
     }
 
     public void teacherEvaluation(int count) {
@@ -150,6 +220,13 @@ public class HomeBodyHolder extends HomeHolder {
         mCourseSelect.setAdapter(adapter);
     }
 
+    private void setCourseSpinnerWithEmpty() {
+        String[] bookCodes = new String[] {"暂无"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
+                android.R.layout.simple_spinner_dropdown_item, bookCodes);
+        mCourseSelect.setAdapter(adapter);
+    }
+
     private String[] getBookCodeList(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
         String[] bookCodes = new String[courseInfoBean.getBookModels().size()];
         for (int i = 0; i < courseInfoBean.getBookModels().size(); i++) {
@@ -158,18 +235,33 @@ public class HomeBodyHolder extends HomeHolder {
         return bookCodes;
     }
 
-    private void setCoursePercentage(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean, int index) {
+    private void setCoursePercentage(CourseSchedule.ResultBean resultBean) {
         setPercentage(mListenSchedule,
-                calculatePercentage(courseInfoBean.getRateList().get(index).getListingRate()),
+                calculatePercentage(resultBean.getListingRate()),
                 mListenPercentage);
         setPercentage(mSpeakSchedule,
-                calculatePercentage(courseInfoBean.getRateList().get(index).getSpeakingRate()),
+                calculatePercentage(resultBean.getSpeakingRate()),
                 mSpeakPercentage);
         setPercentage(mReadSchedule,
-                calculatePercentage(courseInfoBean.getRateList().get(index).getReadingRate()),
+                calculatePercentage(resultBean.getReadingRate()),
                 mReadPercentage);
         setPercentage(mWriteSchedule,
-                calculatePercentage(courseInfoBean.getRateList().get(index).getWritingRate()),
+                calculatePercentage(resultBean.getWritingRate()),
+                mWritePercentage);
+    }
+
+    private void setCoursePercentageWithEmpty() {
+        setPercentage(mListenSchedule,
+                calculatePercentage("0"),
+                mListenPercentage);
+        setPercentage(mSpeakSchedule,
+                calculatePercentage("0"),
+                mSpeakPercentage);
+        setPercentage(mReadSchedule,
+                calculatePercentage("0"),
+                mReadPercentage);
+        setPercentage(mWriteSchedule,
+                calculatePercentage("0"),
                 mWritePercentage);
     }
 
@@ -191,7 +283,7 @@ public class HomeBodyHolder extends HomeHolder {
         if (sScheduleLength == 0) {
             sScheduleLength = layout.getWidth();
         }
-
+        Log.e("TAG", "sScheduleLength = " + sScheduleLength);
         //  防止数据超过100%时出现进度条超过布局宽度的问题
         if (progress > 1) {
             progress = 1;

@@ -79,14 +79,26 @@
                     android:id="@+id/sp_course_select"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/course_index"
-                    android:dropDownSelector="@drawable/xiala_home"/>
+                    android:entries="@array/course_index" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <include layout="@layout/item_course_schedule" />
+        <include
+            layout="@layout/item_course_schedule"/>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_course_assignments_icon"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="36dp"
+            android:layout_toEndOf="@id/ll_course_select"
+            android:layout_toRightOf="@id/ll_course_select"
+            android:indeterminateDrawable="@drawable/progressbar" />
 
     </RelativeLayout>
 
@@ -104,8 +116,8 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:paddingTop="17dp"
-        tools:ignore="UselessParent"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:id="@+id/ll_teacher_evaluation_icon"

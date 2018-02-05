@@ -3,6 +3,7 @@ package com.kaidun.pro.home;
 import android.graphics.Bitmap;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
@@ -30,6 +31,8 @@ public class QRActivity extends KDBaseActivity {
     SimpleDraweeView mQrAvatar;
     @BindView(R.id.tv_qr_name)
     TextView mQrName;
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
 
     @Override
     protected int getLayoutId() {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -115,6 +116,7 @@ public class HomeFragment extends BaseFragment {
                             mHomes.add(0, mSchoolNotification);
                         }
                         mHomes.addAll(classCourseInfos);
+                        Log.e("TAG", "selectClassCourseInfoFinish");
                         mAdapter.notifyDataSetChanged();
                     }
                 } else if (response.body() != null && response.body().getMessage() != null) {
