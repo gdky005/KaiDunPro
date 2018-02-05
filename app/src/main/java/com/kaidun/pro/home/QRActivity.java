@@ -7,7 +7,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.fresco.helper.ImageLoader;
+import com.facebook.fresco.helper.Phoenix;
 import com.kaidun.pro.R;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDAccountManager;
@@ -49,8 +54,12 @@ public class QRActivity extends KDBaseActivity {
         String qrInfo = KDAccountManager.getInstance().getUserInfoBean().getAreaCode()
                 + KDAccountManager.getInstance().getUserInfoBean().getStuCode();
         Bitmap bitmap = QRCodeUtils.createQRCodeBitmap(qrInfo, SizeUtils.dp2px(500));
+
         mQr.setImageBitmap(bitmap);
         mQrName.setText(KDAccountManager.getInstance().getUserInfoBean().getStuName());
+        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+        roundingParams.setRoundAsCircle(true);
+        mQrAvatar.getHierarchy().setRoundingParams(roundingParams);
         mQrAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
     }
 

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
 import com.kaidun.pro.api.KDApi;
@@ -91,6 +92,9 @@ public class HomeFragment extends BaseFragment {
         if (name.length > 1) {
             mParentsNick.setText(name[1]);
         }
+        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+        roundingParams.setRoundAsCircle(true);
+        mParentsAvatar.getHierarchy().setRoundingParams(roundingParams);
         mParentsAvatar.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         try {
             getFamilyInfo();
