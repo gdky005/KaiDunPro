@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.RvListener;
 import com.kaidun.pro.adapter.SubVideoAdapter;
@@ -15,13 +14,12 @@ import com.kaidun.pro.bean.SubVideoBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
-import team.zhuoke.sdk.base.BaseActivity;
 
 public class VideoDetailActivity extends KDBaseActivity implements View.OnClickListener {
 
@@ -107,13 +105,13 @@ public class VideoDetailActivity extends KDBaseActivity implements View.OnClickL
                             rvSubVideo.setAdapter(adapter);
 
                         } else
-                            ToastUtils.showShort(baseBean.getMessage());
+                            KDUtils.showErrorToast();
 
                     }
 
                     @Override
                     public void onFailure(Throwable throwable) {
-
+                        KDUtils.showErrorToast();
                     }
                 });
     }

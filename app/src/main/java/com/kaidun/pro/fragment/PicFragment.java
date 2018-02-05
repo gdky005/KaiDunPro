@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.PicAdapter;
@@ -18,6 +17,7 @@ import com.kaidun.pro.bean.PicBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDListCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +135,7 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
                 if (mNoteBookRefresh != null) {
                     mNoteBookRefresh.refreshComplete();
                 }
-                ToastUtils.showShort(throwable.getMessage());
+                KDUtils.showErrorToast();
             }
         });
     }

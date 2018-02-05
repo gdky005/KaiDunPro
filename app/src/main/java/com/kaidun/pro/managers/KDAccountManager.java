@@ -1,11 +1,11 @@
 package com.kaidun.pro.managers;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONObject;
 
@@ -90,7 +90,7 @@ public class KDAccountManager {
                 @Override
                 public void onFailure(Throwable throwable) {
 
-                    ToastUtils.showShort(throwable.getMessage());
+                    KDUtils.showErrorToast();
                     L.d("onFailure: " + throwable.getMessage());
 
                     if (loginFinish != null) {

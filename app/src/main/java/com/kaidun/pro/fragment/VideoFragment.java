@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.VideoFragmentAdapter;
 import com.kaidun.pro.bean.KDBaseBean;
@@ -15,6 +14,7 @@ import com.kaidun.pro.bean.VideoBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONException;
 
@@ -92,13 +92,13 @@ public class VideoFragment extends BaseFragment {
                             tabPackage.setupWithViewPager(vpVideo);
 
                         } else
-                            ToastUtils.showShort(baseBean.getMessage());
+                            KDUtils.showErrorToast();
 
                     }
 
                     @Override
                     public void onFailure(Throwable throwable) {
-
+                        KDUtils.showErrorToast();
                     }
                 });
     }
