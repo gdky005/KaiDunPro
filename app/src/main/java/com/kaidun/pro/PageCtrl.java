@@ -3,6 +3,7 @@ package com.kaidun.pro;
 import android.content.Context;
 import android.content.Intent;
 
+import com.kaidun.pro.activity.LoginActivity;
 import com.kaidun.pro.activity.PhotoViewActivity;
 import com.kaidun.pro.activity.VideoPlayActivity;
 
@@ -12,6 +13,16 @@ import com.kaidun.pro.activity.VideoPlayActivity;
  */
 
 public class PageCtrl {
+
+    /**
+     * 启动 登录页面
+     *
+     * @param context context
+     */
+    public static void startLoginActivity(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     /**
      * 启动 图片

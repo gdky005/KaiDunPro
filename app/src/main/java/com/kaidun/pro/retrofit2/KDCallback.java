@@ -1,11 +1,13 @@
 package com.kaidun.pro.retrofit2;
 
 
+import com.kaidun.pro.PageCtrl;
 import com.kaidun.pro.bean.KDBaseBean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import team.zhuoke.sdk.ZKBase;
 
 /**
  * ZKCallback
@@ -19,8 +21,13 @@ public abstract class KDCallback<T> implements Callback<KDBaseBean<T>> {
 
         if (baseBean != null) {
             T results = baseBean.getResult();
-            if (baseBean.getStatusCode() == 100) {
+
+            int code = baseBean.getStatusCode();
+
+            if (code == 100) {
                 onResponse(baseBean, results);
+            } else if (code == 208) {
+                PageCtrl.startLoginActivity(ZKBase.getContext());
             } else {
                 onFailure(new Throwable(baseBean.getMessage()));
             }

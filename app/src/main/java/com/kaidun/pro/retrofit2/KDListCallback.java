@@ -1,6 +1,7 @@
 package com.kaidun.pro.retrofit2;
 
 
+import com.kaidun.pro.PageCtrl;
 import com.kaidun.pro.bean.KDListBaseBean;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import team.zhuoke.sdk.ZKBase;
 
 /**
  * ZKCallback
@@ -21,8 +23,13 @@ public abstract class KDListCallback<T> implements Callback<KDListBaseBean<T>> {
 
         if (baseBean != null) {
             List<T> results = baseBean.getResult();
-            if (baseBean.getStatusCode() == 100) {
+
+            int code = baseBean.getStatusCode();
+
+            if (code == 100) {
                 onResponse(baseBean, results);
+            } else if (code == 208) {
+                PageCtrl.startLoginActivity(ZKBase.getContext());
             } else {
                 onFailure(new Throwable(baseBean.getMessage()));
             }
