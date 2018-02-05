@@ -54,8 +54,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -80,6 +80,10 @@
         <meta-data
             android:name="api_key"
             android:value="BNnZg5IkOjn0V6Gu8R19fMss" />
+        <!--正式-->
+        <!--<meta-data-->
+        <!--android:name="api_key"-->
+        <!--android:value="NIIGnE5O0ZU9BtSqREDlEwWo" />-->
 
         <!-- 用于接收系统消息以保证PushService正常运行 -->
         <receiver

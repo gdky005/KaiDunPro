@@ -67,6 +67,12 @@ public interface KDApi {
     Call<KDBaseBean<String>> selectRoleByMachine(@Body RequestBody requestBody);
 
     /**
+     * 推送
+     */
+    @POST("savePushInfo")
+    Call<KDBaseBean<String>> savePushInfo(@Body RequestBody requestBody);
+
+    /**
      * 家长端主页面校区通知，老师评语
      */
     @POST("selectFamilyInfo")

@@ -5,6 +5,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
+import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.bean.KDBaseBean;
+import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.managers.KDConnectionManager;
+import com.kaidun.pro.retrofit2.KDCallback;
+import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +71,11 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
         if (errorCode == 0) {
             // 绑定成功
             Log.d(TAG, "绑定成功");
+            savePushInfo(KDAccountManager.getInstance().getUserCode(),
+                    KDAccountManager.getInstance().getAreaCode(),
+                    KDAccountManager.getInstance().getPassWord(),
+                    KDAccountManager.getInstance().getLoginType(),
+                    channelId);
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
 //        updateContent(context, responseString);
@@ -262,4 +274,43 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
 //        context.getApplicationContext().startActivity(intent);
     }
 
+
+    /**
+     * 保存推送信息
+     */
+    private void savePushInfo(String userCode, String areaCode, String passWord, String loginType, String channelId) {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("areaCode", areaCode);
+            jsonObject.put("userCode", userCode);
+            jsonObject.put("passWord", passWord);
+            jsonObject.put("loginType", loginType);
+            jsonObject.put("channelId", channelId);
+            jsonObject.put("deviceType", 3);
+
+            KDConnectionManager.getInstance().getZHApi().savePushInfo(KDRequestUtils.getRequestBody(jsonObject)).enqueue(
+                    new KDCallback<String>() {
+                        @Override
+                        public void onResponse(KDBaseBean<String> baseBean, String result) {
+                            if (baseBean.getStatusCode() == 100) {
+                                if (TextUtils.equals("002", result)) {
+                                } else {
+                                }
+                            } else {
+                                ToastUtils.showShort(baseBean.getMessage());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            KDUtils.showErrorToast();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }

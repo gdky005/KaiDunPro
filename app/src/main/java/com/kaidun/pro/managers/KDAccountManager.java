@@ -39,8 +39,8 @@ public class KDAccountManager {
     private String userCode;
     private String areaCode;
 
-    //    private String passWord;
-    //    private String loginType;
+    private String passWord;
+    private String loginType;
 
     private String token;
     private LoginBean.DataBean userInfoBean;
@@ -72,6 +72,8 @@ public class KDAccountManager {
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
                     if (result != null) {
                         LoginBean.DataBean dataBean = result.getData();
+                        setPassWord(passWord);
+                        setLoginType(loginType);
 
                         if (dataBean != null) {
                             setUserInfoBean(dataBean);
@@ -146,5 +148,21 @@ public class KDAccountManager {
     public interface LoginFinish {
 
         void loginFinish(LoginBean login);
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    public String getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(String loginType) {
+        this.loginType = loginType;
     }
 }

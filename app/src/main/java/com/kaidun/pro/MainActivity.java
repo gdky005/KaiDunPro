@@ -14,8 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
@@ -190,9 +188,7 @@ public class MainActivity extends KDBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO 替换正式api key
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "BNnZg5IkOjn0V6Gu8R19fMss");
-    }
+         }
 
     @Override
     protected int getLayoutId() {
