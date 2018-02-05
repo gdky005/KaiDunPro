@@ -47,6 +47,13 @@
 
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progressbar"/>
+
         <ImageView
             android:id="@+id/iv_qr"
             android:layout_width="wrap_content"
@@ -54,7 +61,7 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@id/ll_"
             android:layout_centerHorizontal="true"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"/>
 
     </RelativeLayout>
 

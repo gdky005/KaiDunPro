@@ -26,11 +26,17 @@ public class HomeAdapter extends ZKAdapter<Home, HomeHolder> {
 
     @Override
     protected void convert(HomeHolder helper, Home item) {
+
+    }
+
+    @Override
+    public void onBindViewHolder(HomeHolder holder, int position) {
         try {
-            helper.setData(item, getItemCount());
+            holder.setData(getItem(position), getItemCount());
         } catch (Exception e) {
-            helper.setEmptyData(getItemCount());
+            holder.setEmptyData(getItemCount());
             e.printStackTrace();
+            Log.e("TAG", "onBindViewHolder = " + position);
         }
     }
 
