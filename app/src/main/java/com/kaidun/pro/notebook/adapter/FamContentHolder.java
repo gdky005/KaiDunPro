@@ -205,7 +205,6 @@ public class FamContentHolder extends ZKViewHolder {
 
                         @Override
                         public void onFailure(Throwable throwable) {
-
                         }
                     });
 

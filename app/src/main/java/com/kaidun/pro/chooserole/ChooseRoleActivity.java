@@ -17,6 +17,7 @@ import com.kaidun.pro.chooserole.bean.ChooseRoleBean;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONObject;
 
@@ -148,7 +149,7 @@ public class ChooseRoleActivity extends KDBaseActivity implements BaseQuickAdapt
 
                         @Override
                         public void onFailure(Throwable throwable) {
-
+                            KDUtils.showErrorToast();
                         }
                     });
         } catch (Exception e) {

@@ -18,6 +18,7 @@ import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 import com.kaidun.pro.utils.LoadingUtils;
 
 import org.json.JSONObject;
@@ -197,13 +198,14 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                                 addrSpinner.setAdapter(arrayAdapter);
 
                             } else {
-                                ToastUtils.showShort(baseBean.getMessage());
+                                KDUtils.showErrorToast();
                             }
 
                         }
 
                         @Override
                         public void onFailure(Throwable throwable) {
+                            KDUtils.showErrorToast();
                         }
 
 
@@ -249,7 +251,7 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
 
                         @Override
                         public void onFailure(Throwable throwable) {
-
+                            KDUtils.showErrorToast();
                         }
                     });
         } catch (Exception e) {
