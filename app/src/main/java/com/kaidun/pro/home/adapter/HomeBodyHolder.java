@@ -89,8 +89,13 @@ public class HomeBodyHolder extends HomeHolder {
         mTeacherEvaluationContent.setText("暂无老师评价");
         if (getAdapterPosition() != (count - 1)) {
             mTeacherEvaluationLayout.setVisibility(View.GONE);
+        } else {
+            mTeacherEvaluationLayout.setVisibility(View.VISIBLE);
         }
         showCourseSchedule();
+        mCourseName.setText("暂无");
+        setCoursePercentageWithEmpty();
+        setCourseSpinnerWithEmpty();
     }
 
     private void showCourseSchedule() {
@@ -100,7 +105,7 @@ public class HomeBodyHolder extends HomeHolder {
 
     private void hideCourseSchedule() {
         mLoading.setVisibility(View.VISIBLE);
-        mCourseScheduleLayout.setVisibility(View.GONE);
+        mCourseScheduleLayout.setVisibility(View.INVISIBLE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -215,6 +220,13 @@ public class HomeBodyHolder extends HomeHolder {
         mCourseSelect.setAdapter(adapter);
     }
 
+    private void setCourseSpinnerWithEmpty() {
+        String[] bookCodes = new String[] {"暂无"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
+                android.R.layout.simple_spinner_dropdown_item, bookCodes);
+        mCourseSelect.setAdapter(adapter);
+    }
+
     private String[] getBookCodeList(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
         String[] bookCodes = new String[courseInfoBean.getBookModels().size()];
         for (int i = 0; i < courseInfoBean.getBookModels().size(); i++) {
@@ -238,6 +250,21 @@ public class HomeBodyHolder extends HomeHolder {
                 mWritePercentage);
     }
 
+    private void setCoursePercentageWithEmpty() {
+        setPercentage(mListenSchedule,
+                calculatePercentage("0"),
+                mListenPercentage);
+        setPercentage(mSpeakSchedule,
+                calculatePercentage("0"),
+                mSpeakPercentage);
+        setPercentage(mReadSchedule,
+                calculatePercentage("0"),
+                mReadPercentage);
+        setPercentage(mWriteSchedule,
+                calculatePercentage("0"),
+                mWritePercentage);
+    }
+
     private double calculatePercentage(String rate) {
         double percentage = Double.valueOf(rate.split("%")[0]);
         return (percentage / 100);
@@ -256,7 +283,7 @@ public class HomeBodyHolder extends HomeHolder {
         if (sScheduleLength == 0) {
             sScheduleLength = layout.getWidth();
         }
-
+        Log.e("TAG", "sScheduleLength = " + sScheduleLength);
         //  防止数据超过100%时出现进度条超过布局宽度的问题
         if (progress > 1) {
             progress = 1;

@@ -79,7 +79,6 @@
                     android:id="@+id/sp_course_select"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dropDownSelector="@drawable/xiala_home"
                     android:entries="@array/course_index" />
 
             </LinearLayout>

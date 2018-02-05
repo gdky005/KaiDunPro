@@ -36,8 +36,8 @@ public class HomeAdapter extends ZKAdapter<Home, HomeHolder> {
         } catch (Exception e) {
             holder.setEmptyData(getItemCount());
             e.printStackTrace();
-            Log.e("TAG", "onBindViewHolder = " + position);
         }
+        Log.e("TAG", "onBindViewHolder = " + position);
     }
 
     @Override
