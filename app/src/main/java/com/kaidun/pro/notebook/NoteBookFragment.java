@@ -103,7 +103,6 @@ public class NoteBookFragment extends BaseFragment {
 
     private void showList(List<FamContact> list) {
         adapter = new NoteBookAdapter(R.layout.item_note_book, list);
-        mNoteBookGrid.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -113,6 +112,9 @@ public class NoteBookFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        if (adapter != null && mNoteBookGrid != null) {
+            mNoteBookGrid.setAdapter(adapter);
+        }
     }
 
     @Override
