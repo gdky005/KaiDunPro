@@ -18,10 +18,18 @@ import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
 
 public class MainActivity extends KDBaseActivity {
+
+    public static final String FLAG_PUSH_KEY = "FLAG_PUSH_KEY";
+
+
     RadioGroup radioGroup;
+
+    public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;
+    public static final int NAV_TYPE_PICTURE = 2;
     public static final int NAV_TYPE_PARENT_NOTEBOOK = 3;
     public static final int NAV_TYPE_MESSAGE = 4;
+
 
     private static Fragment[] fragmentArray = new Fragment[]{
             HomeFragment.newInstance(),
@@ -135,6 +143,21 @@ public class MainActivity extends KDBaseActivity {
         if (i == R.id.write_btn) {
             startActivity(new Intent(mContext, WriteMsgActivity.class));
         }
+    }
+
+    public boolean isUnReadState = false;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int pushType = intent.getIntExtra(FLAG_PUSH_KEY, 0);
+
+        Fragment fragment = fragmentArray[pushType];
+        if (fragment instanceof MsgFragment) {
+            isUnReadState = true;
+        }
+
+        changeFragment(pushType);
     }
 
 
