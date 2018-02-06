@@ -105,6 +105,10 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                 }else {
                    // mTextNoMsg.setVisibility(View.VISIBLE);
                     refreshLayout.refreshComplete();
+
+                    // TODO: 2018/2/6  这里说明刷新的数据已经没有 未读消息了，需要清除
+                    mData.clear();
+                    messageAdapter.notifyDataSetChanged();
                 }
             }
 
