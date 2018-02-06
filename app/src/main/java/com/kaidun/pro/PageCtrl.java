@@ -38,6 +38,7 @@ public class PageCtrl {
 
     /**
      * 启动视频播放页面
+     *
      * @param context   context
      * @param videoName 视频名字
      * @param thumbUrl  视频缩略图
@@ -54,11 +55,13 @@ public class PageCtrl {
 
     /**
      * 从推送进入到主界面里面
-     * @param context       context
-     * @param isUnReadMsg   是否为 未读消息主页面？ 如果不是进入 图片主页面
+     *
+     * @param context     context
+     * @param isUnReadMsg 是否为 未读消息主页面？ 如果不是进入 图片主页面
      */
     public static void startMainActivityForPush(Context context, boolean isUnReadMsg) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(MainActivity.FLAG_PUSH_KEY, isUnReadMsg ? MainActivity.NAV_TYPE_MESSAGE : MainActivity.NAV_TYPE_PICTURE);
         context.startActivity(intent);
     }

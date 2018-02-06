@@ -8,6 +8,7 @@ import android.util.Log;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.MainActivity;
+import com.kaidun.pro.PageCtrl;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -176,10 +177,9 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
                 if (!customJson.isNull("pushType")) {
                     pushType = customJson.getString("pushType");
                     if (TextUtils.equals("102", pushType)) {
-                        updateContent(context, customContentString);
-
+                        PageCtrl.startMainActivityForPush(context, true);
                     } else if (TextUtils.equals("103", pushType)) {
-                        updateContent(context, customContentString);
+                        PageCtrl.startMainActivityForPush(context, false);
                     }
                 }
 
