@@ -52,7 +52,7 @@
         android:drawablePadding="2dp"
         android:drawableRight="@drawable/jiantou_message"
         android:textColor="@color/text_third"
-        android:textSize="14sp"
+        android:textSize="12sp"
         tools:ignore="RelativeOverlap"
         tools:text="2017/12/26" />
 
