@@ -3,9 +3,11 @@ package com.kaidun.pro.fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.MsgFragmentPagerAdapter;
 
@@ -62,4 +64,20 @@ public class MsgFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectTab();
+    }
+
+    private void selectTab() {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) activity;
+            if (mainActivity.isUnReadState && mMsgVp != null) {
+                mMsgVp.setCurrentItem(1);
+                mainActivity.isUnReadState = false;
+            }
+        }
+    }
 }

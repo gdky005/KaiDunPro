@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends KDBaseActivity {
 
+    public static final String FLAG_PUSH_KEY = "FLAG_PUSH_KEY";
+
     public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;
     public static final int NAV_TYPE_PICTURE = 2;
@@ -176,7 +178,7 @@ public class MainActivity extends KDBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         }
+    }
 
     @Override
     protected int getLayoutId() {
@@ -204,5 +206,18 @@ public class MainActivity extends KDBaseActivity {
 
     }
 
+    public boolean isUnReadState = false;
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int pushType = intent.getIntExtra(FLAG_PUSH_KEY, 0);
+
+        Fragment fragment = TABLE_FRAGMENT[pushType];
+        if (fragment instanceof MsgFragment) {
+            isUnReadState = true;
+        }
+
+        containerViewPager.setCurrentItem(pushType);
+    }
 }
