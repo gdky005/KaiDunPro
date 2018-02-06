@@ -1,5 +1,7 @@
 package com.kaidun.pro.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Spinner;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
@@ -38,6 +41,16 @@ import team.zhuoke.sdk.ZKBase;
  */
 
 public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemSelectedListener {
+
+    /**
+     * 添加 app 需要的动态权限
+     */
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_NETWORK_STATE};
+
     @BindView(R.id.spinner_addr)
     Spinner addrSpinner;
     @BindView(R.id.et_login_account)
@@ -146,6 +159,8 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         arrayAdapter = new ArrayAdapter<String>(
                 this, R.layout.support_simple_spinner_dropdown_item, areaNameList);
         getAreaList();
+
+        verifyStoragePermissions(this);
     }
 
     private boolean checkIsValid(String account, String pwd, String areaCode) {
@@ -265,6 +280,21 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         }
 
 
+    }
+
+    public void verifyStoragePermissions(Activity activity) {
+        PermissionUtils.requestPermissions(activity, 200, PERMISSIONS_STORAGE, new PermissionUtils.OnPermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+
+            }
+
+            @Override
+            public void onPermissionDenied(String[] deniedPermissions) {
+                ToastUtils.showShort("您禁用了以下权限，app 可能无法正常运行：\n" + deniedPermissions.toString());
+
+            }
+        });
     }
 
 
