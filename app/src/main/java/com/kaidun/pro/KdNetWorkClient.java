@@ -108,17 +108,12 @@ public class KdNetWorkClient {
     public void getReadAndUnReadMsg(String flag,String kfmcode) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("kfmRole", "001");
             if (!TextUtils.isEmpty(kfmcode)){
-                jsonObject.put("slideStatus", "down");
-                jsonObject.put("kmdCode", kfmcode);
+                jsonObject.put("slideStatus", "up");
+                jsonObject.put("kfmCode", kfmcode);
             }
-            jsonObject.put("status", flag);
             jsonObject.put("kfmStatus", flag);
             KDConnectionManager.getInstance().getZHApi().getReadAndUnreadMsg(
-                    KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<ReadAndUnReadBean>() {
                         @Override
