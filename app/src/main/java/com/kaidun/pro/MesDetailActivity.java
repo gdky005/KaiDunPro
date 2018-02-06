@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.adapter.MsgDetailAdapter;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by lmj on 2018/1/23.
  */
 
-public class MesDetailActivity extends KDBaseActivity implements View.OnClickListener, View.OnLayoutChangeListener {
+public class MesDetailActivity extends KDBaseActivity implements View.OnClickListener, View.OnLayoutChangeListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     public static final int REPLY = 1;
@@ -89,6 +90,9 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
         mMsgDetailRecycler.addItemDecoration(new RecDividerItemDecoration(getResources().getColor(R.color.text_third),1));
         mMsgDetailRecycler.setAdapter(adapter);
         mToolbarTitle.setText(R.string.msg_detail);
+        adapter.setOnLoadMoreListener(this,mMsgDetailRecycler);
+//        adapter.disableLoadMoreIfNotFullPage(mMsgDetailRecycler);
+
         getDetailDemo();
     }
 
@@ -109,7 +113,6 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                     mData.clear();
                     mData.addAll(result);
                     adapter.notifyDataSetChanged();
-                    mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
                 }
             }
 
@@ -118,7 +121,7 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                 //todo  请求失败提醒
             }
         });
-        httpUtils.getMsgDetail(keyId);
+        httpUtils.getMsgDetail(keyId,null);
     }
 
     private void showNoMsgTip() {
@@ -153,7 +156,8 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                 public void getSuccessDataCallBack(MsgBean data) {
                     if (100 == data.getStatusCode()){
                         mReplyedit.setText("");
-                        getDetailDemo();    //成功后重新刷新数据
+                        onLoadMoreRequested();  //成功后重新刷新数据
+                        mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
                         ToastUtils.showShort("发送成功！");
                     }else {
                         ToastUtils.showShort("发送失败！");
@@ -181,12 +185,41 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
     @Override
     public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-        mMsgDetailRecycler.requestLayout();
+       /* mMsgDetailRecycler.requestLayout();
         mMsgDetailRecycler.post(new Runnable() {
             @Override
             public void run() {
                 mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
             }
-        });
+        });*/
     }
+
+    @Override
+    public void onLoadMoreRequested() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgDetailBean>() {
+
+            @Override
+            public void getSuccessDataCallBack(MsgDetailBean data) {
+                if (data != null ){
+                    List<MsgDetailBean.ResultBean> result = data.getResult();
+                    if (result == null || result.size() <= 0){
+                        adapter.loadMoreEnd();
+                        return;
+                    }
+                    mData.addAll(result);
+                    adapter.loadMoreComplete();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+                //todo  请求失败提醒
+                adapter.loadMoreFail();
+            }
+        });
+        httpUtils.getMsgDetail(keyId,mData.get(mData.size() -1).getKmdCode());
+    }
+
+
 }

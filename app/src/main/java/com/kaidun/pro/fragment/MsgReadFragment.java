@@ -73,9 +73,9 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
         msg_read_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_read_recler.setAdapter(messageAdapter);
         httpUtils = new KdNetWorkClient();
-        getReadMsg();
+//        getReadMsg();
 
-        mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
+        mRefreshLayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
         mRefreshLayout.addEasyEvent(this);
     }
 
@@ -90,6 +90,11 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
         return mData;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getReadMsg();
+    }
 
     private void getReadMsg() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
@@ -111,7 +116,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
                 mRefreshLayout.refreshComplete();
             }
         });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ);
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,null);
     }
 
     @Override
@@ -136,7 +141,25 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
     @Override
     public void onLoadMore() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
+            @Override
+            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
+                if (data.getResult() != null && data.getResult().size() > 0){
+                    mData.addAll(data.getResult());
+                    messageAdapter.notifyDataSetChanged();
+                    mRefreshLayout.loadMoreComplete();
+                }else {
+                    mRefreshLayout.loadMoreComplete();
+                }
+            }
 
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+                //todo 请求失败
+                mRefreshLayout.loadMoreFail();
+            }
+        });
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
     }
 
     @Override

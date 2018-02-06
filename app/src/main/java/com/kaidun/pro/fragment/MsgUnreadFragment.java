@@ -73,7 +73,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         messageAdapter.setOnDelListener(this);
 
         refreshLayout.addEasyEvent(this);
-        refreshLayout.setLoadMoreModel(LoadModel.NONE);
+        refreshLayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
 
     }
 
@@ -85,12 +85,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
         mData = new ArrayList<ReadAndUnReadBean.ResultBean>();
-        String content = "推荐了 Jam 小朋友加入凯顿幼儿英语。凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。";
-       /* for (int i = 0; i < 9; i++) {
-            SwipeBean bean = new SwipeBean(null, "2017/12/26",
-                    "家长", content, "回复：凯顿"+i);
-            data.add(bean);
-        }*/
         return mData;
     }
 
@@ -120,7 +114,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                 refreshLayout.refreshComplete();
             }
         });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD);
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD,null);
     }
 
     @Override
@@ -164,7 +158,25 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     @Override
     public void onLoadMore() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
+            @Override
+            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
+                if (data.getResult() != null && data.getResult().size() > 0){
+                    mData.addAll(data.getResult());
+                    messageAdapter.notifyDataSetChanged();
+                    refreshLayout.loadMoreComplete();
+                }else {
+                    refreshLayout.loadMoreComplete();
+                }
+            }
 
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+                //todo 请求失败
+                refreshLayout.loadMoreFail();
+            }
+        });
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
     }
 
     @Override

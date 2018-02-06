@@ -1,5 +1,7 @@
 package com.kaidun.pro;
 
+import android.text.TextUtils;
+
 import com.kaidun.pro.bean.ClassBean;
 import com.kaidun.pro.bean.MsgDetailBean;
 import com.kaidun.pro.bean.ReadAndUnReadBean;
@@ -13,6 +15,7 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import team.zhuoke.sdk.ZKBase;
 
 /**
  * Created by lmj on 2018/1/25.
@@ -37,6 +40,10 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
                             if (mCallBack != null && response != null) {
+                                if (response.body().getStatusCode() == 208){
+                                    PageCtrl.startLoginActivity(ZKBase.getContext());
+                                    return;
+                                }
                                   mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
@@ -58,17 +65,19 @@ public class KdNetWorkClient {
     /**
      * 获取消息详情
      */
-    public void getMsgDetail(String keyId) {
+    public void getMsgDetail(String keyId,String kmdcode) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("emId", keyId);
+           /* jsonObject.put("emId", keyId);*/
             jsonObject.put("kfmId", keyId);    //主键id
             // TODO: 2018/2/5 test 需要修改这里
-//            jsonObject.put("slideStatus", "down");
-//            jsonObject.put("kmdCode", "10000048");
-            jsonObject.put("messageContent", "内容");
+            if (!TextUtils.isEmpty(kmdcode)){
+                jsonObject.put("slideStatus", "down");
+                jsonObject.put("kmdCode", kmdcode);
+            }
+//            jsonObject.put("messageContent", "内容");
             KDConnectionManager.getInstance().getZHApi().getMsgDetail(
                     KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
@@ -76,6 +85,10 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<MsgDetailBean> call, Response<MsgDetailBean> response) {
                             if (mCallBack != null && response != null && response.isSuccessful()) {
+                                if (response.body().getStatusCode() == 208){
+                                    PageCtrl.startLoginActivity(ZKBase.getContext());
+                                    return;
+                                }
                                 mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
@@ -97,13 +110,16 @@ public class KdNetWorkClient {
     /**
      * 获取未读和已读信息    “001”（已读）“002”（未读）
      */
-    public void getReadAndUnReadMsg(String flag) {
+    public void getReadAndUnReadMsg(String flag,String kfmcode) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
             jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
             jsonObject.put("kfmRole", "001");
-            jsonObject.put("slideStatus", "down");
+            if (!TextUtils.isEmpty(kfmcode)){
+                jsonObject.put("slideStatus", "down");
+                jsonObject.put("kmdCode", kfmcode);
+            }
             jsonObject.put("status", flag);
             jsonObject.put("kfmStatus", flag);
             KDConnectionManager.getInstance().getZHApi().getReadAndUnreadMsg(
@@ -115,6 +131,10 @@ public class KdNetWorkClient {
                             if (response.isSuccessful()) {
                                 ReadAndUnReadBean body = response.body();
                                 if (mCallBack != null && body != null) {
+                                    if (body.getStatusCode() == 208){
+                                        PageCtrl.startLoginActivity(ZKBase.getContext());
+                                        return;
+                                    }
                                     mCallBack.getSuccessDataCallBack(body);
                                 }
                             }
@@ -151,6 +171,10 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
                             if (mCallBack != null && response.isSuccessful()) {
+                                if (response.body().getStatusCode() == 208){
+                                    PageCtrl.startLoginActivity(ZKBase.getContext());
+                                    return;
+                                }
                                 mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
@@ -186,6 +210,10 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<MsgBean> call, Response<MsgBean> response) {
                             if (mCallBack != null && response != null) {
+                                if (response.body().getStatusCode() == 208){
+                                    PageCtrl.startLoginActivity(ZKBase.getContext());
+                                    return;
+                                }
                                 mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
@@ -219,6 +247,10 @@ public class KdNetWorkClient {
                         @Override
                         public void onResponse(Call<ClassBean> call, Response<ClassBean> response) {
                             if (mCallBack != null && response != null) {
+                                if (response.body().getStatusCode() == 208){
+                                    PageCtrl.startLoginActivity(ZKBase.getContext());
+                                    return;
+                                }
                                     mCallBack.getSuccessDataCallBack(response.body());
                             }
                         }
