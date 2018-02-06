@@ -9,6 +9,13 @@
         android:id="@+id/titlebar"
         layout="@layout/widget_toolbar"
         />
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progressbar"/>
 
     <ImageView
         android:id="@+id/send_img"

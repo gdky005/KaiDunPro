@@ -51,4 +51,15 @@ public class PageCtrl {
         context.startActivity(intent);
     }
 
+
+    /**
+     * 从推送进入到主界面里面
+     * @param context       context
+     * @param isUnReadMsg   是否为 未读消息主页面？ 如果不是进入 图片主页面
+     */
+    public static void startMainActivityForPush(Context context, boolean isUnReadMsg) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MainActivity.FLAG_PUSH_KEY, isUnReadMsg ? MainActivity.NAV_TYPE_MESSAGE : MainActivity.NAV_TYPE_PICTURE);
+        context.startActivity(intent);
+    }
 }

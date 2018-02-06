@@ -156,14 +156,14 @@ public interface KDApi {
      * 获取已读和未读消息
      */
     @POST("selectMessge")
-    Call<ReadAndUnReadBean> getReadAndUnreadMsg(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<ReadAndUnReadBean> getReadAndUnreadMsg(@Body RequestBody requestBody);
 
 
     /**
      * 获取消息详情
      */
     @POST("selectMessgeDetail")
-    Call<MsgDetailBean> getMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<MsgDetailBean> getMsgDetail(@Body RequestBody requestBody);
 
 
     /**

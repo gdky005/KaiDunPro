@@ -1,11 +1,13 @@
 package com.kaidun.pro.receiver;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.blankj.utilcode.util.ToastUtils;
+import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -170,19 +172,23 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
             JSONObject customJson = null;
             try {
                 customJson = new JSONObject(customContentString);
-                String myvalue = null;
-                if (!customJson.isNull("mykey")) {
-                    myvalue = customJson.getString("mykey");
+                String pushType = null;
+                if (!customJson.isNull("pushType")) {
+                    pushType = customJson.getString("pushType");
+                    if (TextUtils.equals("102", pushType)) {
+                        updateContent(context, customContentString);
+
+                    } else if (TextUtils.equals("103", pushType)) {
+                        updateContent(context, customContentString);
+                    }
                 }
+
             } catch (JSONException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-        // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-        //TODO 点击通知后处理
-        updateContent(context, notifyString);
     }
 
     /**
@@ -268,10 +274,10 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
     }
 
     private void updateContent(Context context, String content) {
-//        Intent intent = new Intent();
-//        intent.setClass(context.getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(context, MainActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.getApplicationContext().startActivity(intent);
+        context.startActivity(intent);
     }
 
 

@@ -68,23 +68,18 @@ public class KdNetWorkClient {
     public void getMsgDetail(String keyId,String kmdcode) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-           /* jsonObject.put("emId", keyId);*/
             jsonObject.put("kfmId", keyId);    //主键id
             // TODO: 2018/2/5 test 需要修改这里
             if (!TextUtils.isEmpty(kmdcode)){
                 jsonObject.put("slideStatus", "down");
                 jsonObject.put("kmdCode", kmdcode);
             }
-//            jsonObject.put("messageContent", "内容");
             KDConnectionManager.getInstance().getZHApi().getMsgDetail(
-                    KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<MsgDetailBean>() {
                         @Override
                         public void onResponse(Call<MsgDetailBean> call, Response<MsgDetailBean> response) {
-                            if (mCallBack != null && response != null && response.isSuccessful()) {
+                            if (mCallBack != null && response.isSuccessful()) {
                                 if (response.body().getStatusCode() == 208){
                                     PageCtrl.startLoginActivity(ZKBase.getContext());
                                     return;
@@ -113,17 +108,12 @@ public class KdNetWorkClient {
     public void getReadAndUnReadMsg(String flag,String kfmcode) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-            jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
-            jsonObject.put("kfmRole", "001");
             if (!TextUtils.isEmpty(kfmcode)){
-                jsonObject.put("slideStatus", "down");
-                jsonObject.put("kmdCode", kfmcode);
+                jsonObject.put("slideStatus", "up");
+                jsonObject.put("kfmCode", kfmcode);
             }
-            jsonObject.put("status", flag);
             jsonObject.put("kfmStatus", flag);
             KDConnectionManager.getInstance().getZHApi().getReadAndUnreadMsg(
-                    KDRequestUtils.getHeaderMaps(),
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new Callback<ReadAndUnReadBean>() {
                         @Override
