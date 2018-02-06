@@ -163,7 +163,7 @@ public interface KDApi {
      * 获取消息详情
      */
     @POST("selectMessgeDetail")
-    Call<MsgDetailBean> getMsgDetail(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+    Call<MsgDetailBean> getMsgDetail(@Body RequestBody requestBody);
 
 
     /**
