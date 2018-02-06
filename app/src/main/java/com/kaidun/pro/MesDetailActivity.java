@@ -9,6 +9,7 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -56,6 +57,8 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
     @BindView(R.id.root_layout)
     RelativeLayout rootLayout;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar mProgress;
 
     @Override
     protected int getLayoutId() {
@@ -163,15 +166,18 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                         ToastUtils.showShort("发送失败！");
                     }
                     sendMsg.setClickable(true);
+                    mProgress.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void getFailDataCallBack(int failIndex) {
                     sendMsg.setClickable(true);
+                    mProgress.setVisibility(View.GONE);
                 }
             });
             httpUtils.sendMsgDetail(keyId, msg);
             sendMsg.setClickable(false);
+            mProgress.setVisibility(View.VISIBLE);
         }
     }
 

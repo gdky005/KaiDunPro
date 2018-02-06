@@ -139,6 +139,14 @@
             android:textColorHint="@color/text_second"
             android:textSize="14sp" />
 
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progressbar"/>
+
 
     </RelativeLayout>
 

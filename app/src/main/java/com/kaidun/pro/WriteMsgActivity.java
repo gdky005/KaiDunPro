@@ -2,10 +2,12 @@ package com.kaidun.pro;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,6 +51,9 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
     ImageView mClassIcon;
     @BindView(R.id.class_tag)
     TextView mClassTag;
+
+    @BindView(R.id.pb_loading)
+    ProgressBar mProgress;
 
     private KdNetWorkClient httpUtils;
     private HashMap<String, String> classInfos = new HashMap<String, String>();  //默认大小应该足够了
@@ -149,31 +154,55 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
     private Handler mHandler = new Handler();
 
     private void sendClassMsg() {
+        String className = spinnerClass.getSelectedItem().toString();
+        String tempclassId = classId != null ? classId : classInfos.get(className);
+        String content = mEditContent.getText().toString();
+        String theme = mEditTheme.getText().toString();
+
+        if (TextUtils.isEmpty(className)){
+            ToastUtils.showShort("请选择班级");
+            return;
+        }
+
+        if (TextUtils.isEmpty(content) || TextUtils.isEmpty(theme)){
+            ToastUtils.showShort("请输入主题和内容");
+            return;
+        }
+
+
+        mProgress.setVisibility(View.VISIBLE);
+        send.setClickable(false);
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgBean>() {
             @Override
             public void getSuccessDataCallBack(MsgBean data) {
                 if (data != null && data.getStatusCode() == 100) {
                     ToastUtils.showLong("留言成功");
+                    clear();
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             finish();
                         }
-                    }, 1000);
+                    }, 200);
 
                 }
+                send.setClickable(true);
+                mProgress.setVisibility(View.GONE);
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-
+                send.setClickable(true);
+                mProgress.setVisibility(View.GONE);
             }
         });
-        String className = spinnerClass.getSelectedItem().toString();
-        String tempclassId = classId != null ? classId : classInfos.get(className);
-        String content = mEditContent.getText().toString();
-        String theme = mEditTheme.getText().toString();
+
         httpUtils.leaveMsg(content, theme, tempclassId);
+    }
+
+    private void clear() {
+        mEditTheme.setText("");
+        mEditContent.setText("");
     }
 
     @Override
