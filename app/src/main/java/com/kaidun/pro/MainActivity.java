@@ -1,7 +1,5 @@
 package com.kaidun.pro;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
-import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
 import com.kaidun.pro.fragment.PicFragment;
@@ -49,14 +45,6 @@ public class MainActivity extends KDBaseActivity {
             MsgFragment.newInstance(NAV_TYPE_MESSAGE)};
 
     public static int[] NAV_TYPE = new int[]{NAV_TYPE_MAIN, NAV_TYPE_VIDEO, NAV_TYPE_PICTURE, NAV_TYPE_PARENT_NOTEBOOK, NAV_TYPE_MESSAGE};
-
-    /**
-     * 添加 app 需要的动态权限
-     */
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_NETWORK_STATE};
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -214,21 +202,7 @@ public class MainActivity extends KDBaseActivity {
     @Override
     protected void initData() {
 
-        verifyStoragePermissions(this);
     }
 
-    public void verifyStoragePermissions(Activity activity) {
-        PermissionUtils.requestPermissions(activity, 200, PERMISSIONS_STORAGE, new PermissionUtils.OnPermissionListener() {
-            @Override
-            public void onPermissionGranted() {
 
-            }
-
-            @Override
-            public void onPermissionDenied(String[] deniedPermissions) {
-                ToastUtils.showShort("您禁用了以下权限，app 可能无法正常运行：\n" + deniedPermissions.toString());
-
-            }
-        });
-    }
 }
