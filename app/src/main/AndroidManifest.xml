@@ -76,15 +76,6 @@
 
 
         <!-- push service start -->
-        <!-- 在百度开发者中心查询应用的API Key -->
-        <meta-data
-            android:name="api_key"
-            android:value="BNnZg5IkOjn0V6Gu8R19fMss" />
-        <!--正式-->
-        <!--<meta-data-->
-        <!--android:name="api_key"-->
-        <!--android:value="NIIGnE5O0ZU9BtSqREDlEwWo" />-->
-
         <!-- 用于接收系统消息以保证PushService正常运行 -->
         <receiver
             android:name="com.baidu.android.pushservice.PushServiceReceiver"
