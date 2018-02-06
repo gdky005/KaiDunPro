@@ -1,17 +1,15 @@
 package com.kaidun.pro;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
+import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
 import com.kaidun.pro.fragment.PicFragment;
@@ -19,74 +17,117 @@ import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MainActivity extends KDBaseActivity {
-
-    public static final String FLAG_PUSH_KEY = "FLAG_PUSH_KEY";
-
-    public static final int NAV_TYPE_MAIN = 0;
+    RadioGroup radioGroup;
     public static final int NAV_TYPE_VIDEO = 1;
-    public static final int NAV_TYPE_PICTURE = 2;
     public static final int NAV_TYPE_PARENT_NOTEBOOK = 3;
     public static final int NAV_TYPE_MESSAGE = 4;
-    @BindView(R.id.container_view_pager)
-    ViewPager containerViewPager;
-    @BindView(R.id.navigation)
-    BottomNavigationView navigation;
-    @BindView(R.id.container)
-    RelativeLayout container;
 
-
-    private static Fragment[] TABLE_FRAGMENT = new Fragment[]{
+    private static Fragment[] fragmentArray = new Fragment[]{
             HomeFragment.newInstance(),
             VideoFragment.newInstance(NAV_TYPE_VIDEO),
             PicFragment.newInstance(),
             NoteBookFragment.newInstance(NAV_TYPE_PARENT_NOTEBOOK),
             MsgFragment.newInstance(NAV_TYPE_MESSAGE)};
 
-    public static int[] NAV_TYPE = new int[]{NAV_TYPE_MAIN, NAV_TYPE_VIDEO, NAV_TYPE_PICTURE, NAV_TYPE_PARENT_NOTEBOOK, NAV_TYPE_MESSAGE};
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_NETWORK_STATE};
 
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        }
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        @Override
-        public void onPageSelected(int position) {
-            int itemId = R.id.navigation_main;
-            switch (position) {
-                case NAV_TYPE_MAIN:
+
+    @Override
+    protected void initViews() {
+        mToolbar.setNavigationIcon(null);
+        setTitle("首页");
+        radioGroup = findViewById(R.id.radioGroup);
+        FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
+        beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        beginTransaction.add(R.id.main_layout, fragmentArray[0]);
+        beginTransaction.add(R.id.main_layout, fragmentArray[1]);
+        beginTransaction.add(R.id.main_layout, fragmentArray[2]);
+        beginTransaction.add(R.id.main_layout, fragmentArray[3]);
+        beginTransaction.add(R.id.main_layout, fragmentArray[4]);
+        beginTransaction.commit();
+        changeFragment(1);
+
+    }
+
+    @Override
+    protected void initListener() {
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.bottom_home:
                     setRight(-1);
-                    itemId = R.id.navigation_main;
+                    setTitle("主页");
+                    changeFragment(1);
                     break;
-                case NAV_TYPE_VIDEO:
+                case R.id.bottom_video:
+                    setTitle("视频");
                     setRight(-1);
-                    itemId = R.id.navigation_video;
+                    changeFragment(2);
+
                     break;
-                case NAV_TYPE_PICTURE:
+                case R.id.bottom_pic:
+                    setTitle("图片");
                     setRight(-1);
-                    itemId = R.id.navigation_picture;
+                    changeFragment(3);
                     break;
-                case NAV_TYPE_PARENT_NOTEBOOK:
+                case R.id.bottom_jia:
+                    setTitle("家联本");
                     setRight(-1);
-                    itemId = R.id.navigation_parent_notebook;
+                    changeFragment(4);
                     break;
-                case NAV_TYPE_MESSAGE:
-                    itemId = R.id.navigation_message;
+                case R.id.bottom_msg:
+                    setTitle("消息");
                     setRight(R.menu.item_message_edit);
+                    changeFragment(5);
                     break;
+
             }
-            navigation.setSelectedItemId(itemId);
-        }
+        });
+    }
 
-        @Override
-        public void onPageScrollStateChanged(int state) {
+    @Override
+    protected void initData() {
+        verifyStoragePermissions(this);
+    }
 
+    public void verifyStoragePermissions(Activity activity) {
+        PermissionUtils.requestPermissions(activity, 200, PERMISSIONS_STORAGE, new PermissionUtils.OnPermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+
+            }
+
+            @Override
+            public void onPermissionDenied(String[] deniedPermissions) {
+                ToastUtils.showShort("您禁用了以下权限，app 可能无法正常运行：\n" + deniedPermissions.toString());
+
+            }
+        });
+    }
+
+    public void changeFragment(int index) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        for (int i = 0; i < fragmentArray.length; i++) {
+            if (i + 1 != index) {
+                // 隐藏选项卡
+                fragmentTransaction.hide(fragmentArray[i]);
+            } else {
+                // 当前选项卡
+                fragmentTransaction.show(fragmentArray[i]);
+
+            }
         }
-    };
+        fragmentTransaction.commitAllowingStateLoss();
+    }
 
     @Override
     public void onRightText(MenuItem item) {
@@ -96,128 +137,5 @@ public class MainActivity extends KDBaseActivity {
         }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_main:
-                    setRight(-1);
-                    setTitle("主页");
-                    containerViewPager.setCurrentItem(NAV_TYPE_MAIN);
-                    return true;
-                case R.id.navigation_video:
-                    setTitle("视频");
-                    setRight(-1);
-                    containerViewPager.setCurrentItem(NAV_TYPE_VIDEO);
-                    return true;
-                case R.id.navigation_picture:
-                    setTitle("图片");
-                    setRight(-1);
-                    containerViewPager.setCurrentItem(NAV_TYPE_PICTURE);
-                    return true;
-                case R.id.navigation_parent_notebook:
-                    setTitle("家联本");
-                    setRight(-1);
-                    containerViewPager.setCurrentItem(NAV_TYPE_PARENT_NOTEBOOK);
-                    return true;
-                case R.id.navigation_message:
-                    setTitle("消息");
-                    setRight(R.menu.item_message_edit);
-                    containerViewPager.setCurrentItem(NAV_TYPE_MESSAGE);
-                    return true;
-            }
-            return false;
-        }
-    };
-
-    /**
-     * MainActivity 中的四大底标签页面
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-
-        public static final int NAV_TYPE_MAIN = 0;
-        public static final int NAV_TYPE_VIDEO = 1;
-        public static final int NAV_TYPE_PICTURE = 2;
-        public static final int NAV_TYPE_PARENT_NOTEBOOK = 3;
-        public static final int NAV_TYPE_MESSAGE = 4;
-
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case NAV_TYPE_MAIN:
-                    return TABLE_FRAGMENT[0];
-                case NAV_TYPE_VIDEO:
-                    return TABLE_FRAGMENT[1];
-                case NAV_TYPE_PICTURE:
-                    return TABLE_FRAGMENT[2];
-                case NAV_TYPE_PARENT_NOTEBOOK:
-                    return TABLE_FRAGMENT[3];
-                case NAV_TYPE_MESSAGE:
-                    return TABLE_FRAGMENT[4];
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return NAV_TYPE.length;
-        }
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initViews() {
-        ButterKnife.bind(this);
-        mToolbar.setNavigationIcon(null);
-        setTitle("首页");
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    @Override
-    protected void initListener() {
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        containerViewPager.setOffscreenPageLimit(1);
-        containerViewPager.addOnPageChangeListener(onPageChangeListener);
-        containerViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
-    }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    public boolean isUnReadState = false;
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        int pushType = intent.getIntExtra(FLAG_PUSH_KEY, 0);
-
-        Fragment fragment = TABLE_FRAGMENT[pushType];
-        if (fragment instanceof MsgFragment) {
-            isUnReadState = true;
-        }
-
-        containerViewPager.setCurrentItem(pushType);
-    }
 }
