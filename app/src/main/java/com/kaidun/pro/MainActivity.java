@@ -42,6 +42,7 @@ public class MainActivity extends KDBaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_NETWORK_STATE};
+    private static String[] mTitles = {"主页", "视频", "图片", "家联本", "消息"};
 
 
     @Override
@@ -53,7 +54,7 @@ public class MainActivity extends KDBaseActivity {
     @Override
     protected void initViews() {
         mToolbar.setNavigationIcon(null);
-        setTitle("首页");
+        setTitle(mTitles[NAV_TYPE_MAIN]);
         radioGroup = findViewById(R.id.radioGroup);
         FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
         beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -73,27 +74,27 @@ public class MainActivity extends KDBaseActivity {
             switch (checkedId) {
                 case R.id.bottom_home:
                     setRight(-1);
-                    setTitle("主页");
+                    setTitle(mTitles[NAV_TYPE_MAIN]);
                     changeFragment(1);
                     break;
                 case R.id.bottom_video:
-                    setTitle("视频");
+                    setTitle(mTitles[NAV_TYPE_VIDEO]);
                     setRight(-1);
                     changeFragment(2);
 
                     break;
                 case R.id.bottom_pic:
-                    setTitle("图片");
+                    setTitle(mTitles[NAV_TYPE_PICTURE]);
                     setRight(-1);
                     changeFragment(3);
                     break;
                 case R.id.bottom_jia:
-                    setTitle("家联本");
+                    setTitle(mTitles[NAV_TYPE_PARENT_NOTEBOOK]);
                     setRight(-1);
                     changeFragment(4);
                     break;
                 case R.id.bottom_msg:
-                    setTitle("消息");
+                    setTitle(mTitles[NAV_TYPE_MESSAGE]);
                     setRight(R.menu.item_message_edit);
                     changeFragment(5);
                     break;
@@ -156,8 +157,8 @@ public class MainActivity extends KDBaseActivity {
         if (fragment instanceof MsgFragment) {
             isUnReadState = true;
         }
-
-        changeFragment(pushType);
+        setTitle(mTitles[pushType]);
+        changeFragment(pushType + 1);
     }
 
 
