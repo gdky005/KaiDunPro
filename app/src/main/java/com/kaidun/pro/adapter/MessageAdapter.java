@@ -57,7 +57,7 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
     protected void convert(ZKViewHolder helper, ReadAndUnReadBean.ResultBean item) {
 
        if (item != null ) {
-           helper.setText(R.id.tv_parents_name, item.getKfmMsgTitle());
+           helper.setText(R.id.tv_parents_name, item.getKfmSender());
            // TODO: 2018/2/6  确定时间 显示格式是否正确
            helper.setText(R.id.tv_recommended_date, item.getKfmMsgTime());
 //           helper.setText(R.id.tv_recommended_date, getData(item.getKfmMsgTime()));

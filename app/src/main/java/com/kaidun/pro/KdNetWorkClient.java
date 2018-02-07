@@ -109,7 +109,7 @@ public class KdNetWorkClient {
         try {
             JSONObject jsonObject = new JSONObject();
             if (!TextUtils.isEmpty(kfmcode)){
-                jsonObject.put("slideStatus", "up");
+                jsonObject.put("slideStatus", "down");
                 jsonObject.put("kfmCode", kfmcode);
             }
             jsonObject.put("kfmStatus", flag);
