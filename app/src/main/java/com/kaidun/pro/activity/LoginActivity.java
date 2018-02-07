@@ -187,8 +187,11 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
             LoadingUtils.dismiss();
             if (login != null) {
                 //TODO 替换正式api key
-                PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "NIIGnE5O0ZU9BtSqREDlEwWo");
-//                PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "BNnZg5IkOjn0V6Gu8R19fMss");
+                String key = "NIIGnE5O0ZU9BtSqREDlEwWo";
+//                String key = "dyijjlKmMzNs083Ph3KPVQg4"; // WangQing test
+//                String key = "BNnZg5IkOjn0V6Gu8R19fMss";  //test
+
+                PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, key);
 
                 //无退出登录 ，判断本地数据，切换账号会有问题
 //                KaiDunSP kaiDunSP = new KaiDunSP();
