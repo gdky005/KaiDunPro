@@ -147,6 +147,12 @@ public class MainActivity extends KDBaseActivity {
     public boolean isUnReadState = false;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handlerPushMessage(getIntent());
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         handlerPushMessage(getIntent());
