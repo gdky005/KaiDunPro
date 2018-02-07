@@ -30,7 +30,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by WangQing on 2018/1/22.
  */
 
-public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.onSwipeListener, BaseQuickAdapter.UpFetchListener, EasyRefreshLayout.EasyEvent {
+public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.onSwipeListener, BaseQuickAdapter.UpFetchListener, EasyRefreshLayout.EasyEvent, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final String KEY = "key";
     @BindView(R.id.unread_recle)
@@ -42,6 +42,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
     private MessageAdapter messageAdapter;
     private ArrayList<ReadAndUnReadBean.ResultBean> mData;
     private KdNetWorkClient httpUtils;
+    private boolean isRefresh;
 
 
     public static MsgUnreadFragment newInstance() {
@@ -72,8 +73,9 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         msg_unread_recler.setAdapter(messageAdapter);
         messageAdapter.setOnDelListener(this);
 
+        messageAdapter.setOnLoadMoreListener(this,msg_unread_recler);
         refreshLayout.addEasyEvent(this);
-        refreshLayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
+        refreshLayout.setLoadMoreModel(LoadModel.NONE);
 
     }
 
@@ -97,25 +99,24 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
-                if (data.getResult() != null && data.getResult().size() > 0){
+                if (data.getResult() != null) {
                     mData.clear();
                     refreshLayout.refreshComplete();
                     mData.addAll(data.getResult());
-                    messageAdapter.notifyDataSetChanged();
-                }else {
-                   // mTextNoMsg.setVisibility(View.VISIBLE);
-                    refreshLayout.refreshComplete();
-
-                    // TODO: 2018/2/6  这里说明刷新的数据已经没有 未读消息了，需要清除
-                    mData.clear();
-                    messageAdapter.notifyDataSetChanged();
+                    if (isRefresh) {
+                        messageAdapter.setNewData(mData);   //重新开启上拉加载更多
+                    } else {
+                        messageAdapter.notifyDataSetChanged();
+                    }
                 }
+                isRefresh = false;  //重置标志位
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
                 refreshLayout.refreshComplete();
+                isRefresh = false;  //重置标志位
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD,null);
@@ -162,29 +163,57 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     @Override
     public void onLoadMore() {
+//        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
+//            @Override
+//            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
+//                if (data.getResult() != null && data.getResult().size() > 0){
+//                    mData.addAll(data.getResult());
+//                    messageAdapter.notifyDataSetChanged();
+//                    refreshLayout.loadMoreComplete();
+//                }else {
+//                    ToastUtils.showShort("没有更多数据了");
+//                    refreshLayout.loadMoreComplete();
+//                }
+//            }
+//
+//            @Override
+//            public void getFailDataCallBack(int failIndex) {
+//                //todo 请求失败
+//                refreshLayout.loadMoreFail();
+//            }
+//        });
+//        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
+    }
+
+    @Override
+    public void onRefreshing() {
+        isRefresh = true;
+        initUnreadData();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
-                if (data.getResult() != null && data.getResult().size() > 0){
-                    mData.addAll(data.getResult());
+                if (data != null) {
+                    List<ReadAndUnReadBean.ResultBean> result = data.getResult();
+                    if (result == null || result.size() <= 0) {
+                        messageAdapter.loadMoreEnd();
+                        return;
+                    }
+                    mData.addAll(result);
+                    messageAdapter.loadMoreComplete();
                     messageAdapter.notifyDataSetChanged();
-                    refreshLayout.loadMoreComplete();
-                }else {
-                    refreshLayout.loadMoreComplete();
                 }
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
-                refreshLayout.loadMoreFail();
+                messageAdapter.loadMoreFail();
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
-    }
-
-    @Override
-    public void onRefreshing() {
-        initUnreadData();
     }
 }

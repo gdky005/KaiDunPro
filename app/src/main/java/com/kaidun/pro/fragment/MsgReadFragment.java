@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.fresco.helper.utils.DensityUtil;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
@@ -32,7 +33,7 @@ import team.zhuoke.sdk.base.BaseFragment;
  * Created by WangQing on 2018/1/22.
  */
 
-public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent, MessageAdapter.onSwipeListener {
+public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent, MessageAdapter.onSwipeListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final String KEY = "key";
 
@@ -44,6 +45,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     private MessageAdapter messageAdapter;
     private KdNetWorkClient httpUtils;
     private ArrayList<ReadAndUnReadBean.ResultBean> mData;
+    private boolean isRefresh;
 
 
     public static MsgReadFragment newInstance() {
@@ -74,8 +76,8 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
         msg_read_recler.setAdapter(messageAdapter);
         httpUtils = new KdNetWorkClient();
 //        getReadMsg();
-
-        mRefreshLayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
+        messageAdapter.setOnLoadMoreListener(this,msg_read_recler);
+        mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
         mRefreshLayout.addEasyEvent(this);
     }
 
@@ -100,20 +102,24 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
-              if (data.getResult() != null && data.getResult().size() > 0){
-                  mData.clear();
-                  mRefreshLayout.refreshComplete();
-                  mData.addAll(data.getResult());
-                  messageAdapter.notifyDataSetChanged();
-              }else {
+                if (data.getResult() != null) {
+                    mData.clear();
                     mRefreshLayout.refreshComplete();
-              }
+                    mData.addAll(data.getResult());
+                    if (isRefresh) {
+                        messageAdapter.setNewData(mData);
+                    } else {
+                        messageAdapter.notifyDataSetChanged();
+                    }
+                }
+                isRefresh = false;
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
                 mRefreshLayout.refreshComplete();
+                isRefresh = false;
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,null);
@@ -141,7 +147,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
     @Override
     public void onLoadMore() {
-        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
+      /*  httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
             @Override
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
                 if (data.getResult() != null && data.getResult().size() > 0){
@@ -159,11 +165,12 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
                 mRefreshLayout.loadMoreFail();
             }
         });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());*/
     }
 
     @Override
     public void onRefreshing() {
+        isRefresh = true;
         getReadMsg();
     }
 
@@ -195,5 +202,31 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     @Override
     public void onTop(int pos) {
 
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
+            @Override
+            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
+                if (data != null) {
+                    List<ReadAndUnReadBean.ResultBean> result = data.getResult();
+                    if (result == null || result.size() <= 0) {
+                        messageAdapter.loadMoreEnd();
+                        return;
+                    }
+                    mData.addAll(result);
+                    messageAdapter.loadMoreComplete();
+                    messageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void getFailDataCallBack(int failIndex) {
+                //todo 请求失败
+                messageAdapter.loadMoreFail();
+            }
+        });
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ, mData.get(mData.size() - 1).getKfmCode());
     }
 }
