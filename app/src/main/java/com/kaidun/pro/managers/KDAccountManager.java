@@ -1,11 +1,11 @@
 package com.kaidun.pro.managers;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
-import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONObject;
 
@@ -70,6 +70,7 @@ public class KDAccountManager {
             kdApi.login(KDRequestUtils.getLoginRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
+
                     if (result != null) {
                         LoginBean.DataBean dataBean = result.getData();
                         setPassWord(passWord);
@@ -92,7 +93,8 @@ public class KDAccountManager {
                 @Override
                 public void onFailure(Throwable throwable) {
 
-                    KDUtils.showErrorToast();
+//                    KDUtils.showErrorToast();
+                    ToastUtils.showShort(throwable.getMessage());
                     L.d("onFailure: " + throwable.getMessage());
 
                     if (loginFinish != null) {
