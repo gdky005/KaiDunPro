@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.KDBaseBean;
@@ -75,7 +76,7 @@ public class NoteBookFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(Throwable throwable) {
-
+                            ToastUtils.showShort("服务器异常");
                         }
                     });
         } catch (Exception e) {

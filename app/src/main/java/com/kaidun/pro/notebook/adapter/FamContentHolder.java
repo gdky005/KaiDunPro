@@ -205,6 +205,7 @@ public class FamContentHolder extends ZKViewHolder {
 
                         @Override
                         public void onFailure(Throwable throwable) {
+                            ToastUtils.showShort("服务器异常");
                         }
                     });
 

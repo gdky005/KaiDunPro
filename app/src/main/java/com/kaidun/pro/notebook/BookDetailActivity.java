@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.R;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.managers.KDConnectionManager;
@@ -91,12 +92,14 @@ public class BookDetailActivity extends KDBaseActivity {
                         public void onResponse(Call<BookDetail> call, Response<BookDetail> response) {
                             if (response.isSuccessful() && response.body().getStatusCode() == 100) {
                                 showData(response.body().getResult());
+                            } else {
+                                onFailure(call, new Throwable("服务器异常"));
                             }
                         }
 
                         @Override
                         public void onFailure(Call<BookDetail> call, Throwable t) {
-
+                            ToastUtils.showShort("服务器异常");
                         }
                     });
         } catch (Exception e) {
