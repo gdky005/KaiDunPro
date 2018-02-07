@@ -22,6 +22,8 @@ import team.zhuoke.sdk.manager.ZKPathManager;
 
 public class ImgUtils {
 
+    public static final String teacher_head = "http://211.152.60.252:8088/baseImg/teacher.png";
+
     public static Bitmap getBitmap(String url) {
         Uri uri= Uri.parse(url);
 

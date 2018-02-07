@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.MesDetailActivity;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.ReadAndUnReadBean;
 import com.kaidun.pro.managers.KDAccountManager;
+import com.kaidun.pro.utils.ImgUtils;
 
 import java.util.List;
 
@@ -61,8 +64,13 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
            // TODO: 2018/2/6  确定时间 显示格式是否正确
            helper.setText(R.id.tv_recommended_date, item.getKfmMsgTime());
 //           helper.setText(R.id.tv_recommended_date, getData(item.getKfmMsgTime()));
-           helper.setText(R.id.replay_latest, "回复："+ KDAccountManager.getInstance().getUserInfoBean().getStuName());
            helper.setText(R.id.tv_recommended_content, item.getKfmMsgText());
+
+           SimpleDraweeView mQrAvatar = (SimpleDraweeView) helper.getView(R.id.iv_parents_avatar);
+           RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+           roundingParams.setRoundAsCircle(true);
+           mQrAvatar.getHierarchy().setRoundingParams(roundingParams);
+           mQrAvatar.setImageURI(ImgUtils.teacher_head);
 
 
            View btnDelete = helper.getView(R.id.btnDelete);
@@ -88,8 +96,11 @@ public class MessageAdapter extends ZKAdapter<ReadAndUnReadBean.ResultBean, ZKVi
 
            if (mLayoutResId == R.layout.item_msg_unread) {
                helper.getView(R.id.xxtx_msg).setVisibility(View.VISIBLE);
+//               helper.setText(R.id.replay_latest, KDAccountManager.getInstance().getUserInfoBean().getStuName());//未读没有回复两字
+               helper.setText(R.id.replay_latest, item.getKfmMsgTitle());//未读没有回复两字
            } else {
                helper.getView(R.id.xxtx_msg).setVisibility(View.INVISIBLE);
+               helper.setText(R.id.replay_latest, "回复："+ item.getKfmMsgTitle());
            }
 
            int adapterPosition = helper.getAdapterPosition();
