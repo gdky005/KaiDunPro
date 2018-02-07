@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.R;
 import com.kaidun.pro.activity.KDBaseActivity;
@@ -88,7 +89,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
 
                         @Override
                         public void onFailure(Call<FamContent> call, Throwable t) {
-
+                            ToastUtils.showShort("服务器异常");
                         }
                     });
 
@@ -121,6 +122,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
 
                         @Override
                         public void onFailure(Call<FamContent> call, Throwable t) {
+                            ToastUtils.showShort("服务器异常");
                             mNoteBookRefresh.refreshComplete();
                         }
                     });
