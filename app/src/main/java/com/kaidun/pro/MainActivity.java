@@ -173,8 +173,9 @@ public class MainActivity extends KDBaseActivity {
             setTitle(mTitles[pushType]);
 
 //        radioGroup.check(index);
-        changeFragment(index);
-        //要选中当前的按钮
-        radioGroup.check(radioBtnIds[pushType]);
-    }}
+            changeFragment(index);
+            //要选中当前的按钮
+            radioGroup.check(radioBtnIds[pushType]);
+        }
+    }
 }
