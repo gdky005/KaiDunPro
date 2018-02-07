@@ -162,17 +162,19 @@ public class MainActivity extends KDBaseActivity {
 
     private void handlerPushMessage(Intent intent) {
         int pushType = intent.getIntExtra(FLAG_PUSH_KEY, 0);
-        int index = pushType + 1;
 
-        Fragment fragment = fragmentArray[pushType];
-        if (fragment instanceof MsgFragment) {
-            isUnReadState = true;
-        }
-        setTitle(mTitles[pushType]);
+        if (pushType != 0) {
+            int index = pushType + 1;
+
+            Fragment fragment = fragmentArray[pushType];
+            if (fragment instanceof MsgFragment) {
+                isUnReadState = true;
+            }
+            setTitle(mTitles[pushType]);
 
 //        radioGroup.check(index);
         changeFragment(index);
         //要选中当前的按钮
         radioGroup.check(radioBtnIds[pushType]);
-    }
+    }}
 }
