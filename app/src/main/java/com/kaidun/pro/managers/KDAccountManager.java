@@ -1,11 +1,11 @@
 package com.kaidun.pro.managers;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONObject;
 
@@ -70,31 +70,35 @@ public class KDAccountManager {
             kdApi.login(KDRequestUtils.getLoginRequestBody(jsonObject)).enqueue(new KDCallback<LoginBean>() {
                 @Override
                 public void onResponse(KDBaseBean<LoginBean> baseBean, LoginBean result) {
+                    if (baseBean.getStatusCode() == 100) {
+                        if (result != null) {
+                            LoginBean.DataBean dataBean = result.getData();
+                            setPassWord(passWord);
+                            setLoginType(loginType);
 
-                    if (result != null) {
-                        LoginBean.DataBean dataBean = result.getData();
-                        setPassWord(passWord);
-                        setLoginType(loginType);
+                            if (dataBean != null) {
+                                setUserInfoBean(dataBean);
+                            }
 
-                        if (dataBean != null) {
-                            setUserInfoBean(dataBean);
+                            setToken(result.getToken());
+
+                            if (loginFinish != null) {
+                                loginFinish.loginFinish(result);
+                            }
+
+                            L.d("onResponse: " + result.toString());
                         }
-
-                        setToken(result.getToken());
-
+                    } else {
                         if (loginFinish != null) {
-                            loginFinish.loginFinish(result);
+                            loginFinish.loginFinish(null);
                         }
-
-                        L.d("onResponse: " + result.toString());
                     }
                 }
 
                 @Override
                 public void onFailure(Throwable throwable) {
 
-//                    KDUtils.showErrorToast();
-                    ToastUtils.showShort(throwable.getMessage());
+                    KDUtils.showErrorToast();
                     L.d("onFailure: " + throwable.getMessage());
 
                     if (loginFinish != null) {

@@ -24,12 +24,14 @@ public abstract class KDCallback<T> implements Callback<KDBaseBean<T>> {
 
             int code = baseBean.getStatusCode();
 
-            if (code == 100) {
-                onResponse(baseBean, results);
-            } else if (code == 208) {
+//            if (code == 100) {
+//                onResponse(baseBean, results);
+//            } else
+            if (code == 208) {
                 PageCtrl.startLoginActivity(ZKBase.getContext());
             } else {
-                onFailure(new Throwable(baseBean.getMessage()));
+//                onFailure(new Throwable(baseBean.getMessage()));
+                onResponse(baseBean, results);
             }
 
         } else {

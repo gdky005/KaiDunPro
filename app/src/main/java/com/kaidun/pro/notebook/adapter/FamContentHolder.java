@@ -26,6 +26,7 @@ import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -200,7 +201,10 @@ public class FamContentHolder extends ZKViewHolder {
 
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {
-                            ToastUtils.showShort("送花成功");
+                            if (baseBean.getStatusCode() == 100)
+                                ToastUtils.showShort("送花成功");
+                            else
+                                KDUtils.showErrorToast();
                         }
 
                         @Override

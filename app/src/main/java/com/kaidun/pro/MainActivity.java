@@ -45,6 +45,9 @@ public class MainActivity extends KDBaseActivity {
             Manifest.permission.ACCESS_NETWORK_STATE};
     private static String[] mTitles = {"主页", "视频", "图片", "家联本", "消息"};
 
+    private static int radioBtnIds[] = {R.id.bottom_home, R.id.bottom_video, R.id.bottom_pic,
+            R.id.bottom_jia, R.id.bottom_msg};
+
 
     @Override
     protected int getLayoutId() {
@@ -82,7 +85,6 @@ public class MainActivity extends KDBaseActivity {
                     setTitle(mTitles[NAV_TYPE_VIDEO]);
                     setRight(-1);
                     changeFragment(2);
-
                     break;
                 case R.id.bottom_pic:
                     setTitle(mTitles[NAV_TYPE_PICTURE]);
@@ -147,6 +149,12 @@ public class MainActivity extends KDBaseActivity {
     public boolean isUnReadState = false;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handlerPushMessage(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         handlerPushMessage(getIntent());
@@ -161,5 +169,7 @@ public class MainActivity extends KDBaseActivity {
         }
         setTitle(mTitles[pushType]);
         changeFragment(pushType + 1);
+        //要选中当前的按钮
+        radioGroup.check(radioBtnIds[pushType]);
     }
 }

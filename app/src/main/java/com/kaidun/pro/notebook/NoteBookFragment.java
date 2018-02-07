@@ -13,6 +13,7 @@ import com.kaidun.pro.notebook.adapter.NoteBookAdapter;
 import com.kaidun.pro.notebook.bean.FamContact;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
+import com.kaidun.pro.utils.KDUtils;
 
 import org.json.JSONObject;
 
@@ -71,7 +72,10 @@ public class NoteBookFragment extends BaseFragment {
 
                         @Override
                         public void onResponse(KDBaseBean<List<FamContact>> baseBean, List<FamContact> result) {
-                            showList(result);
+                            if (baseBean.getStatusCode() == 100)
+                                showList(result);
+                            else
+                                KDUtils.showErrorToast();
                         }
 
                         @Override

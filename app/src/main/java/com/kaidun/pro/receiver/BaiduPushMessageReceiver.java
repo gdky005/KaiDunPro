@@ -300,9 +300,7 @@ public class BaiduPushMessageReceiver extends PushMessageReceiver {
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {
                             if (baseBean.getStatusCode() == 100) {
-                                if (TextUtils.equals("002", result)) {
-                                } else {
-                                }
+
                             } else {
                                 ToastUtils.showShort(baseBean.getMessage());
                             }
