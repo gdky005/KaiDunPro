@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
@@ -124,18 +125,15 @@ public class MainActivity extends KDBaseActivity {
     }
 
     public void changeFragment(int index) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (int i = 0; i < fragmentArray.length; i++) {
             if (i + 1 != index) {
                 // 隐藏选项卡
-                fragmentTransaction.hide(fragmentArray[i]);
+                FragmentUtils.hide(fragmentArray[i]);
             } else {
                 // 当前选项卡
-                fragmentTransaction.show(fragmentArray[i]);
-
+                FragmentUtils.show(fragmentArray[i]);
             }
         }
-        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -149,8 +147,12 @@ public class MainActivity extends KDBaseActivity {
     public boolean isUnReadState = false;
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    protected void onStart() {
+        super.onStart();
+        handlerPushMessage(getIntent());
+    }
+
+    private void handlerPushMessage(Intent intent) {
         int pushType = intent.getIntExtra(FLAG_PUSH_KEY, 0);
 
         Fragment fragment = fragmentArray[pushType];
@@ -160,6 +162,4 @@ public class MainActivity extends KDBaseActivity {
         setTitle(mTitles[pushType]);
         changeFragment(pushType + 1);
     }
-
-
 }

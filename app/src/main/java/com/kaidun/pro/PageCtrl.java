@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.kaidun.pro.activity.LoginActivity;
 import com.kaidun.pro.activity.PhotoViewActivity;
 import com.kaidun.pro.activity.VideoPlayActivity;
+import com.kaidun.pro.bean.LoginBean;
+import com.kaidun.pro.managers.KDAccountManager;
 
 /**
  * PageCtrl
@@ -60,9 +62,17 @@ public class PageCtrl {
      * @param isUnReadMsg 是否为 未读消息主页面？ 如果不是进入 图片主页面
      */
     public static void startMainActivityForPush(Context context, boolean isUnReadMsg) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(MainActivity.FLAG_PUSH_KEY, isUnReadMsg ? MainActivity.NAV_TYPE_MESSAGE : MainActivity.NAV_TYPE_PICTURE);
-        context.startActivity(intent);
+        LoginBean.DataBean userInfoBean = KDAccountManager.getInstance().getUserInfoBean();
+
+        if (userInfoBean == null) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(MainActivity.FLAG_PUSH_KEY, isUnReadMsg ? MainActivity.NAV_TYPE_MESSAGE : MainActivity.NAV_TYPE_PICTURE);
+            context.startActivity(intent);
+        }
     }
 }

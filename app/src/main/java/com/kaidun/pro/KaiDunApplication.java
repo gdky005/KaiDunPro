@@ -31,7 +31,11 @@ public class KaiDunApplication extends Application {
         Fresco.initialize(mContext);
 
         //在这里初始化
-        Bugtags.start("fedc05f31e8d57fd6a20bb9d1fa7349c", this, Bugtags.BTGInvocationEventBubble);
+        try {
+            Bugtags.start("fedc05f31e8d57fd6a20bb9d1fa7349c", this, Bugtags.BTGInvocationEventBubble);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         ZKBase.init(this, BuildConfig.DEBUG);
 

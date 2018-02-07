@@ -87,11 +87,15 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle bundle) {
-        String[] name = KDAccountManager.getInstance().getUserInfoBean().getStuName().split("/");
-        mParentsName.setText(name[0]);
-        if (name.length > 1) {
-            mParentsNick.setText(name[1]);
+        String stuName =  KDAccountManager.getInstance().getUserInfoBean().getStuName();
+        if (stuName != null) {
+            String[] name = stuName.split("/");
+            mParentsName.setText(name[0]);
+            if (name.length > 1) {
+                mParentsNick.setText(name[1]);
+            }
         }
+
         RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
         roundingParams.setRoundAsCircle(true);
         mParentsAvatar.getHierarchy().setRoundingParams(roundingParams);
