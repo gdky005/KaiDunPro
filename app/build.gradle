@@ -13,8 +13,8 @@ android {
         applicationId "com.kaidun.pro"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 7
-        versionName "1.7"
+        versionCode 8
+        versionName "1.8"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
