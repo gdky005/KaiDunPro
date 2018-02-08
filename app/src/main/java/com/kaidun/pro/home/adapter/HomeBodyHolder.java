@@ -2,6 +2,7 @@ package com.kaidun.pro.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -68,6 +69,7 @@ public class HomeBodyHolder extends HomeHolder {
     TextView mTeacherEvaluationDate;
     @BindView(R.id.rl_teacher_evaluation)
     RelativeLayout mTeacherEvaluationLayout;
+    @Nullable
     @BindView(R.id.ll_course_schedule)
     LinearLayout mCourseScheduleLayout;
     @BindView(R.id.pb_loading)
@@ -79,7 +81,6 @@ public class HomeBodyHolder extends HomeHolder {
 
     public HomeBodyHolder(View view) {
         super(view);
-        ButterKnife.bind(this, itemView);
         mItemView = itemView;
         mContext = view.getContext();
     }
@@ -100,12 +101,16 @@ public class HomeBodyHolder extends HomeHolder {
 
     private void showCourseSchedule() {
         mLoading.setVisibility(View.GONE);
-        mCourseScheduleLayout.setVisibility(View.VISIBLE);
+        if (mCourseScheduleLayout != null) {
+            mCourseScheduleLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void hideCourseSchedule() {
         mLoading.setVisibility(View.VISIBLE);
-        mCourseScheduleLayout.setVisibility(View.INVISIBLE);
+        if (mCourseScheduleLayout != null) {
+            mCourseScheduleLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -151,14 +156,19 @@ public class HomeBodyHolder extends HomeHolder {
         kdApi.selectBookFinishRate(KDRequestUtils.getRequestBody(jsonObject)).enqueue(new Callback<CourseSchedule>() {
             @Override
             public void onResponse(Call<CourseSchedule> call, Response<CourseSchedule> response) {
-                if (response.body() != null) {
-                    if (!(response.body().getStatusCode() == 100)) {
-                        showToast(response.body().getMessage());
-                    } else {
-                        setCoursePercentage(response.body().getResult().get(0));
+                try {
+                    if (response.body() != null) {
+                        if (!(response.body().getStatusCode() == 100)) {
+                            showToast(response.body().getMessage());
+                        } else {
+                            setCoursePercentage(response.body().getResult().get(0));
+                        }
                     }
+                    showCourseSchedule();
+                } catch (Exception e) {
+                    setCoursePercentageWithEmpty();
+                    showCourseSchedule();
                 }
-                showCourseSchedule();
             }
 
             @Override
@@ -229,6 +239,7 @@ public class HomeBodyHolder extends HomeHolder {
 
     private String[] getBookCodeList(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean) {
         String[] bookCodes = new String[courseInfoBean.getBookModels().size()];
+        Log.e("Tag", "size " + courseInfoBean.getBookModels().size());
         for (int i = 0; i < courseInfoBean.getBookModels().size(); i++) {
             bookCodes[i] = courseInfoBean.getBookModels().get(i).getBookCode();
         }
