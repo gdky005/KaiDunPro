@@ -104,10 +104,11 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
                 if (data.getResult() != null) {
                     mData.clear();
-                    mRefreshLayout.refreshComplete();
+
                     mData.addAll(data.getResult());
                     if (isRefresh) {
                         messageAdapter.setNewData(mData);
+                        mRefreshLayout.refreshComplete();
                     } else {
                         messageAdapter.notifyDataSetChanged();
                     }
@@ -118,8 +119,10 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
-                mRefreshLayout.refreshComplete();
-                isRefresh = false;
+                if (isRefresh){
+                    isRefresh = false;
+                    mRefreshLayout.refreshComplete();
+                }
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,null);
@@ -184,7 +187,7 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
                 if (data != null && 100 == data.getStatusCode()){
 //                    initUnreadData();
                     mData.remove(pos);
-                    messageAdapter.notifyItemRemoved(pos);
+                    messageAdapter.notifyDataSetChanged();
                     ToastUtils.showShort("删除成功");
                 }else {
                     ToastUtils.showShort("删除失败");

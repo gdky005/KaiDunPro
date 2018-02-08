@@ -101,9 +101,10 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
             public void getSuccessDataCallBack(ReadAndUnReadBean data) {
                 if (data.getResult() != null) {
                     mData.clear();
-                    refreshLayout.refreshComplete();
+
                     mData.addAll(data.getResult());
                     if (isRefresh) {
+                        refreshLayout.refreshComplete();
                         messageAdapter.setNewData(mData);   //重新开启上拉加载更多
                     } else {
                         messageAdapter.notifyDataSetChanged();
@@ -115,8 +116,10 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
             @Override
             public void getFailDataCallBack(int failIndex) {
                 //todo 请求失败
-                refreshLayout.refreshComplete();
-                isRefresh = false;  //重置标志位
+                if (isRefresh){
+                    isRefresh = false;
+                    refreshLayout.refreshComplete();
+                }
             }
         });
         httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD,null);
@@ -137,7 +140,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                 if (data != null && 100 == data.getStatusCode()){
 //                    initUnreadData();
                     mData.remove(pos);
-                    messageAdapter.notifyItemRemoved(pos);
+                    messageAdapter.notifyDataSetChanged();
                     ToastUtils.showShort("删除成功");
                 }else {
                     ToastUtils.showShort("删除失败");
