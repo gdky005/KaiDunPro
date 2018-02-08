@@ -43,7 +43,7 @@ public class MainActivity extends KDBaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_NETWORK_STATE};
-    private static String[] mTitles = {"主页", "视频", "图片", "家联本", "消息"};
+    private static String[] mTitles = {"主页", "视频", "照片", "家联本", "消息"};
 
     private static int radioBtnIds[] = {R.id.bottom_home, R.id.bottom_video, R.id.bottom_pic,
             R.id.bottom_jia, R.id.bottom_msg};
