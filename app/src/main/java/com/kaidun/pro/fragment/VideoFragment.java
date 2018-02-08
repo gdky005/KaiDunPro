@@ -21,6 +21,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
@@ -32,6 +33,7 @@ public class VideoFragment extends BaseFragment {
     private ViewPager vpVideo;
     public static final String KEY = "key";
     private List<VideoBean> list = new ArrayList<>();
+    private Call<KDBaseBean<List<VideoBean>>> mAllVideo;
 
 
     @Override
@@ -65,42 +67,42 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void getVideo() throws JSONException {
-        KDConnectionManager.getInstance().getZHApi()
-                .getAllVideo(KDRequestUtils.getRequestBody())
-                .enqueue(new KDCallback<List<VideoBean>>() {
-                    @Override
-                    public void onResponse(KDBaseBean<List<VideoBean>> baseBean, List<VideoBean> result) {
+        mAllVideo = KDConnectionManager.getInstance().getZHApi()
+                .getAllVideo(KDRequestUtils.getRequestBody());
+        mAllVideo.enqueue(new KDCallback<List<VideoBean>>() {
+            @Override
+            public void onResponse(KDBaseBean<List<VideoBean>> baseBean, List<VideoBean> result) {
 
-                        if (baseBean.getStatusCode() == 100) {
-                            list.clear();
-                            list.addAll(result);
-                            List<Fragment> fragments = new ArrayList<>(list.size());
-                            String[] titles = new String[list.size()];
-                            for (int i = 0; i < list.size(); i++) {
-                                VideoBean videoBean = list.get(i);
-                                SubVideoFragment sub = new SubVideoFragment();
-                                Bundle bundle = new Bundle();
-                                bundle.putParcelable("sub", videoBean);
-                                sub.setArguments(bundle);
-                                fragments.add(sub);
-                                titles[i] = videoBean.getCourseSortName();
-                            }
-                            VideoFragmentAdapter pagerAdapter = new VideoFragmentAdapter(getChildFragmentManager(),
-                                    fragments);
-                            vpVideo.setAdapter(pagerAdapter);
-                            pagerAdapter.setTitles(titles);
-                            tabPackage.setupWithViewPager(vpVideo);
-
-                        } else
-                            KDUtils.showErrorToast();
-
+                if (baseBean.getStatusCode() == 100) {
+                    list.clear();
+                    list.addAll(result);
+                    List<Fragment> fragments = new ArrayList<>(list.size());
+                    String[] titles = new String[list.size()];
+                    for (int i = 0; i < list.size(); i++) {
+                        VideoBean videoBean = list.get(i);
+                        SubVideoFragment sub = new SubVideoFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("sub", videoBean);
+                        sub.setArguments(bundle);
+                        fragments.add(sub);
+                        titles[i] = videoBean.getCourseSortName();
                     }
+                    VideoFragmentAdapter pagerAdapter = new VideoFragmentAdapter(getChildFragmentManager(),
+                            fragments);
+                    vpVideo.setAdapter(pagerAdapter);
+                    pagerAdapter.setTitles(titles);
+                    tabPackage.setupWithViewPager(vpVideo);
 
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        KDUtils.showErrorToast();
-                    }
-                });
+                } else
+                    KDUtils.showErrorToast();
+
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                KDUtils.showErrorToast();
+            }
+        });
     }
 
     @Override
@@ -108,5 +110,12 @@ public class VideoFragment extends BaseFragment {
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mAllVideo != null) {
+            if (!mAllVideo.isCanceled())
+                mAllVideo.cancel();
+        }
+    }
 }
