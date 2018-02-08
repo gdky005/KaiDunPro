@@ -1,5 +1,6 @@
 package com.kaidun.pro.managers;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.api.KDApi;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.bean.LoginBean;
@@ -89,6 +90,7 @@ public class KDAccountManager {
                             L.d("onResponse: " + result.toString());
                         }
                     } else {
+                        ToastUtils.showShort(baseBean.getMessage());
                         if (loginFinish != null) {
                             loginFinish.loginFinish(null);
                         }
