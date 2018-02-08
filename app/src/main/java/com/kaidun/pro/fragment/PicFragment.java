@@ -108,6 +108,12 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
         refreshData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
     private void refreshData() {
         JSONObject jsonObject = new JSONObject();
         if (!TextUtils.isEmpty(ccId) && !TextUtils.isEmpty(classId)) {
