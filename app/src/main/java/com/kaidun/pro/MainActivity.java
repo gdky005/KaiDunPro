@@ -22,8 +22,8 @@ public class MainActivity extends KDBaseActivity {
 
     public static final String FLAG_PUSH_KEY = "FLAG_PUSH_KEY";
 
-
-    RadioGroup radioGroup;
+    private Fragment currentFragment;
+    private RadioGroup radioGroup;
 
     public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;
@@ -128,12 +128,14 @@ public class MainActivity extends KDBaseActivity {
 
     public void changeFragment(int index) {
         for (int i = 0; i < fragmentArray.length; i++) {
+            Fragment fragment = fragmentArray[i];
             if (i + 1 != index) {
                 // 隐藏选项卡
-                FragmentUtils.hide(fragmentArray[i]);
+                FragmentUtils.hide(fragment);
             } else {
                 // 当前选项卡
-                FragmentUtils.show(fragmentArray[i]);
+                currentFragment = fragment;
+                FragmentUtils.show(fragment);
             }
         }
     }
@@ -143,6 +145,17 @@ public class MainActivity extends KDBaseActivity {
         int i = item.getItemId();
         if (i == R.id.write_btn) {
             startActivity(new Intent(mContext, WriteMsgActivity.class));
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        if (fragment == currentFragment) {
+            FragmentUtils.show(fragment);
+        } else {
+            FragmentUtils.hide(fragment);
         }
     }
 
