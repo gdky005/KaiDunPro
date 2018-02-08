@@ -191,4 +191,17 @@ public class MainActivity extends KDBaseActivity {
             radioGroup.check(radioBtnIds[pushType]);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 1000) {
+            ToastUtils.showShort("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+            System.exit(0);
+        }
+    }
+
+    private long exitTime = 0;
 }
