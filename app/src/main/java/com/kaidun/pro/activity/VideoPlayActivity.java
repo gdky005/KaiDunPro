@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
-import team.zhuoke.sdk.base.BaseActivity;
 
 public class VideoPlayActivity extends KDBaseActivity {
 
@@ -73,7 +72,8 @@ public class VideoPlayActivity extends KDBaseActivity {
         mName = intent.getStringExtra(FLAG_VIDEO_NAME);
         String imageUrl = intent.getStringExtra(FLAG_VIDEO_THUMB_URL);
         String videoUrl = intent.getStringExtra(FLAG_VIDEO_URL);
-        setTitle(mName);
+        // TODO: 2018/2/9  需求说这里默认显示 『视频』 两个字
+        setTitle(getString(R.string.video_text));
         if (TextUtils.isEmpty(videoUrl))
             videoUrl = "hehe";
         player.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, mName);
