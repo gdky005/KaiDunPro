@@ -116,6 +116,7 @@ public class NoteBookActivity extends KDBaseActivity implements EasyRefreshLayou
                                 data = response.body().getResult().getFamilyContactList();
                                 nextPage = response.body().getResult().getSlideCode();
                                 mNoteBookRefresh.refreshComplete();
+                                adapter.setNewData(data);
                                 adapter.notifyDataSetChanged();
                             }
                         }
