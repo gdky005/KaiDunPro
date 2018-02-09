@@ -70,7 +70,7 @@ public class PicItemAdapter extends ZKAdapter<PicBean.PictureUrlMapBean, ZKViewH
 
     private void startVideoPlay(String teacSendUrl, String smallUrl) {
 
-        if (!TextUtils.isEmpty(teacSendUrl)) {
+        if (TextUtils.isEmpty(teacSendUrl)) {
             ToastUtils.showShort("播放地址有误，不能播放");
             return;
         }
