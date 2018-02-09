@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@drawable/bg_main_tab"
+    android:layout_height="70dp"
     android:orientation="vertical">
 
 
@@ -12,71 +12,82 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:background="@drawable/bg_main_tab"
         android:orientation="horizontal">
 
-        <RadioButton
+        <com.kaidun.pro.views.CustomRadioButton
             android:id="@+id/bottom_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
+            android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
-            android:drawableTop="@drawable/selector_a"
             android:gravity="center"
             android:text="主页"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            custom:drawableSizes="25dp"
+            custom:drawableTop="@drawable/selector_a"/>
 
-        <RadioButton
+        <com.kaidun.pro.views.CustomRadioButton
             android:id="@+id/bottom_video"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
-            android:drawableTop="@drawable/selector_b"
             android:gravity="center"
             android:text="视频"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            custom:drawableSizes="25dp"
+            custom:drawableTop="@drawable/selector_b"/>
 
-        <RadioButton
+        <com.kaidun.pro.views.CustomRadioButton
             android:id="@+id/bottom_pic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
-            android:drawableTop="@drawable/selector_c"
             android:gravity="center"
             android:text="图片"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            custom:drawableSizes="25dp"
+            custom:drawableTop="@drawable/selector_c"/>
 
 
-        <RadioButton
+        <com.kaidun.pro.views.CustomRadioButton
             android:id="@+id/bottom_jia"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:checked="false"
+            android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
-            android:drawableTop="@drawable/selector_d"
             android:gravity="center"
             android:text="家联本"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            custom:drawableSizes="25dp"
+            custom:drawableTop="@drawable/selector_d"/>
 
-        <RadioButton
+        <com.kaidun.pro.views.CustomRadioButton
             android:id="@+id/bottom_msg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
             android:checked="false"
+            android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
-            android:drawableTop="@drawable/selector_e"
             android:gravity="center"
             android:text="消息"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            custom:drawableSizes="25dp"
+            custom:drawableTop="@drawable/selector_e"/>
     </RadioGroup>
 
 </LinearLayout>
