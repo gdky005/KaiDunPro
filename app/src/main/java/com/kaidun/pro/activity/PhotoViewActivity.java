@@ -57,7 +57,7 @@ public class PhotoViewActivity extends KDBaseActivity {
             case R.id.right_share_pic:
                 Bitmap bitmap = ImgUtils.getBitmap(picUrl);
 
-                if (bitmap == null) {
+                if (bitmap != null) {
                     String picPath = ImgUtils.saveImageToFile(mContext, bitmap);
 
 //                Intent intent=new Intent(Intent.ACTION_SEND);

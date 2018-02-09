@@ -2,6 +2,8 @@ package com.kaidun.pro;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
 import com.bugtags.library.Bugtags;
@@ -50,6 +52,14 @@ public class KaiDunApplication extends Application {
                 })
                 .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(mContext))
                 .build());
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            // android 7.0系统解决拍照的问题
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+        }
 
         //添加 Stetho 的拦截器
         KDConnectionManager.getInstance().getBuilder().addNetworkInterceptor(new StethoInterceptor());
