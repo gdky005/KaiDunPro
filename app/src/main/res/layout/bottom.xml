@@ -25,7 +25,7 @@
             android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
             android:gravity="center"
-            android:text="主页"
+            android:text="@string/nav_title_main"
             android:textSize="10sp"
             custom:drawableSizes="25dp"
             custom:drawableTop="@drawable/selector_a"/>
@@ -39,7 +39,7 @@
             android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
             android:gravity="center"
-            android:text="视频"
+            android:text="@string/nav_title_video"
             android:textSize="10sp"
             custom:drawableSizes="25dp"
             custom:drawableTop="@drawable/selector_b"/>
@@ -53,7 +53,7 @@
             android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
             android:gravity="center"
-            android:text="图片"
+            android:text="@string/nav_title_picture"
             android:textSize="10sp"
             custom:drawableSizes="25dp"
             custom:drawableTop="@drawable/selector_c"/>
@@ -69,7 +69,7 @@
             android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
             android:gravity="center"
-            android:text="家联本"
+            android:text="@string/nav_title_parent_notebook"
             android:textSize="10sp"
             custom:drawableSizes="25dp"
             custom:drawableTop="@drawable/selector_d"/>
@@ -84,7 +84,7 @@
             android:clickable="true"
             android:drawablePadding="@dimen/dp_3"
             android:gravity="center"
-            android:text="消息"
+            android:text="@string/nav_title_message"
             android:textSize="10sp"
             custom:drawableSizes="25dp"
             custom:drawableTop="@drawable/selector_e"/>

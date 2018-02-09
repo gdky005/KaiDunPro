@@ -2,7 +2,7 @@
     <string name="app_name">凯顿家长端</string>
     <string name="nav_title_main">主页</string>
     <string name="nav_title_video">视频</string>
-    <string name="nav_title_picture">图片</string>
+    <string name="nav_title_picture">照片</string>
     <string name="nav_title_parent_notebook">家联本</string>
     <string name="nav_title_message">消息</string>
     <string name="please_input_number">请输入手机号</string>
@@ -36,6 +36,6 @@
     <string name="tip_content2">教师通过这些课程与相应的课外作业促进学生的认知性学习(智力发展)、情感性学习(价值观的发展)与心理运动性学习(操作技能的发展)，从而把他们培养成能够服务于社会的全面发展的人。</string>
     <string name="tip_content3">在公司里，我们提倡自由、开放的工作氛围，省钱网？？？</string>
     <string name="no_msg">暂无消息</string>
-    <string name="photo_title">照片</string>
-    <string name="video_text">视频</string>
+    <string name="photo_title">@string/nav_title_picture</string>
+    <string name="video_text">@string/nav_title_video</string>
 </resources>
