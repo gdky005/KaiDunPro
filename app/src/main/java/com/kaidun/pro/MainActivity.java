@@ -17,6 +17,7 @@ import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
+import com.kaidun.pro.views.CustomRadioButton;
 
 public class MainActivity extends KDBaseActivity {
 
@@ -24,6 +25,11 @@ public class MainActivity extends KDBaseActivity {
 
     private Fragment currentFragment;
     private RadioGroup radioGroup;
+    private CustomRadioButton rbHome;
+    private CustomRadioButton rbVideo;
+    private CustomRadioButton rbPic;
+    private CustomRadioButton rbBook;
+    private CustomRadioButton rbMessage;
 
     public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;
@@ -60,6 +66,11 @@ public class MainActivity extends KDBaseActivity {
         mToolbar.setNavigationIcon(null);
         setTitle(mTitles[NAV_TYPE_MAIN]);
         radioGroup = findViewById(R.id.radioGroup);
+        rbHome = findViewById(R.id.bottom_home);
+        rbVideo = findViewById(R.id.bottom_video);
+        rbPic = findViewById(R.id.bottom_pic);
+        rbBook = findViewById(R.id.bottom_jia);
+        rbMessage = findViewById(R.id.bottom_msg);
         FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
         beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         beginTransaction.add(R.id.main_layout, fragmentArray[0]);
@@ -69,6 +80,8 @@ public class MainActivity extends KDBaseActivity {
         beginTransaction.add(R.id.main_layout, fragmentArray[4]);
         beginTransaction.commit();
         changeFragment(1);
+        rbHome.setDrawableSize(100);
+
 
     }
 
@@ -80,26 +93,51 @@ public class MainActivity extends KDBaseActivity {
                     setRight(-1);
                     setTitle(mTitles[NAV_TYPE_MAIN]);
                     changeFragment(1);
+                    rbHome.setDrawableSize(100);
+                    rbVideo.setDrawableSize(75);
+                    rbPic.setDrawableSize(75);
+                    rbBook.setDrawableSize(75);
+                    rbMessage.setDrawableSize(75);
                     break;
                 case R.id.bottom_video:
                     setTitle(mTitles[NAV_TYPE_VIDEO]);
                     setRight(-1);
                     changeFragment(2);
+                    rbHome.setDrawableSize(75);
+                    rbVideo.setDrawableSize(100);
+                    rbPic.setDrawableSize(75);
+                    rbBook.setDrawableSize(75);
+                    rbMessage.setDrawableSize(75);
                     break;
                 case R.id.bottom_pic:
                     setTitle(mTitles[NAV_TYPE_PICTURE]);
                     setRight(-1);
                     changeFragment(3);
+                    rbHome.setDrawableSize(75);
+                    rbVideo.setDrawableSize(75);
+                    rbPic.setDrawableSize(100);
+                    rbBook.setDrawableSize(75);
+                    rbMessage.setDrawableSize(75);
                     break;
                 case R.id.bottom_jia:
                     setTitle(mTitles[NAV_TYPE_PARENT_NOTEBOOK]);
                     setRight(-1);
                     changeFragment(4);
+                    rbHome.setDrawableSize(75);
+                    rbVideo.setDrawableSize(75);
+                    rbPic.setDrawableSize(75);
+                    rbBook.setDrawableSize(100);
+                    rbMessage.setDrawableSize(75);
                     break;
                 case R.id.bottom_msg:
                     setTitle(mTitles[NAV_TYPE_MESSAGE]);
                     setRight(R.menu.item_message_edit);
                     changeFragment(5);
+                    rbHome.setDrawableSize(75);
+                    rbVideo.setDrawableSize(75);
+                    rbPic.setDrawableSize(75);
+                    rbBook.setDrawableSize(75);
+                    rbMessage.setDrawableSize(100);
                     break;
 
             }
