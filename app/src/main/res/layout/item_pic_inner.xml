@@ -13,4 +13,14 @@
         android:layout_centerInParent="true"
         android:src="@drawable/fun_book_placeholder"/>
 
+    <ImageView
+        android:id="@+id/play_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/iv"
+        android:layout_alignBottom="@+id/iv"
+        android:padding="@dimen/dp_10"
+        android:visibility="gone"
+        android:src="@drawable/ic_play_btn_pic"/>
+
 </RelativeLayout>
