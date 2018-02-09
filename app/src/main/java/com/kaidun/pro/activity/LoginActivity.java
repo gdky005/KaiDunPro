@@ -19,6 +19,7 @@ import com.kaidun.pro.R;
 import com.kaidun.pro.bean.AreaBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
+import com.kaidun.pro.kd.KaiDunSP;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.retrofit2.KDCallback;
@@ -63,6 +64,7 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     Spinner spinnerTestAccount;
     private String areaCode;
     ArrayAdapter<String> arrayAdapter;
+    KaiDunSP kaiDunSP;
 
 
     @Override
@@ -158,6 +160,10 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         areaNameList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<String>(
                 this, R.layout.support_simple_spinner_dropdown_item, areaNameList);
+        kaiDunSP = new KaiDunSP();
+        accountEt.setText((String) kaiDunSP.get(KaiDunSP.KEY_USERCODE, ""));
+        accountEt.setSelection(accountEt.getText().length());
+        pwdEt.setText((String) kaiDunSP.get(KaiDunSP.KEY_USERPWD, ""));
         getAreaList();
 
         verifyStoragePermissions(this);
@@ -193,15 +199,11 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
 
                 PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, key);
 
-                //无退出登录 ，判断本地数据，切换账号会有问题
-//                KaiDunSP kaiDunSP = new KaiDunSP();
-//                boolean isFirstChooseRole = (boolean) kaiDunSP.get(KaiDunSP.KEY_TEST_ROLES, true);
-//                if (!isFirstChooseRole) {
-//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                    finish();
-//                } else {
+                //存储登录账户
+                kaiDunSP.put(KaiDunSP.KEY_USERCODE, account);
+                kaiDunSP.put(KaiDunSP.KEY_USERPWD, pwd);
+
                 chargeSelectRole(account, areaCode);
-//                }
             }
         });
         LoadingUtils.show(this);

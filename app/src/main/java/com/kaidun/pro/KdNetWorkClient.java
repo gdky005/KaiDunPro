@@ -103,7 +103,7 @@ public class KdNetWorkClient {
 
 
     /**
-     * 获取未读和已读信息    “001”（已读）“002”（未读）
+     * 获取未读和已读信息    “001”（未读）“002”（已读）
      */
     public void getReadAndUnReadMsg(String flag,String kfmcode) {
         try {

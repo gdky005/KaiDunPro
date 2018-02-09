@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.WriteMsgActivity;
@@ -20,6 +22,7 @@ import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
+import com.kaidun.pro.notebook.JustifyTextView;
 import com.kaidun.pro.notebook.OptionUtil;
 import com.kaidun.pro.notebook.PicActivity;
 import com.kaidun.pro.notebook.bean.FamContact;
@@ -27,7 +30,6 @@ import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.KDUtils;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -47,13 +49,13 @@ public class FamContentHolder extends ZKViewHolder {
     @BindView(R.id.fam_message)
     TextView mFamMessage;
     @BindView(R.id.fam_icon)
-    ImageView mFamIcon;
+    SimpleDraweeView mFamIcon;
     @BindView(R.id.fam_name)
     TextView mFamName;
     @BindView(R.id.fam_kcmb)
     ImageView mFamKcmb;
     @BindView(R.id.fam_unit)
-    TextView mFamUnit;
+    JustifyTextView mFamUnit;
     @BindView(R.id.fam_option)
     LinearLayout mFamOption;
     @BindView(R.id.fam_text)
@@ -114,10 +116,14 @@ public class FamContentHolder extends ZKViewHolder {
         }
 
         mFamName.setText(name);
+
+        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+        roundingParams.setRoundAsCircle(true);
+        mFamIcon.getHierarchy().setRoundingParams(roundingParams);
         if (!TextUtils.isEmpty(headImg)) {
-            Picasso.with(mFamIcon.getContext()).load(headImg).into(mFamIcon);
+            mFamIcon.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         } else {
-            mFamIcon.setImageResource(R.drawable.head_portrait_znx);
+            mFamIcon.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         }
 
         mHourNumText.setText(famContent.getHourNum() + "");//课时
@@ -161,7 +167,11 @@ public class FamContentHolder extends ZKViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fam_flower:
-                sendFolwer();
+                if (famContent.getFlowerStatus() == 0) {
+                    sendFolwer();
+                } else {
+                    ToastUtils.showShort("已经送过花了");
+                }
                 break;
             case R.id.fam_message:
                 Intent intent = new Intent(view.getContext(), WriteMsgActivity.class);
@@ -194,7 +204,8 @@ public class FamContentHolder extends ZKViewHolder {
     private void sendFolwer() {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("ccId", famContent.getCcId());
+            jsonObject.put("ccid", famContent.getCcId());
+            jsonObject.put("kwcmId", famContent.getKwcmId());
             KDConnectionManager.getInstance().getZHApi().sendFolwer(
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new KDCallback<String>() {

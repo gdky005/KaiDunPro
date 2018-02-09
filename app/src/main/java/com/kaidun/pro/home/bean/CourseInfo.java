@@ -72,6 +72,7 @@ public class CourseInfo {
 
             private String className;
             private String courseSortId;
+            private String courseUrl;
             private List<BookModelsBean> bookModels;
             private List<RateListBean> rateList;
             public static String comment;
@@ -135,6 +136,14 @@ public class CourseInfo {
 
             public void setPublishTime(String publishTime) {
                 this.publishTime = publishTime;
+            }
+
+            public String getCourseUrl() {
+                return courseUrl;
+            }
+
+            public void setCourseUrl(String courseUrl) {
+                this.courseUrl = courseUrl;
             }
 
             public static class BookModelsBean {

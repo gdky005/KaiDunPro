@@ -95,6 +95,9 @@ public class HomeBodyHolder extends HomeHolder {
         }
         showCourseSchedule();
         mCourseName.setText("暂无");
+        if (mCourseInfo != null && mCourseInfo.getCourseUrl() != null) {
+            mCoursePhoto.setImageURI(mCourseInfo.getCourseUrl());
+        }
         setCoursePercentageWithEmpty();
         setCourseSpinnerWithEmpty();
     }
@@ -119,6 +122,9 @@ public class HomeBodyHolder extends HomeHolder {
             hideCourseSchedule();
             CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean
                     = (CourseInfo.ResultBean.ClassCourseInfoBean) home;
+            if (courseInfoBean.getCourseUrl() != null) {
+                mCoursePhoto.setImageURI(courseInfoBean.getCourseUrl());
+            }
             mCourseInfo = courseInfoBean;
             changeShowBook(courseInfoBean, 0);
             String bookCode = courseInfoBean.getBookModels().get(0).getBookCode();

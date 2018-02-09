@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.adapter.PicAdapter;
@@ -19,7 +20,6 @@ import com.kaidun.pro.retrofit2.KDListCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.KDUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import team.zhuoke.sdk.utils.L;
  * Created by WangQing on 2018/1/24.
  */
 
-public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent {
+public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyEvent, BaseQuickAdapter.RequestLoadMoreListener{
     @BindView(R.id.pic_recycle_view)
     ZKRecycleView picRecycleView;
     Unbinder unbinder;
@@ -94,6 +94,8 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
 
         picRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
         picRecycleView.setAdapter(picAdapter);
+        picAdapter.setEnableLoadMore(true);
+        picAdapter.setOnLoadMoreListener(this, picRecycleView);
     }
 
     @Override
@@ -105,28 +107,50 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
             classId = data.getString(Constant.CLASS_ID);
         }
 
-        refreshData();
+        refreshData(null);
     }
 
-    private void refreshData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData(null);
+    }
+
+    private void refreshData(String uploadTime) {
         JSONObject jsonObject = new JSONObject();
-        if (!TextUtils.isEmpty(ccId) && !TextUtils.isEmpty(classId)) {
-            try {
+        try {
+            if (!TextUtils.isEmpty(ccId) && !TextUtils.isEmpty(classId)) {
                 jsonObject.put("ccId", ccId);
                 jsonObject.put("classId", classId);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+
+            if (!TextUtils.isEmpty(uploadTime)) {
+                jsonObject.put("uploadTime", uploadTime);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         KDConnectionManager.getInstance().getZHApi().selectFamilyPicture(
                 KDRequestUtils.getRequestBody(jsonObject)).enqueue(new KDListCallback<PicBean>() {
             @Override
             public void onResponse(KDListBaseBean<PicBean> baseBean, List<PicBean> result) {
-                picAdapter.setNewData(result);
+
                 if (mNoteBookRefresh != null) {
                     mNoteBookRefresh.refreshComplete();
                 }
+
+                if (result == null || result.size() == 0) {
+                    picAdapter.loadMoreEnd();
+                    return;
+                }
+
+                if (!TextUtils.isEmpty(uploadTime)) {
+                    picAdapter.addData(result);
+                } else {
+                    picAdapter.setNewData(result);
+                }
+                picAdapter.loadMoreComplete();
                 L.d("selectFamilyPicture: " + result.toString());
             }
 
@@ -135,6 +159,7 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
                 if (mNoteBookRefresh != null) {
                     mNoteBookRefresh.refreshComplete();
                 }
+                picAdapter.loadMoreComplete();
                 KDUtils.showErrorToast();
             }
         });
@@ -161,11 +186,19 @@ public class PicFragment extends BaseFragment implements EasyRefreshLayout.EasyE
 
     @Override
     public void onLoadMore() {
-
     }
 
     @Override
     public void onRefreshing() {
-        refreshData();
+        refreshData(null);
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        List<PicBean> list = picAdapter.getData();
+        PicBean picBean = list.get(list.size() - 1);
+        if (picBean != null) {
+            refreshData(picBean.getUploadTime());
+        }
     }
 }
