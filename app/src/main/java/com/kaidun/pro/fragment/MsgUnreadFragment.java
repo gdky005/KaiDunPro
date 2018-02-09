@@ -217,6 +217,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                 messageAdapter.loadMoreFail();
             }
         });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD,mData.get(mData.size() -1).getKfmCode());
     }
 }
