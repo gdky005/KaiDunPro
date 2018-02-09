@@ -20,6 +20,7 @@ import com.kaidun.pro.bean.LoginBean;
 import com.kaidun.pro.managers.KDAccountManager;
 import com.kaidun.pro.managers.KDConnectionManager;
 import com.kaidun.pro.notebook.BookDetailActivity;
+import com.kaidun.pro.notebook.JustifyTextView;
 import com.kaidun.pro.notebook.OptionUtil;
 import com.kaidun.pro.notebook.PicActivity;
 import com.kaidun.pro.notebook.bean.FamContact;
@@ -53,7 +54,7 @@ public class FamContentHolder extends ZKViewHolder {
     @BindView(R.id.fam_kcmb)
     ImageView mFamKcmb;
     @BindView(R.id.fam_unit)
-    TextView mFamUnit;
+    JustifyTextView mFamUnit;
     @BindView(R.id.fam_option)
     LinearLayout mFamOption;
     @BindView(R.id.fam_text)
