@@ -95,6 +95,7 @@ public class FamContent {
              * start : 5
              * text : ………是吧
              * writingRate : 0%
+             * kwcmId
              */
 
             private String ccId;
@@ -113,6 +114,24 @@ public class FamContent {
             private int hourNum;
             private String text;
             private String writingRate;
+            private String kwcmId;
+            private int flowerStatus;//0没送过，1送过了
+
+            public String getKwcmId() {
+                return kwcmId;
+            }
+
+            public void setKwcmId(String kwcmId) {
+                this.kwcmId = kwcmId;
+            }
+
+            public int getFlowerStatus() {
+                return flowerStatus;
+            }
+
+            public void setFlowerStatus(int flowerStatus) {
+                this.flowerStatus = flowerStatus;
+            }
 
             public int getHourNum() {
                 return hourNum;

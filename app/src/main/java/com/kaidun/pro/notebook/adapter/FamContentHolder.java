@@ -30,7 +30,6 @@ import com.kaidun.pro.notebook.bean.FamContent;
 import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.KDUtils;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -168,7 +167,11 @@ public class FamContentHolder extends ZKViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fam_flower:
-                sendFolwer();
+                if (famContent.getFlowerStatus() == 0) {
+                    sendFolwer();
+                } else {
+                    ToastUtils.showShort("已经送过花了");
+                }
                 break;
             case R.id.fam_message:
                 Intent intent = new Intent(view.getContext(), WriteMsgActivity.class);
@@ -201,7 +204,8 @@ public class FamContentHolder extends ZKViewHolder {
     private void sendFolwer() {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("ccId", famContent.getCcId());
+            jsonObject.put("ccid", famContent.getCcId());
+            jsonObject.put("kwcmId", famContent.getKwcmId());
             KDConnectionManager.getInstance().getZHApi().sendFolwer(
                     KDRequestUtils.getRequestBody(jsonObject))
                     .enqueue(new KDCallback<String>() {
