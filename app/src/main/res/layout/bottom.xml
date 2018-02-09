@@ -27,7 +27,7 @@
             android:checked="true"
             android:clickable="true"
             android:textSize="0dp"
-            custom:drawableSizes="25dp"
+            custom:drawableSizes="50dp"
             custom:drawableTop="@drawable/selector_a"/>
 
         <com.kaidun.pro.views.CustomRadioButton
@@ -39,7 +39,7 @@
             android:clickable="true"
             android:textSize="0dp"
             android:gravity="center"
-            custom:drawableSizes="25dp"
+            custom:drawableSizes="50dp"
             custom:drawableTop="@drawable/selector_b"/>
 
         <com.kaidun.pro.views.CustomRadioButton
@@ -50,7 +50,7 @@
             android:textSize="0dp"
             android:button="@null"
             android:clickable="true"
-            custom:drawableSizes="25dp"
+            custom:drawableSizes="50dp"
             custom:drawableTop="@drawable/selector_c"/>
 
 
@@ -63,7 +63,7 @@
             android:checked="false"
             android:clickable="true"
             android:textSize="0dp"
-            custom:drawableSizes="25dp"
+            custom:drawableSizes="50dp"
             custom:drawableTop="@drawable/selector_d"/>
 
         <com.kaidun.pro.views.CustomRadioButton
@@ -76,13 +76,14 @@
             android:checked="false"
             android:clickable="true"
             android:gravity="center"
-            custom:drawableSizes="25dp"
+            custom:drawableSizes="50dp"
             custom:drawableTop="@drawable/selector_e"/>
     </RadioGroup>
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
         android:orientation="horizontal">
 
         <RadioButton

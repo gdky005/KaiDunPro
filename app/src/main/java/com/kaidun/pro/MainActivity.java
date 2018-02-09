@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
@@ -80,9 +81,7 @@ public class MainActivity extends KDBaseActivity {
         beginTransaction.add(R.id.main_layout, fragmentArray[4]);
         beginTransaction.commit();
         changeFragment(1);
-        rbHome.setDrawableSize(100);
-
-
+        setDefaultSize();
     }
 
     @Override
@@ -93,55 +92,67 @@ public class MainActivity extends KDBaseActivity {
                     setRight(-1);
                     setTitle(mTitles[NAV_TYPE_MAIN]);
                     changeFragment(1);
-                    rbHome.setDrawableSize(100);
-                    rbVideo.setDrawableSize(75);
-                    rbPic.setDrawableSize(75);
-                    rbBook.setDrawableSize(75);
-                    rbMessage.setDrawableSize(75);
+                    setDefaultSize();
                     break;
                 case R.id.bottom_video:
                     setTitle(mTitles[NAV_TYPE_VIDEO]);
                     setRight(-1);
                     changeFragment(2);
-                    rbHome.setDrawableSize(75);
-                    rbVideo.setDrawableSize(100);
-                    rbPic.setDrawableSize(75);
-                    rbBook.setDrawableSize(75);
-                    rbMessage.setDrawableSize(75);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getSelectDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_pic:
                     setTitle(mTitles[NAV_TYPE_PICTURE]);
                     setRight(-1);
                     changeFragment(3);
-                    rbHome.setDrawableSize(75);
-                    rbVideo.setDrawableSize(75);
-                    rbPic.setDrawableSize(100);
-                    rbBook.setDrawableSize(75);
-                    rbMessage.setDrawableSize(75);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getSelectDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_jia:
                     setTitle(mTitles[NAV_TYPE_PARENT_NOTEBOOK]);
                     setRight(-1);
                     changeFragment(4);
-                    rbHome.setDrawableSize(75);
-                    rbVideo.setDrawableSize(75);
-                    rbPic.setDrawableSize(75);
-                    rbBook.setDrawableSize(100);
-                    rbMessage.setDrawableSize(75);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getSelectDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_msg:
                     setTitle(mTitles[NAV_TYPE_MESSAGE]);
                     setRight(R.menu.item_message_edit);
                     changeFragment(5);
-                    rbHome.setDrawableSize(75);
-                    rbVideo.setDrawableSize(75);
-                    rbPic.setDrawableSize(75);
-                    rbBook.setDrawableSize(75);
-                    rbMessage.setDrawableSize(100);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getSelectDrawableSize());
                     break;
 
             }
         });
+    }
+
+    private void setDefaultSize() {
+        rbHome.setDrawableSize(getSelectDrawableSize());
+        rbVideo.setDrawableSize(getDrawableSize());
+        rbPic.setDrawableSize(getDrawableSize());
+        rbBook.setDrawableSize(getDrawableSize());
+        rbMessage.setDrawableSize(getDrawableSize());
+    }
+
+    private int getDrawableSize() {
+        return SizeUtils.dp2px(35);
+    }
+
+    private int getSelectDrawableSize() {
+        return SizeUtils.dp2px(50);
     }
 
     @Override
