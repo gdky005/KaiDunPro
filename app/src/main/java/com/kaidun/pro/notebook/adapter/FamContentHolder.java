@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.Constant;
 import com.kaidun.pro.R;
 import com.kaidun.pro.WriteMsgActivity;
@@ -48,7 +50,7 @@ public class FamContentHolder extends ZKViewHolder {
     @BindView(R.id.fam_message)
     TextView mFamMessage;
     @BindView(R.id.fam_icon)
-    ImageView mFamIcon;
+    SimpleDraweeView mFamIcon;
     @BindView(R.id.fam_name)
     TextView mFamName;
     @BindView(R.id.fam_kcmb)
@@ -115,10 +117,14 @@ public class FamContentHolder extends ZKViewHolder {
         }
 
         mFamName.setText(name);
+
+        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+        roundingParams.setRoundAsCircle(true);
+        mFamIcon.getHierarchy().setRoundingParams(roundingParams);
         if (!TextUtils.isEmpty(headImg)) {
-            Picasso.with(mFamIcon.getContext()).load(headImg).into(mFamIcon);
+            mFamIcon.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         } else {
-            mFamIcon.setImageResource(R.drawable.head_portrait_znx);
+            mFamIcon.setImageURI(KDAccountManager.getInstance().getUserInfoBean().getStuHeadImg());
         }
 
         mHourNumText.setText(famContent.getHourNum() + "");//课时
