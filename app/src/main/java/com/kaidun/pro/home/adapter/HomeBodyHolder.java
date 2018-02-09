@@ -95,6 +95,9 @@ public class HomeBodyHolder extends HomeHolder {
         }
         showCourseSchedule();
         mCourseName.setText("暂无");
+        if (mCourseInfo != null && mCourseInfo.getCourseUrl() != null) {
+            mCoursePhoto.setImageURI(mCourseInfo.getCourseUrl());
+        }
         setCoursePercentageWithEmpty();
         setCourseSpinnerWithEmpty();
     }
