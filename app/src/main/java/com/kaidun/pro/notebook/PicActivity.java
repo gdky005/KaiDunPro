@@ -20,7 +20,7 @@ public class PicActivity extends KDBaseActivity {
 
     @Override
     protected void initViews() {
-        mTitle.setText("图片");
+        mTitle.setText("照片");
         String ccId = getIntent().getStringExtra("ccId");
         String classId = getIntent().getStringExtra("classId");
         FragmentManager mFragmentManager = getSupportFragmentManager();
