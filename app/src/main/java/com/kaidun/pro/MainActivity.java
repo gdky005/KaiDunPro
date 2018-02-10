@@ -14,11 +14,14 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
+import com.kaidun.pro.fragment.MsgUnreadFragment;
 import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
 import com.kaidun.pro.views.CustomRadioButton;
+
+import org.simple.eventbus.EventBus;
 
 public class MainActivity extends KDBaseActivity {
 
@@ -64,6 +67,7 @@ public class MainActivity extends KDBaseActivity {
 
     @Override
     protected void initViews() {
+        EventBus.getDefault().register(this);
         mToolbar.setNavigationIcon(null);
         setTitle(mTitles[NAV_TYPE_MAIN]);
         radioGroup = findViewById(R.id.radioGroup);
@@ -133,10 +137,17 @@ public class MainActivity extends KDBaseActivity {
                     rbPic.setDrawableSize(getDrawableSize());
                     rbBook.setDrawableSize(getDrawableSize());
                     rbMessage.setDrawableSize(getSelectDrawableSize());
+                    EventBus.getDefault().post("", MsgUnreadFragment.MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE);
                     break;
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void setDefaultSize() {
@@ -231,6 +242,7 @@ public class MainActivity extends KDBaseActivity {
             Fragment fragment = fragmentArray[pushType];
             if (fragment instanceof MsgFragment) {
                 isUnReadState = true;
+                EventBus.getDefault().post("", MsgUnreadFragment.MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE);
             }
             setTitle(mTitles[pushType]);
 
