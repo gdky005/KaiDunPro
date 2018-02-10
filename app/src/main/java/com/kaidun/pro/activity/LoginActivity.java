@@ -88,6 +88,7 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         if (ZKBase.isDebug()) {
             spinnerTestAccount.setVisibility(View.VISIBLE);
             List<String> areaList = new ArrayList<>();
+            areaList.add("10047349");
             areaList.add("10009010");
             areaList.add("10047341");
             areaList.add("7007342");
