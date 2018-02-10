@@ -248,7 +248,7 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                 }
                 if (!isExist) {
                     AccountData accountData = new AccountData(account, pwd);
-                    accountDataList.add(accountData);
+                    accountDataList.add(0, accountData);
                     setDataList(KaiDunSP.KEY_USERCODE_AND_PWD, accountDataList);
                 }
                 chargeSelectRole(account, areaCode);
