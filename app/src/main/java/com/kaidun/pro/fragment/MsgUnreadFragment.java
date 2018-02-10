@@ -18,6 +18,9 @@ import com.kaidun.pro.bean.ReadAndUnReadBean;
 import com.kaidun.pro.notebook.bean.MsgBean;
 import com.kaidun.pro.views.RecDividerItemDecoration;
 
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,8 @@ import team.zhuoke.sdk.base.BaseFragment;
  */
 
 public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.onSwipeListener, BaseQuickAdapter.UpFetchListener, EasyRefreshLayout.EasyEvent, BaseQuickAdapter.RequestLoadMoreListener {
+
+    public static final String MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE = "msg_unread_fragment_update_message";
 
     public static final String KEY = "key";
     @BindView(R.id.unread_recle)
@@ -59,6 +64,7 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     @Override
     public void initView(View view) {
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this,view);
         httpUtils = new KdNetWorkClient();
 
@@ -85,6 +91,12 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
         initUnreadData();
     }
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
         mData = new ArrayList<ReadAndUnReadBean.ResultBean>();
         return mData;
@@ -95,6 +107,10 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     }
 
+    @Subscriber(tag = MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE)
+    private void initUnreadData(String state) {
+        initUnreadData();
+    }
     private void initUnreadData() {
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
             @Override
@@ -217,6 +233,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                 messageAdapter.loadMoreFail();
             }
         });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
+        httpUtils.getReadAndUnReadMsg(Constant.FLAG_UNREAD,mData.get(mData.size() -1).getKfmCode());
     }
 }

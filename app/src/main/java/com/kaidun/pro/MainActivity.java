@@ -10,13 +10,18 @@ import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.activity.KDBaseActivity;
 import com.kaidun.pro.fragment.MsgFragment;
+import com.kaidun.pro.fragment.MsgUnreadFragment;
 import com.kaidun.pro.fragment.PicFragment;
 import com.kaidun.pro.fragment.VideoFragment;
 import com.kaidun.pro.home.HomeFragment;
 import com.kaidun.pro.notebook.NoteBookFragment;
+import com.kaidun.pro.views.CustomRadioButton;
+
+import org.simple.eventbus.EventBus;
 
 public class MainActivity extends KDBaseActivity {
 
@@ -24,6 +29,11 @@ public class MainActivity extends KDBaseActivity {
 
     private Fragment currentFragment;
     private RadioGroup radioGroup;
+    private CustomRadioButton rbHome;
+    private CustomRadioButton rbVideo;
+    private CustomRadioButton rbPic;
+    private CustomRadioButton rbBook;
+    private CustomRadioButton rbMessage;
 
     public static final int NAV_TYPE_MAIN = 0;
     public static final int NAV_TYPE_VIDEO = 1;
@@ -57,9 +67,15 @@ public class MainActivity extends KDBaseActivity {
 
     @Override
     protected void initViews() {
+        EventBus.getDefault().register(this);
         mToolbar.setNavigationIcon(null);
         setTitle(mTitles[NAV_TYPE_MAIN]);
         radioGroup = findViewById(R.id.radioGroup);
+        rbHome = findViewById(R.id.bottom_home);
+        rbVideo = findViewById(R.id.bottom_video);
+        rbPic = findViewById(R.id.bottom_pic);
+        rbBook = findViewById(R.id.bottom_jia);
+        rbMessage = findViewById(R.id.bottom_msg);
         FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
         beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         beginTransaction.add(R.id.main_layout, fragmentArray[0]);
@@ -69,7 +85,7 @@ public class MainActivity extends KDBaseActivity {
         beginTransaction.add(R.id.main_layout, fragmentArray[4]);
         beginTransaction.commit();
         changeFragment(1);
-
+        setDefaultSize();
     }
 
     @Override
@@ -80,30 +96,74 @@ public class MainActivity extends KDBaseActivity {
                     setRight(-1);
                     setTitle(mTitles[NAV_TYPE_MAIN]);
                     changeFragment(1);
+                    setDefaultSize();
                     break;
                 case R.id.bottom_video:
                     setTitle(mTitles[NAV_TYPE_VIDEO]);
                     setRight(-1);
                     changeFragment(2);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getSelectDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_pic:
                     setTitle(mTitles[NAV_TYPE_PICTURE]);
                     setRight(-1);
                     changeFragment(3);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getSelectDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_jia:
                     setTitle(mTitles[NAV_TYPE_PARENT_NOTEBOOK]);
                     setRight(-1);
                     changeFragment(4);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getSelectDrawableSize());
+                    rbMessage.setDrawableSize(getDrawableSize());
                     break;
                 case R.id.bottom_msg:
                     setTitle(mTitles[NAV_TYPE_MESSAGE]);
                     setRight(R.menu.item_message_edit);
                     changeFragment(5);
+                    rbHome.setDrawableSize(getDrawableSize());
+                    rbVideo.setDrawableSize(getDrawableSize());
+                    rbPic.setDrawableSize(getDrawableSize());
+                    rbBook.setDrawableSize(getDrawableSize());
+                    rbMessage.setDrawableSize(getSelectDrawableSize());
+                    EventBus.getDefault().post("", MsgUnreadFragment.MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE);
                     break;
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    private void setDefaultSize() {
+        rbHome.setDrawableSize(getSelectDrawableSize());
+        rbVideo.setDrawableSize(getDrawableSize());
+        rbPic.setDrawableSize(getDrawableSize());
+        rbBook.setDrawableSize(getDrawableSize());
+        rbMessage.setDrawableSize(getDrawableSize());
+    }
+
+    private int getDrawableSize() {
+        return SizeUtils.dp2px(35);
+    }
+
+    private int getSelectDrawableSize() {
+        return SizeUtils.dp2px(50);
     }
 
     @Override
@@ -182,6 +242,7 @@ public class MainActivity extends KDBaseActivity {
             Fragment fragment = fragmentArray[pushType];
             if (fragment instanceof MsgFragment) {
                 isUnReadState = true;
+                EventBus.getDefault().post("", MsgUnreadFragment.MSG_UNREAD_FRAGMENT_UPDATE_MESSAGE);
             }
             setTitle(mTitles[pushType]);
 

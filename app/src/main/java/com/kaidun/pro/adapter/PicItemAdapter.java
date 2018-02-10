@@ -3,8 +3,10 @@ package com.kaidun.pro.adapter;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.kaidun.pro.PageCtrl;
 import com.kaidun.pro.R;
 import com.kaidun.pro.bean.PicBean;
@@ -31,26 +33,49 @@ public class PicItemAdapter extends ZKAdapter<PicBean.PictureUrlMapBean, ZKViewH
         String teacSendUrl = item.getTeacSendUrl();
 
         ZKImageView zkImageView = helper.getView(R.id.iv);
+        ImageView imageView = helper.getView(R.id.play_iv);
 
         if (isVideo(teacSendUrl)) {
+            helper.setVisible(R.id.play_iv, true);
             zkImageView.setImageURI(smallUrl);
         } else {
+            helper.setVisible(R.id.play_iv, false);
             zkImageView.setImageURI(teacSendUrl);
         }
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startVideoPlay(teacSendUrl, smallUrl);
+            }
+        });
         zkImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ToastUtils.showShort("图片：" + helper.getAdapterPosition());
-//                String picUrl = "http://a.hiphotos.baidu.com/image/h%3D300/sign=c17af2b3bb51f819ee25054aeab54a76/d6ca7bcb0a46f21f46612acbfd246b600d33aed5.jpg";
-
-                if (isVideo(teacSendUrl)) {
-                    PageCtrl.startVideoPlay(mContext, getName(teacSendUrl), smallUrl, teacSendUrl);
-                } else {
-                    PageCtrl.startPhotoView(mContext, teacSendUrl);
-                }
+                jumpAction(teacSendUrl, smallUrl);
             }
         });
+    }
+
+    private void jumpAction(String teacSendUrl, String smallUrl) {
+        //                ToastUtils.showShort("图片：" + helper.getAdapterPosition());
+//                String picUrl = "http://a.hiphotos.baidu.com/image/h%3D300/sign=c17af2b3bb51f819ee25054aeab54a76/d6ca7bcb0a46f21f46612acbfd246b600d33aed5.jpg";
+
+        if (isVideo(teacSendUrl)) {
+            startVideoPlay(teacSendUrl, smallUrl);
+        } else {
+            PageCtrl.startPhotoView(mContext, teacSendUrl);
+        }
+    }
+
+    private void startVideoPlay(String teacSendUrl, String smallUrl) {
+
+        if (TextUtils.isEmpty(teacSendUrl)) {
+            ToastUtils.showShort("播放地址有误，不能播放");
+            return;
+        }
+
+        PageCtrl.startVideoPlay(mContext, getName(teacSendUrl), smallUrl, teacSendUrl);
     }
 
     /**

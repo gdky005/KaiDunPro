@@ -27,11 +27,18 @@ public class ImgUtils {
     public static Bitmap getBitmap(String url) {
         Uri uri= Uri.parse(url);
 
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         FileBinaryResource resource = (FileBinaryResource) Fresco.getImagePipelineFactory().getSmallImageFileCache().getResource(new SimpleCacheKey(uri.toString()));
-        File file = resource.getFile();
-        bitmap = BitmapFactory.decodeFile(file.getPath());
-        return bitmap;
+
+        if (resource != null) {
+            File file = resource.getFile();
+            if (file != null) {
+                bitmap = BitmapFactory.decodeFile(file.getPath());
+                return bitmap;
+            }
+        }
+
+        return null;
     }
 
     //保存文件到指定路径
