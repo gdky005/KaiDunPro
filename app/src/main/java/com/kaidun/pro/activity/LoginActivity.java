@@ -8,14 +8,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kaidun.pro.MainActivity;
 import com.kaidun.pro.R;
+import com.kaidun.pro.adapter.AccountAdapter;
+import com.kaidun.pro.bean.AccountData;
 import com.kaidun.pro.bean.AreaBean;
 import com.kaidun.pro.bean.KDBaseBean;
 import com.kaidun.pro.chooserole.ChooseRoleActivity;
@@ -26,6 +34,7 @@ import com.kaidun.pro.retrofit2.KDCallback;
 import com.kaidun.pro.utils.KDRequestUtils;
 import com.kaidun.pro.utils.KDUtils;
 import com.kaidun.pro.utils.LoadingUtils;
+import com.kaidun.pro.views.RecDividerItemDecoration;
 
 import org.json.JSONObject;
 
@@ -36,6 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import team.zhuoke.sdk.ZKBase;
+import team.zhuoke.sdk.component.ZKRecycleView;
 
 /**
  * Created by Doraemon on 2018/1/23.
@@ -63,8 +73,18 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     @BindView(R.id.spinner_test_account)
     Spinner spinnerTestAccount;
     private String areaCode;
-    ArrayAdapter<String> arrayAdapter;
+    AccountAdapter accountDataAdapter;
+    ArrayAdapter arrayAdapter;
     KaiDunSP kaiDunSP;
+    List<AccountData> accountDataList;
+    @BindView(R.id.ll_choose_account)
+    LinearLayout chooseAccountLay;
+    @BindView(R.id.tv_clear)
+    TextView clearTv;
+    @BindView(R.id.rv_account_list)
+    ZKRecycleView accountRv;
+    @BindView(R.id.rl_login_root)
+    RelativeLayout rootLay;
 
 
     @Override
@@ -139,7 +159,8 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
 
     }
 
-    @OnClick({R.id.btn_login})
+    @OnClick({R.id.btn_login, R.id.rl_login_root, R.id.et_login_account,
+            R.id.tv_clear, R.id.iv_reset_account})
     public void onViewClick(View view) {
         // TODO: 2018/1/25 记得处理这里
         switch (view.getId()) {
@@ -149,6 +170,27 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                 if (checkIsValid(account, pwd, areaCode)) {
                     login(account, pwd, areaCode);
                 }
+                break;
+            case R.id.rl_login_root:
+                if (chooseAccountLay.isShown()) {
+                    chooseAccountLay.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.et_login_account:
+                if (!chooseAccountLay.isShown() && accountDataList.size() > 0) {
+                    chooseAccountLay.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.tv_clear:
+                accountEt.setText("");
+                pwdEt.setText("");
+                chooseAccountLay.setVisibility(View.GONE);
+                accountDataList.clear();
+                kaiDunSP.put(KaiDunSP.KEY_USERCODE_AND_PWD, "");
+                break;
+            case R.id.iv_reset_account:
+                accountEt.setText("");
+                pwdEt.setText("");
                 break;
 
         }
@@ -161,11 +203,8 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         arrayAdapter = new ArrayAdapter<String>(
                 this, R.layout.support_simple_spinner_dropdown_item, areaNameList);
         kaiDunSP = new KaiDunSP();
-        accountEt.setText((String) kaiDunSP.get(KaiDunSP.KEY_USERCODE, ""));
-        accountEt.setSelection(accountEt.getText().length());
-        pwdEt.setText((String) kaiDunSP.get(KaiDunSP.KEY_USERPWD, ""));
+        getLocalUserCode();
         getAreaList();
-
         verifyStoragePermissions(this);
     }
 
@@ -196,13 +235,21 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                 String key = "NIIGnE5O0ZU9BtSqREDlEwWo";
 //                String key = "dyijjlKmMzNs083Ph3KPVQg4"; // WangQing test
 //                String key = "BNnZg5IkOjn0V6Gu8R19fMss";  //test
-
                 PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, key);
 
                 //存储登录账户
-                kaiDunSP.put(KaiDunSP.KEY_USERCODE, account);
-                kaiDunSP.put(KaiDunSP.KEY_USERPWD, pwd);
-
+                boolean isExist = false;
+                for (int i = 0; i < accountDataList.size(); i++) {
+                    if (TextUtils.equals(account, accountDataList.get(i).getUserCode())) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (!isExist) {
+                    AccountData accountData = new AccountData(account, pwd);
+                    accountDataList.add(accountData);
+                    setDataList(KaiDunSP.KEY_USERCODE_AND_PWD, accountDataList);
+                }
                 chargeSelectRole(account, areaCode);
             }
         });
@@ -302,5 +349,62 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
         });
     }
 
+    private void getLocalUserCode() {
+        accountDataList = getDataList(KaiDunSP.KEY_USERCODE_AND_PWD);
+        if (accountDataList.size() > 0) {
+            accountDataAdapter = new AccountAdapter(accountDataList);
+            accountRv.setAdapter(accountDataAdapter);
+            RecDividerItemDecoration decoration = new RecDividerItemDecoration(
+                    getResources().getColor(R.color.color_fca948), 2, false);
+            //divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
+            accountRv.addItemDecoration(decoration);
+            accountDataAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    accountEt.setText(accountDataList.get(position).getUserCode());
+                    pwdEt.setText(accountDataList.get(position).getPwd());
+                    accountEt.setSelection(accountEt.getText().length());
+                    chooseAccountLay.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+
+    /**
+     * 获取本地账号信息
+     *
+     * @param tag
+     * @return
+     */
+    public List<AccountData> getDataList(String tag) {
+        List<AccountData> datalist = new ArrayList<AccountData>();
+        String jsonData = (String) kaiDunSP.get(tag, "");
+        if (TextUtils.isEmpty(jsonData)) {
+            return datalist;
+        }
+        Gson gson = new Gson();
+        datalist = gson.fromJson(jsonData, new TypeToken<List<AccountData>>() {
+        }.getType());
+        return datalist;
+
+    }
+
+    /**
+     * 保存List
+     *
+     * @param tag
+     * @param datalist
+     */
+    public <T> void setDataList(String tag, List<T> datalist) {
+        if (null == datalist || datalist.size() <= 0)
+            return;
+
+        Gson gson = new Gson();
+        //转换成json数据，再保存
+        String jsonData = gson.toJson(datalist);
+        KaiDunSP kaiDunSP = new KaiDunSP();
+        kaiDunSP.put(tag, jsonData);
+
+    }
 
 }

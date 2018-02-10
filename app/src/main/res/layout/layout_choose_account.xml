@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_choose_account"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_clear"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="2px"
+        android:background="@drawable/bg_clear_account"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="清除所有历史记录"
+        android:textColor="@color/color_ff7624"
+        android:textSize="@dimen/sp_12" />
+
+    <team.zhuoke.sdk.component.ZKRecycleView
+        android:id="@+id/rv_account_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        app:layoutManager="LinearLayoutManager" />
+</LinearLayout>
+

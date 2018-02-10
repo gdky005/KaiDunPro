@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_login_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
@@ -18,8 +19,10 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/spinner_test_account"
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:background="@drawable/input_login"
@@ -37,7 +40,7 @@
             android:id="@+id/et_login_account"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_weight="1"
             android:background="@null"
             android:hint="@string/hint_input_account"
             android:imeOptions="actionDone"
@@ -45,11 +48,23 @@
             android:singleLine="true"
             android:textColorHint="@color/color_hint"
             android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/iv_reset_account"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_reset_account" />
+
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/ll_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ll_account"
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_10"
@@ -80,8 +95,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ll_pwd"
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_10"
@@ -100,11 +117,11 @@
             android:id="@+id/spinner_addr"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_weight="1"
             android:dropDownVerticalOffset="@dimen/dp_40"
             android:spinnerMode="dropdown"
-            android:textColor="@color/color_text"
-           android:layout_marginRight="@dimen/dp_5"/>
+            android:textColor="@color/color_text" />
 
         <!--<ImageView-->
         <!--android:layout_width="@dimen/dp_40"-->
@@ -117,9 +134,23 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/ll_area"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/bg_btn_login" />
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_choose_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_account"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_5"
+        android:visibility="gone">
+
+        <include layout="@layout/layout_choose_account" />
+    </LinearLayout>
+</RelativeLayout>
