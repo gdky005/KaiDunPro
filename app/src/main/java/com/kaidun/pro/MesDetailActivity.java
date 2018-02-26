@@ -103,6 +103,10 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
 
     private void getDetailDemo() {
+        if (httpUtils == null) {
+            return;
+        }
+
         httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<MsgDetailBean>() {
 
             @Override
