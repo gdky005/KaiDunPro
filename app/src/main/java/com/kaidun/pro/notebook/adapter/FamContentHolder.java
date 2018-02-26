@@ -242,6 +242,8 @@ public class FamContentHolder extends ZKViewHolder {
 
     @SuppressLint("SetTextI18n")
     private void setPercentage(final FrameLayout layout, double progress, TextView percentage) {
+        realSetPercentage(layout, 0);
+
         layout.post(() -> realSetPercentage(layout, progress));
         percentage.setText((int) (progress * 100) + "%");
     }
