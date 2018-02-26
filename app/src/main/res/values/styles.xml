@@ -30,4 +30,35 @@
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="JLB_Detail_item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp_8</item>
+        <item name="android:layout_marginRight">@dimen/dp_8</item>
+        <item name="android:textColor">@color/text_main</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="JLB_Detail_item_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:layout_marginBottom">@dimen/dp_13</item>
+        <item name="android:layout_marginTop">@dimen/dp_13</item>
+        <item name="android:background">@drawable/dotted_line</item>
+        <item name="android:layerType">software</item>
+    </style>
+
+
+    <style name="JLB_Detail_item_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp_8</item>
+        <item name="android:layout_marginRight">@dimen/dp_8</item>
+        <item name="android:layout_marginTop">@dimen/dp_15</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+
 </resources>

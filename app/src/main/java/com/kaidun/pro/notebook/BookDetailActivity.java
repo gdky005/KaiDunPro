@@ -1,6 +1,9 @@
 package com.kaidun.pro.notebook;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,29 +30,46 @@ import retrofit2.Response;
  */
 public class BookDetailActivity extends KDBaseActivity {
 
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.line_bottom)
+    View lineBottom;
     @BindView(R.id.detail_book_img)
-    ImageView mDetailBookImg;
+    ImageView detailBookImg;
     @BindView(R.id.detail_book_name)
-    TextView mDetailBookName;
+    TextView detailBookName;
     @BindView(R.id.detail_unit)
-    TextView mDetailUnit;
-    @BindView(R.id.detail_msg_group)
-    LinearLayout mDetailMsgGroup;
+    TextView detailUnit;
+    @BindView(R.id.book_detail_msg_title)
+    TextView bookDetailMsgTitle;
     @BindView(R.id.book_detail_objective)
-    TextView mBookDetailObjective;
-    @BindView(R.id.book_detail_sentence)
-    TextView mBookDetailSentence;
+    TextView bookDetailObjective;
+    @BindView(R.id.book_detail_study_sentence_title)
+    TextView bookDetailStudySentenceTitle;
+    @BindView(R.id.book_detail_study_sentence)
+    TextView bookDetailStudySentence;
+    @BindView(R.id.book_detail_phonics_title)
+    TextView bookDetailPhonicsTitle;
+    @BindView(R.id.book_detail_phonics)
+    TextView bookDetailPhonics;
+    @BindView(R.id.book_detail_vocabulary_title)
+    TextView bookDetailVocabularyTitle;
     @BindView(R.id.book_detail_vocabulary)
-    TextView mBookDetailVocabulary;
-    @BindView(R.id.book_detail_phonice)
-    TextView mBookDetailPhonice;
+    TextView bookDetailVocabulary;
+    @BindView(R.id.book_detail_sentence_title)
+    TextView bookDetailSentenceTitle;
+    @BindView(R.id.book_detail_sentence)
+    TextView bookDetailSentence;
+    @BindView(R.id.detail_msg_group)
+    LinearLayout detailMsgGroup;
     private String ccId;
     private String courseSortId;
     private String bookName;
-    //private String unitName;
+    private String unitName;
     private String bookImg;
-
-    private String[] titles = {"课程目标", "Sentence", "Vocabulary", "Phonice"};
 
     @Override
     protected int getLayoutId() {
@@ -73,12 +93,12 @@ public class BookDetailActivity extends KDBaseActivity {
         ccId = toDetailIntent.getStringExtra("ccId");
         courseSortId = toDetailIntent.getStringExtra("courseSortId");
         bookName = toDetailIntent.getStringExtra("bookName");
-        //unitName = toDetailIntent.getStringExtra("unitName");
+        unitName = toDetailIntent.getStringExtra("unitName");
         bookImg = toDetailIntent.getStringExtra("bookImg");
 
-        Picasso.with(mContext).load(bookImg).into(mDetailBookImg);
-        mDetailBookName.setText(bookName);
-        //mDetailUnit.setText(unitName);
+        Picasso.with(mContext).load(bookImg).into(detailBookImg);
+        detailBookName.setText(bookName);
+        detailUnit.setText(unitName);
 
         try {
             JSONObject jsonObject = new JSONObject();
@@ -108,7 +128,7 @@ public class BookDetailActivity extends KDBaseActivity {
     }
 
     private void showData(BookDetail.ResultBean bookDetail) {
-        mBookDetailObjective.setText(bookDetail.getCourseObject());
+        bookDetailObjective.setText(bookDetail.getCourseObject());
 
         StringBuilder sentence = new StringBuilder();
         StringBuilder vocabulary = new StringBuilder();
@@ -123,18 +143,26 @@ public class BookDetailActivity extends KDBaseActivity {
 
         if (sentence.length() > 0) {
             sentence.deleteCharAt(sentence.length() - 1);
-            mBookDetailSentence.setText(sentence);
+            bookDetailSentence.setText(sentence);
+            bookDetailStudySentence.setText(sentence);
         }
 
         if (vocabulary.length() > 0) {
             vocabulary.deleteCharAt(vocabulary.length() - 1);
-            mBookDetailVocabulary.setText(vocabulary);
+            bookDetailVocabulary.setText(vocabulary);
         }
 
         if (phonice.length() > 0) {
             phonice.deleteCharAt(phonice.length() - 1);
-            mBookDetailPhonice.setText(phonice);
+            bookDetailPhonics.setText(phonice);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 //    private void showData(BookDetail result) {

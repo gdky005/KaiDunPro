@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFF"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/white"
+              android:orientation="vertical">
 
-    <include layout="@layout/widget_toolbar" />
+    <include layout="@layout/widget_toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,29 +21,30 @@
                 android:id="@+id/detail_book_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/dp_20"
                 android:scaleType="center"
-                android:src="@drawable/fun_book_placeholder" />
+                android:src="@drawable/fun_book_placeholder"/>
 
             <TextView
                 android:id="@+id/detail_book_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
                 android:gravity="center"
                 android:text="ABC fun book 6"
-                android:textColor="#1b1a16"
-                android:textSize="@dimen/sp_20" />
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/sp_12"/>
 
             <TextView
                 android:id="@+id/detail_unit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_15"
                 android:gravity="center"
-                android:textColor="#1b1a16"
-                android:textSize="24sp" />
+                android:text="AAAAAAA"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/sp_20"/>
 
             <LinearLayout
                 android:id="@+id/detail_msg_group"
@@ -58,31 +60,16 @@
 
                     <TextView
                         android:id="@+id/book_detail_msg_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="课程目标"
-                        android:textColor="#1b1a16"
-                        android:textSize="@dimen/sp_18" />
+                        style="@style/JLB_Detail_item_title"
+                        android:text="课程目标"/>
 
                     <TextView
                         android:id="@+id/book_detail_objective"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#433d2e"
-                        android:textSize="@dimen/sp_16" />
+                        style="@style/JLB_Detail_item_text"
+                        tools:text="我是课程目标的内容哦！"/>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/dotted_line"
-                        android:layerType="software" />
+                        style="@style/JLB_Detail_item_line"/>
                 </LinearLayout>
 
                 <!--常用句型-->
@@ -92,32 +79,39 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Sentence Pattern"
-                        android:textColor="#1b1a16"
-                        android:textSize="@dimen/sp_18" />
+                        android:id="@+id/book_detail_study_sentence_title"
+                        style="@style/JLB_Detail_item_title"
+                        android:text="学习常用句型"/>
 
                     <TextView
-                        android:id="@+id/book_detail_sentence"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#433d2e"
-                        android:textSize="@dimen/sp_16" />
+                        android:id="@+id/book_detail_study_sentence"
+                        style="@style/JLB_Detail_item_text"
+                        tools:text="What's can you do?"/>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/dotted_line"
-                        android:layerType="software" />
+                        style="@style/JLB_Detail_item_line"/>
                 </LinearLayout>
+
+                <!--Phonics-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/book_detail_phonics_title"
+                        style="@style/JLB_Detail_item_title"
+                        android:text="Phonics"/>
+
+                    <TextView
+                        android:id="@+id/book_detail_phonics"
+                        style="@style/JLB_Detail_item_text"
+                        tools:text="Phonics Phonics Phonics"/>
+
+                    <View
+                        style="@style/JLB_Detail_item_line"/>
+                </LinearLayout>
+
                 <!--Vocabulary-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -125,64 +119,38 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Vocabulary"
-                        android:textColor="#1b1a16"
-                        android:textSize="@dimen/sp_18" />
+                        android:id="@+id/book_detail_vocabulary_title"
+                        style="@style/JLB_Detail_item_title"
+                        android:text="Vocabulary"/>
 
                     <TextView
                         android:id="@+id/book_detail_vocabulary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#433d2e"
-                        android:textSize="@dimen/sp_16" />
+                        style="@style/JLB_Detail_item_text"
+                        tools:text="Vocabulary Vocabulary Vocabulary"/>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/dotted_line"
-                        android:layerType="software" />
+                        style="@style/JLB_Detail_item_line"/>
+
                 </LinearLayout>
-                <!--Phonice-->
+
+                <!--Sentence-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Phonice"
-                        android:textColor="#1b1a16"
-                        android:textSize="@dimen/sp_18" />
+                        android:id="@+id/book_detail_sentence_title"
+                        style="@style/JLB_Detail_item_title"
+                        android:text="Sentence"/>
 
                     <TextView
-                        android:id="@+id/book_detail_phonice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#433d2e"
-                        android:textSize="@dimen/sp_16" />
+                        android:id="@+id/book_detail_sentence"
+                        style="@style/JLB_Detail_item_text"
+                        tools:text="Vocabulary Vocabulary Vocabulary"/>
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/dotted_line"
-                        android:layerType="software" />
+                        style="@style/JLB_Detail_item_line"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
