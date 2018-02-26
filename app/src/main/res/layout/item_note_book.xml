@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="27dp">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="@dimen/dp_24">
 
     <ImageView
         android:id="@+id/note_book_item_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/other_notebook" />
+        android:src="@drawable/other_notebook"/>
 
     <TextView
         android:id="@+id/note_book_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="@dimen/sp_16" />
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="@dimen/sp_14"
+        tools:text="ABC 家联本"/>
 </LinearLayout>
