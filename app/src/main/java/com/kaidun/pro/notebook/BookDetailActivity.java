@@ -65,7 +65,7 @@ public class BookDetailActivity extends KDBaseActivity {
     TextView bookDetailSentence;
     @BindView(R.id.detail_msg_group)
     LinearLayout detailMsgGroup;
-    private String ccId;
+    private String processId;
     private String courseSortId;
     private String bookName;
     private String unitName;
@@ -90,7 +90,7 @@ public class BookDetailActivity extends KDBaseActivity {
     @Override
     protected void initData() {
         Intent toDetailIntent = getIntent();
-        ccId = toDetailIntent.getStringExtra("ccId");
+        processId = toDetailIntent.getStringExtra("processId");
         courseSortId = toDetailIntent.getStringExtra("courseSortId");
         bookName = toDetailIntent.getStringExtra("bookName");
         unitName = toDetailIntent.getStringExtra("unitName");
@@ -102,7 +102,7 @@ public class BookDetailActivity extends KDBaseActivity {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("ccId", ccId);
+            jsonObject.put("processId", processId); // TODO: 2018/2/27  根据服务器修改的
             jsonObject.put("courseSortId", courseSortId);
             KDConnectionManager.getInstance().getZHApi()
                     .selectCourseObject(KDRequestUtils.getRequestBody(jsonObject))
@@ -134,11 +134,21 @@ public class BookDetailActivity extends KDBaseActivity {
         StringBuilder vocabulary = new StringBuilder();
         StringBuilder phonice = new StringBuilder();
 
-        for (int i = 0; i < bookDetail.getCourseObjectList().size(); i++) {
-            BookDetail.ResultBean.CourseObjectListBean listBean = bookDetail.getCourseObjectList().get(i);
-            sentence.append(listBean.getCourseSentencePattern()).append("\n");
-            vocabulary.append(listBean.getCourseVocabulary()).append(",");
-            phonice.append(listBean.getCourserPhonice()).append(",");
+
+        BookDetail.ResultBean.CourseObjectListBean courseObjectListBean = bookDetail.getCourseObjectList();
+
+        if (courseObjectListBean != null) {
+            for (String sentenceStr : courseObjectListBean.getSentenceList()) {
+                sentence.append(sentenceStr).append("\n");
+            }
+
+            for (String vocabularyStr : courseObjectListBean.getVocabularyList()) {
+                vocabulary.append(vocabularyStr).append(",");
+            }
+
+            for (String phoniceStr : courseObjectListBean.getPhoniceList()) {
+                phonice.append(phoniceStr).append(",");
+            }
         }
 
         if (sentence.length() > 0) {

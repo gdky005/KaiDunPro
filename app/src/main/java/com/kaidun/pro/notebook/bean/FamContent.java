@@ -112,6 +112,7 @@ public class FamContent {
             private String speakingRate;
             private int start;
             private int hourNum;
+            private String processId;
             private String text;
             private String writingRate;
             private String kwcmId;
@@ -139,6 +140,14 @@ public class FamContent {
 
             public void setHourNum(int hourNum) {
                 this.hourNum = hourNum;
+            }
+
+            public String getProcessId() {
+                return processId;
+            }
+
+            public void setProcessId(String processId) {
+                this.processId = processId;
             }
 
             public String getCcId() {

@@ -11,7 +11,7 @@ public class BookDetail {
 
     /**
      * message : 成功
-     * result : {"courseObject":"然小朋友烤饼干","courseObjectList":[{"courseSentencePattern":"what can you do?i can dance","courseVocabulary":"dance","courserPhonice":"dance"},{"courseSentencePattern":"waht can you do?ican paint","courseVocabulary":"paint","courserPhonice":"paint"},{"courseSentencePattern":"what can you do?i can read","courseVocabulary":"read","courserPhonice":"read"},{"courseSentencePattern":"what can you do?i can sing","courseVocabulary":"sing","courserPhonice":"sing"}]}
+     * result : {"courseObject":"小朋友烤饼干","courseObjectList":{"sentenceList":["WHAT   ARE YOU DOING","WHAT   ARE YOU DOING NOW"],"phoniceList":["DASFASD","FADFAD"],"vocabularyList":["PATHOY","JAVA","C++","C"]}}
      * statusCode : 100
      * ver : 1
      */
@@ -55,12 +55,12 @@ public class BookDetail {
 
     public static class ResultBean {
         /**
-         * courseObject : 然小朋友烤饼干
-         * courseObjectList : [{"courseSentencePattern":"what can you do?i can dance","courseVocabulary":"dance","courserPhonice":"dance"},{"courseSentencePattern":"waht can you do?ican paint","courseVocabulary":"paint","courserPhonice":"paint"},{"courseSentencePattern":"what can you do?i can read","courseVocabulary":"read","courserPhonice":"read"},{"courseSentencePattern":"what can you do?i can sing","courseVocabulary":"sing","courserPhonice":"sing"}]
+         * courseObject : 小朋友烤饼干
+         * courseObjectList : {"sentenceList":["WHAT   ARE YOU DOING","WHAT   ARE YOU DOING NOW"],"phoniceList":["DASFASD","FADFAD"],"vocabularyList":["PATHOY","JAVA","C++","C"]}
          */
 
         private String courseObject;
-        private List<CourseObjectListBean> courseObjectList;
+        private CourseObjectListBean courseObjectList;
 
         public String getCourseObject() {
             return courseObject;
@@ -70,47 +70,41 @@ public class BookDetail {
             this.courseObject = courseObject;
         }
 
-        public List<CourseObjectListBean> getCourseObjectList() {
+        public CourseObjectListBean getCourseObjectList() {
             return courseObjectList;
         }
 
-        public void setCourseObjectList(List<CourseObjectListBean> courseObjectList) {
+        public void setCourseObjectList(CourseObjectListBean courseObjectList) {
             this.courseObjectList = courseObjectList;
         }
 
         public static class CourseObjectListBean {
-            /**
-             * courseSentencePattern : what can you do?i can dance
-             * courseVocabulary : dance
-             * courserPhonice : dance
-             */
+            private List<String> sentenceList;
+            private List<String> phoniceList;
+            private List<String> vocabularyList;
 
-            private String courseSentencePattern;
-            private String courseVocabulary;
-            private String courserPhonice;
-
-            public String getCourseSentencePattern() {
-                return courseSentencePattern;
+            public List<String> getSentenceList() {
+                return sentenceList;
             }
 
-            public void setCourseSentencePattern(String courseSentencePattern) {
-                this.courseSentencePattern = courseSentencePattern;
+            public void setSentenceList(List<String> sentenceList) {
+                this.sentenceList = sentenceList;
             }
 
-            public String getCourseVocabulary() {
-                return courseVocabulary;
+            public List<String> getPhoniceList() {
+                return phoniceList;
             }
 
-            public void setCourseVocabulary(String courseVocabulary) {
-                this.courseVocabulary = courseVocabulary;
+            public void setPhoniceList(List<String> phoniceList) {
+                this.phoniceList = phoniceList;
             }
 
-            public String getCourserPhonice() {
-                return courserPhonice;
+            public List<String> getVocabularyList() {
+                return vocabularyList;
             }
 
-            public void setCourserPhonice(String courserPhonice) {
-                this.courserPhonice = courserPhonice;
+            public void setVocabularyList(List<String> vocabularyList) {
+                this.vocabularyList = vocabularyList;
             }
         }
     }

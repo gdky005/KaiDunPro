@@ -182,7 +182,7 @@ public class FamContentHolder extends ZKViewHolder {
             case R.id.fam_kcmb:
                 if (famContent != null) {
                     Intent toDetailIntent = new Intent(view.getContext(), BookDetailActivity.class);
-                    toDetailIntent.putExtra("ccId", famContent.getCcId());
+                    toDetailIntent.putExtra("processId", famContent.getProcessId());
                     toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
                     //测试数据
 //                    toDetailIntent.putExtra("ccId", "52F4DE182D9DF774E0530B01000A1F5A");
