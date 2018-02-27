@@ -93,6 +93,7 @@ public class FamContentHolder extends ZKViewHolder {
     private String name;//学员名称
     private String headImg;//学院头像地址
     private FamContact famBookData;
+    private int flowerStatus = 0; // 送花状态默认可以送，根据状态判断
 
     public FamContentHolder(View view) {
         super(view);
@@ -109,6 +110,8 @@ public class FamContentHolder extends ZKViewHolder {
 
     public void setData(FamContent.ResultBean.FamilyContactListBean famContent) {
         this.famContent = famContent;
+        flowerStatus = famContent.getFlowerStatus();
+
         if (getLayoutPosition() == 0) {
             famFirstGone.setBackgroundColor(Color.WHITE);
         } else {
@@ -167,7 +170,7 @@ public class FamContentHolder extends ZKViewHolder {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fam_flower:
-                if (famContent.getFlowerStatus() == 0) {
+                if (flowerStatus == 0) {
                     sendFolwer();
                 } else {
                     ToastUtils.showShort("已经送过花了");
@@ -212,9 +215,10 @@ public class FamContentHolder extends ZKViewHolder {
 
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {
-                            if (baseBean.getStatusCode() == 100)
+                            if (baseBean.getStatusCode() == 100) {
+                                flowerStatus = 1;
                                 ToastUtils.showShort("送花成功");
-                            else
+                            } else
                                 KDUtils.showErrorToast();
                         }
 
