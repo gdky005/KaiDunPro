@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.kaidun.pro.R;
@@ -94,7 +95,9 @@ public class HomeBodyHolder extends HomeHolder {
             mTeacherEvaluationLayout.setVisibility(View.VISIBLE);
         }
         showCourseSchedule();
-        mCourseName.setText("暂无");
+        if (TextUtils.isEmpty(mCourseName.getText().toString())) {
+            mCourseName.setText("暂无");
+        }
         if (mCourseInfo != null && mCourseInfo.getCourseUrl() != null) {
             mCoursePhoto.setImageURI(mCourseInfo.getCourseUrl());
         }
@@ -189,7 +192,12 @@ public class HomeBodyHolder extends HomeHolder {
     }
 
     private void changeShowBook(CourseInfo.ResultBean.ClassCourseInfoBean courseInfoBean, int position) {
-        mCourseName.setText(courseInfoBean.getClassName());
+        if (TextUtils.isEmpty(courseInfoBean.getClassName())) {
+            mCourseName.setText("暂无");
+            LogUtils.e("TextUtils.isEmpty(ClassName)");
+        } else {
+            mCourseName.setText(courseInfoBean.getClassName());
+        }
         mCoursePhoto.setImageURI(courseInfoBean.getBookModels().get(position).getBookUrl());
     }
 
