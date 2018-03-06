@@ -51,24 +51,12 @@ public class PhotoViewActivity extends KDBaseActivity {
     @Override
     public void onRightText(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.right_save_pic:
-//                onSavePic(picUrl);
-//                break;
             case R.id.right_share_pic:
                 Bitmap bitmap = ImgUtils.getBitmap(picUrl);
 
                 if (bitmap != null) {
                     String picPath = ImgUtils.saveImageToFile(mContext, bitmap);
-
-//                Intent intent=new Intent(Intent.ACTION_SEND);
-//                intent.setType("text/plain"); // 分享发送的数据类型
-//                intent.putExtra(Intent.EXTRA_SUBJECT, "掌上生活"); // 分享的主题
-//                intent.putExtra(Intent.EXTRA_TEXT, "掌上生活，你的日常生活护理专家！\nPocketLife,make your life in the pocket!"); // 分享的内容
-//
-//                startActivity(Intent.createChooser(intent, "分享"));
-
                     Intent intent = IntentUtils.getShareImageIntent("我分享了一个图片", picPath);
-//                Intent intent = IntentUtils.getShareTextIntent("我分享了一个图片");
                     startActivity(Intent.createChooser(intent, "分享"));
 
                 } else {
@@ -101,22 +89,6 @@ public class PhotoViewActivity extends KDBaseActivity {
                     return b;
                 }
             });
-
-
-//            PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-//            controller.setUri(uri);
-//            controller.setOldController(zkImageView.getController());
-//            controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
-//                @Override
-//                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-//                    super.onFinalImageSet(id, imageInfo, animatable);
-//                    if (imageInfo == null || zkImageView == null) {
-//                        return;
-//                    }
-//                    zkImageView.update(imageInfo.getWidth(), imageInfo.getHeight());
-//                }
-//            });
-//            zkImageView.setController(controller.build());
         } else {
             ToastUtils.showShort("图片地址为空！");
         }
@@ -141,7 +113,6 @@ public class PhotoViewActivity extends KDBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 
