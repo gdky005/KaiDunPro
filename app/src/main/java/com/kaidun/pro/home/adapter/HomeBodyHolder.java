@@ -303,13 +303,11 @@ public class HomeBodyHolder extends HomeHolder {
 
     private void realSetPercentage(FrameLayout layout, double progress) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layout.getLayoutParams();
-        //  measure方法的参数值都设为0即可
         layout.measure(0, 0);
         if (sScheduleLength == 0) {
             sScheduleLength = layout.getWidth();
         }
         Log.e("TAG", "sScheduleLength = " + sScheduleLength);
-        //  防止数据超过100%时出现进度条超过布局宽度的问题
         if (progress > 1) {
             progress = 1;
         }
