@@ -50,6 +50,7 @@ public class SubVideoFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setClass(mContext, VideoDetailActivity.class);
                 intent.putExtra("id", dvdList.get(position).getCourseSortId());
+                intent.putExtra("name", dvdList.get(position).getCourseSortName());
                 intent.putExtra("code", dvdList.get(position).getBookCode());
                 startActivity(intent);
 
