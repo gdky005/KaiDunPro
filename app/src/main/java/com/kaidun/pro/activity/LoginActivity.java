@@ -44,7 +44,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import team.zhuoke.sdk.ZKBase;
 import team.zhuoke.sdk.component.ZKRecycleView;
 
 /**
@@ -70,8 +69,6 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     EditText pwdEt;
     List<AreaBean> areaBeanList;
     List<String> areaNameList;
-    @BindView(R.id.spinner_test_account)
-    Spinner spinnerTestAccount;
     private String areaCode;
     AccountAdapter accountDataAdapter;
     ArrayAdapter arrayAdapter;
@@ -95,54 +92,8 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        testAccount();
 
 
-    }
-
-    /**
-     * 添加多个测试账号
-     */
-    private void testAccount() {
-        // TODO: 2018/1/25  这里是测试的，记得删除了
-        if (ZKBase.isDebug()) {
-            spinnerTestAccount.setVisibility(View.VISIBLE);
-            List<String> areaList = new ArrayList<>();
-            areaList.add("10047346");
-            areaList.add("10047349");
-            areaList.add("10009010");
-            areaList.add("10047341");
-            areaList.add("7007342");
-            areaList.add("10007027");
-            areaList.add("8009030410");
-            areaList.add("8009030324");
-            areaList.add("8009034272");
-            areaList.add("8009028864");
-            areaList.add("8009028361");
-            areaList.add("8009024777");
-            areaList.add("8009011327");
-            areaList.add("8009001100");
-            areaList.add("10006568");
-
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                    this, R.layout.support_simple_spinner_dropdown_item, areaList);
-            spinnerTestAccount.setAdapter(arrayAdapter);
-            spinnerTestAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    accountEt.setText(areaList.get(position));
-                    pwdEt.setText(areaList.get(position));
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            accountEt.setText(areaList.get(0));
-            pwdEt.setText(areaList.get(0));
-        }
     }
 
     @Override
@@ -164,7 +115,6 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     @OnClick({R.id.btn_login, R.id.rl_login_root, R.id.et_login_account,
             R.id.tv_clear, R.id.iv_reset_account})
     public void onViewClick(View view) {
-        // TODO: 2018/1/25 记得处理这里
         switch (view.getId()) {
             case R.id.btn_login:
                 String account = accountEt.getText().toString();
@@ -227,16 +177,12 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
     }
 
     public void login(String account, String pwd, String areaCode) {
-//        测试账号有：10007027，10009010， 账号和密码都相同
         KDAccountManager kdAccountManager = KDAccountManager.getInstance();
         kdAccountManager.setLoginFinish(login -> {
             // TODO: 2018/1/25  这里请处理你的逻辑
             LoadingUtils.dismiss();
             if (login != null) {
-                //TODO 替换正式api key
                 String key = "NIIGnE5O0ZU9BtSqREDlEwWo";
-//                String key = "dyijjlKmMzNs083Ph3KPVQg4"; // WangQing test
-//                String key = "BNnZg5IkOjn0V6Gu8R19fMss";  //test
                 PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, key);
 
                 //存储登录账户
@@ -314,8 +260,6 @@ public class LoginActivity extends KDBaseActivity implements AdapterView.OnItemS
                                 if (TextUtils.equals("002", result)) {
                                     ChooseRoleActivity.start(LoginActivity.this);
                                 } else {
-//                                    KaiDunSP kaiDunSP = new KaiDunSP();
-//                                    kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 }
                                 finish();

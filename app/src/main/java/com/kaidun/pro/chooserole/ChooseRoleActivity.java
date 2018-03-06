@@ -138,8 +138,6 @@ public class ChooseRoleActivity extends KDBaseActivity implements BaseQuickAdapt
                         @Override
                         public void onResponse(KDBaseBean<String> baseBean, String result) {
                             if (baseBean.getStatusCode() == 100) {
-//                                KaiDunSP kaiDunSP = new KaiDunSP();
-//                                kaiDunSP.put(KaiDunSP.KEY_TEST_ROLES, false);
                                 startActivity(new Intent(ChooseRoleActivity.this, MainActivity.class));
                                 finish();
                             } else {
