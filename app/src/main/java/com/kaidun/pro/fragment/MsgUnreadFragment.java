@@ -126,12 +126,11 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                         messageAdapter.notifyDataSetChanged();
                     }
                 }
-                isRefresh = false;  //重置标志位
+                isRefresh = false;
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 if (isRefresh){
                     isRefresh = false;
                     refreshLayout.refreshComplete();
@@ -154,7 +153,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
             @Override
             public void getSuccessDataCallBack(MsgBean data) {
                 if (data != null && 100 == data.getStatusCode()){
-//                    initUnreadData();
                     mData.remove(pos);
                     messageAdapter.notifyDataSetChanged();
                     ToastUtils.showShort("删除成功");
@@ -182,26 +180,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
     @Override
     public void onLoadMore() {
-//        httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
-//            @Override
-//            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
-//                if (data.getResult() != null && data.getResult().size() > 0){
-//                    mData.addAll(data.getResult());
-//                    messageAdapter.notifyDataSetChanged();
-//                    refreshLayout.loadMoreComplete();
-//                }else {
-//                    ToastUtils.showShort("没有更多数据了");
-//                    refreshLayout.loadMoreComplete();
-//                }
-//            }
-//
-//            @Override
-//            public void getFailDataCallBack(int failIndex) {
-//                //todo 请求失败
-//                refreshLayout.loadMoreFail();
-//            }
-//        });
-//        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());
     }
 
     @Override
@@ -229,7 +207,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 messageAdapter.loadMoreFail();
             }
         });
