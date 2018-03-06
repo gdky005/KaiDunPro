@@ -102,7 +102,7 @@ public class BookDetailActivity extends KDBaseActivity {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("processId", processId); // TODO: 2018/2/27  根据服务器修改的
+            jsonObject.put("processId", processId);
             jsonObject.put("courseSortId", courseSortId);
             KDConnectionManager.getInstance().getZHApi()
                     .selectCourseObject(KDRequestUtils.getRequestBody(jsonObject))
@@ -171,26 +171,7 @@ public class BookDetailActivity extends KDBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
-//    private void showData(BookDetail result) {
-//        for (int i = 0; i < titles.length; i++) {
-//            View msgView = getLayoutInflater().inflate(R.layout.item_book_detail_msg,
-//                    mDetailMsgGroup, false);
-//            TextView titleView = msgView.findViewById(R.id.book_detail_msg_title);
-//            TextView descView = msgView.findViewById(R.id.book_detail_msg_desc);
-//            View lineView = msgView.findViewById(R.id.book_detail_msg_line);
-//
-//            titleView.setText(titles[i]);
-//            descView.setText(desc[i]);
-//            if (i == 10 - 1) {
-//                lineView.setVisibility(View.GONE);
-//            }
-//
-//            mDetailMsgGroup.addView(msgView);
-//        }
-//    }
 
 }
