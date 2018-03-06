@@ -94,8 +94,6 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
         mMsgDetailRecycler.setAdapter(adapter);
         mToolbarTitle.setText(R.string.msg_detail);
         adapter.setOnLoadMoreListener(this,mMsgDetailRecycler);
-//        adapter.disableLoadMoreIfNotFullPage(mMsgDetailRecycler);
-
         getDetailDemo();
     }
 
@@ -125,14 +123,14 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo  请求失败提醒
+             
             }
         });
         httpUtils.getMsgDetail(keyId,null);
     }
 
     private void showNoMsgTip() {
-        //todo   无消息提醒
+      
     }
 
     private void initDemoData() {
@@ -163,7 +161,7 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                 public void getSuccessDataCallBack(MsgBean data) {
                     if (100 == data.getStatusCode()){
                         mReplyedit.setText("");
-                        onLoadMoreRequested();  //成功后重新刷新数据
+                        onLoadMoreRequested();  
                         mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
                         ToastUtils.showShort("发送成功！");
                     }else {
@@ -195,13 +193,7 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
     @Override
     public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-       /* mMsgDetailRecycler.requestLayout();
-        mMsgDetailRecycler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
-            }
-        });*/
+ 
     }
 
     @Override
@@ -224,7 +216,6 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo  请求失败提醒
                 adapter.loadMoreFail();
             }
         });
