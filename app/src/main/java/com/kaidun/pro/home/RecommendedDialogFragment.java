@@ -109,9 +109,6 @@ public class RecommendedDialogFragment extends BaseDialogFragment {
 
     private RequestBody recommendInfo() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        // TODO: 2018/1/25  内部已经添加这两个了，请删除下面两个注释
-//        jsonObject.put("userCode", KDAccountManager.getInstance().getUserCode());
-//        jsonObject.put("areaCode", KDAccountManager.getInstance().getAreaCode());
         jsonObject.put("cellPhoneNumber", mInputNumber.getText().toString());
         jsonObject.put("familyName", mInputParentsName.getText().toString());
         jsonObject.put("childName", mInputChildName.getText().toString());
