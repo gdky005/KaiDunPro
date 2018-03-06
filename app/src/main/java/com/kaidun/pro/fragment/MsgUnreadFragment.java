@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
- * 测试页面
  * Created by WangQing on 2018/1/22.
  */
 
@@ -121,12 +120,12 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
                     mData.addAll(data.getResult());
                     if (isRefresh) {
                         refreshLayout.refreshComplete();
-                        messageAdapter.setNewData(mData);   //重新开启上拉加载更多
+                        messageAdapter.setNewData(mData);   
                     } else {
                         messageAdapter.notifyDataSetChanged();
                     }
                 }
-                isRefresh = false;  //重置标志位
+                isRefresh = false;
             }
 
             @Override
@@ -208,7 +207,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 messageAdapter.loadMoreFail();
             }
         });
