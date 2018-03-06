@@ -109,7 +109,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 if (isRefresh){
                     isRefresh = false;
                     mRefreshLayout.refreshComplete();
@@ -197,7 +196,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 messageAdapter.loadMoreFail();
             }
         });
