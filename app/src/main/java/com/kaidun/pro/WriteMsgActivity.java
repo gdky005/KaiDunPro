@@ -56,7 +56,7 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
     ProgressBar mProgress;
 
     private KdNetWorkClient httpUtils;
-    private HashMap<String, String> classInfos = new HashMap<String, String>();  //默认大小应该足够了
+    private HashMap<String, String> classInfos = new HashMap<String, String>();  
     private boolean isGetClassInfoSuccess = false;
     private ArrayList<String> className = new ArrayList<>();
     private String classId;
@@ -97,7 +97,7 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
             classId = intent.getStringExtra(Constant.CLASS_ID);
             className.add(intent.getStringExtra(Constant.CLASS_Name));
             adapter.notifyDataSetChanged();
-        } else {  //默认界面跳过来需要先请求班级
+        } else {  
             getClasses();
         }
     }
@@ -142,11 +142,9 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
 
     private void tranfToArray(List<ClassBean.ResultBean> result) {
         className.clear();
-        //  className = new String[result.size()];
         for (int i = 0; i < result.size(); i++) {
             ClassBean.ResultBean bean = result.get(i);
             classInfos.put(bean.getClassName(), bean.getClassId());
-//            className[i] = bean.getClassName();
             className.add(bean.getClassName());
         }
     }
@@ -212,5 +210,4 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
         httpUtils = null;
     }
 
-    //-------------------
 }
