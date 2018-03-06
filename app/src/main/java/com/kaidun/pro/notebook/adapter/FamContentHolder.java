@@ -187,9 +187,6 @@ public class FamContentHolder extends ZKViewHolder {
                     Intent toDetailIntent = new Intent(view.getContext(), BookDetailActivity.class);
                     toDetailIntent.putExtra("processId", famContent.getProcessId());
                     toDetailIntent.putExtra("courseSortId", famBookData.getCourseSortId());
-                    //测试数据
-//                    toDetailIntent.putExtra("ccId", "52F4DE182D9DF774E0530B01000A1F5A");
-//                    toDetailIntent.putExtra("courseSortId", "40051078-ce55-45ce-95a3-67aaca1796aa");
                     toDetailIntent.putExtra("bookName", famContent.getCourseSortName());
                     toDetailIntent.putExtra("bookImg", famBookData.getCsUrl());
                     view.getContext().startActivity(toDetailIntent);
@@ -258,7 +255,7 @@ public class FamContentHolder extends ZKViewHolder {
         if (sScheduleLength == 0) {
             sScheduleLength = layout.getWidth();
         }
-        //防止数据超过100%时出现进度条超过布局宽度的问题
+
         if (progress > 1) {
             progress = 1;
         }
