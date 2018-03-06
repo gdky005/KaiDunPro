@@ -26,6 +26,7 @@ public class VideoDetailActivity extends KDBaseActivity implements View.OnClickL
     private RecyclerView rvSubVideo;
     private SubVideoAdapter adapter;
     private ImageView ivBack;
+    private String mName;
 
     @Override
     protected int getLayoutId() {
@@ -48,6 +49,7 @@ public class VideoDetailActivity extends KDBaseActivity implements View.OnClickL
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         String code = intent.getStringExtra("code");
+        mName = intent.getStringExtra("name");
         try {
             getVideoDetail(id, code);
         } catch (JSONException e) {
@@ -68,8 +70,19 @@ public class VideoDetailActivity extends KDBaseActivity implements View.OnClickL
                     public void onResponse(KDBaseBean<List<SubVideoBean>> baseBean, List<SubVideoBean> result) {
 
                         if (baseBean.getStatusCode() == 100) {
-
                             SubVideoBean subVideoBean = new SubVideoBean();
+                            switch (mName) {
+                                case "ABC":
+                                    subVideoBean.setType(0);
+                                    break;
+                                case "LA":
+                                    subVideoBean.setType(1);
+                                    break;
+                                case "SC":
+                                    subVideoBean.setType(2);
+                                    break;
+
+                            }
                             result.add(0, subVideoBean);
                             adapter = new SubVideoAdapter(mContext, result, new RvListener() {
                                 @Override

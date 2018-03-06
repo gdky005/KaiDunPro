@@ -56,7 +56,7 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
     ProgressBar mProgress;
 
     private KdNetWorkClient httpUtils;
-    private HashMap<String, String> classInfos = new HashMap<String, String>();  
+    private HashMap<String, String> classInfos = new HashMap<String, String>();
     private boolean isGetClassInfoSuccess = false;
     private ArrayList<String> className = new ArrayList<>();
     private String classId;
@@ -97,7 +97,7 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
             classId = intent.getStringExtra(Constant.CLASS_ID);
             className.add(intent.getStringExtra(Constant.CLASS_Name));
             adapter.notifyDataSetChanged();
-        } else {  
+        } else {
             getClasses();
         }
     }
@@ -209,5 +209,4 @@ public class WriteMsgActivity extends KDBaseActivity implements View.OnClickList
         httpUtils.setmCallBack(null);
         httpUtils = null;
     }
-
 }

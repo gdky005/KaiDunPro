@@ -29,7 +29,7 @@ import retrofit2.Response;
 import team.zhuoke.sdk.base.BaseFragment;
 
 /**
- * 测试页面
+ *
  * Created by WangQing on 2018/1/22.
  */
 
@@ -79,7 +79,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
         mData = new ArrayList<>();
-        String content = "推荐了 Jam 小朋友加入凯顿幼儿英语。凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。";
         return mData;
     }
 

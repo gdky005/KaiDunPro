@@ -123,14 +123,14 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-             
+
             }
         });
         httpUtils.getMsgDetail(keyId,null);
     }
 
     private void showNoMsgTip() {
-      
+
     }
 
     private void initDemoData() {
@@ -161,7 +161,7 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                 public void getSuccessDataCallBack(MsgBean data) {
                     if (100 == data.getStatusCode()){
                         mReplyedit.setText("");
-                        onLoadMoreRequested();  
+                        onLoadMoreRequested();
                         mMsgDetailRecycler.scrollToPosition(adapter.getItemCount() - 1);
                         ToastUtils.showShort("发送成功！");
                     }else {
@@ -193,7 +193,7 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
     @Override
     public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
- 
+
     }
 
     @Override

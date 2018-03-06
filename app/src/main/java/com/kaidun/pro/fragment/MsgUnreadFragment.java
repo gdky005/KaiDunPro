@@ -130,7 +130,6 @@ public class MsgUnreadFragment extends BaseFragment implements MessageAdapter.on
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
                 if (isRefresh){
                     isRefresh = false;
                     refreshLayout.refreshComplete();
