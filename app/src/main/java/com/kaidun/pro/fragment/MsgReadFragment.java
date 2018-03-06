@@ -66,16 +66,12 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
         messageAdapter = new MessageAdapter(getSampleData(), R.layout.item_msg_read);
         messageAdapter.setOnDelListener(this);
-       /* DividerItemDecoration divider = new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL);*/
         RecDividerItemDecoration decoration = new RecDividerItemDecoration(
                 getResources().getColor(R.color.bg_color), DensityUtil.dipToPixels(mContext, 12));
-        //divider.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.bg_line));
         msg_read_recler.addItemDecoration(decoration);
         msg_read_recler.setLayoutManager(new LinearLayoutManager(getContext()));
         msg_read_recler.setAdapter(messageAdapter);
         httpUtils = new KdNetWorkClient();
-//        getReadMsg();
         messageAdapter.setOnLoadMoreListener(this,msg_read_recler);
         mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
         mRefreshLayout.addEasyEvent(this);
@@ -84,11 +80,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
     private List<ReadAndUnReadBean.ResultBean> getSampleData() {
         mData = new ArrayList<>();
         String content = "推荐了 Jam 小朋友加入凯顿幼儿英语。凯顿幼儿美语推出新课程了，欢迎各位家长带孩子来体验，活动免费开放四天。";
-      /*  for (int i = 0; i < 9; i++) {
-            SwipeBean bean = new SwipeBean(null, "2017/12/26",
-                    "家长", content, "回复：凯顿");
-            data.add(bean);
-        }*/
         return mData;
     }
 
@@ -150,25 +141,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
 
     @Override
     public void onLoadMore() {
-      /*  httpUtils.setmCallBack(new KdNetWorkClient.DataCallBack<ReadAndUnReadBean>() {
-            @Override
-            public void getSuccessDataCallBack(ReadAndUnReadBean data) {
-                if (data.getResult() != null && data.getResult().size() > 0){
-                    mData.addAll(data.getResult());
-                    messageAdapter.notifyDataSetChanged();
-                    mRefreshLayout.loadMoreComplete();
-                }else {
-                    mRefreshLayout.loadMoreComplete();
-                }
-            }
-
-            @Override
-            public void getFailDataCallBack(int failIndex) {
-                //todo 请求失败
-                mRefreshLayout.loadMoreFail();
-            }
-        });
-        httpUtils.getReadAndUnReadMsg(Constant.FLAG_READ,mData.get(mData.size() -1).getKfmCode());*/
     }
 
     @Override
@@ -185,7 +157,6 @@ public class MsgReadFragment extends BaseFragment implements EasyRefreshLayout.E
             @Override
             public void getSuccessDataCallBack(MsgBean data) {
                 if (data != null && 100 == data.getStatusCode()){
-//                    initUnreadData();
                     mData.remove(pos);
                     messageAdapter.notifyDataSetChanged();
                     ToastUtils.showShort("删除成功");
