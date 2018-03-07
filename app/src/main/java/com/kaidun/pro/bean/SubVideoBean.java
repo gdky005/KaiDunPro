@@ -15,6 +15,8 @@ public class SubVideoBean {
 
     private String tageTitle;
     private String thumbnallUrl;
+    private int type;
+
 
     public String getDvdUrl() {
         return dvdUrl;
@@ -40,5 +42,13 @@ public class SubVideoBean {
 
     public void setThumbnallUrl(String thumbnallUrl) {
         this.thumbnallUrl = thumbnallUrl;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
