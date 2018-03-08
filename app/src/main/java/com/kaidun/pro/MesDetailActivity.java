@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
@@ -32,8 +34,7 @@ import butterknife.ButterKnife;
  * Created by lmj on 2018/1/23.
  */
 
-public class MesDetailActivity extends KDBaseActivity implements View.OnClickListener, View.OnLayoutChangeListener, BaseQuickAdapter.RequestLoadMoreListener {
-
+public class MesDetailActivity extends KDBaseActivity implements View.OnClickListener, View.OnLayoutChangeListener, BaseQuickAdapter.RequestLoadMoreListener,EasyRefreshLayout.EasyEvent {
 
     public static final int REPLY = 1;
     public static final int MSG = 0;
@@ -59,6 +60,11 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
     @BindView(R.id.pb_loading)
     ProgressBar mProgress;
+
+    @BindView(R.id.refresh_layout)
+    EasyRefreshLayout mRefreshLayout;
+
+    private boolean isRefresh;
 
     @Override
     protected int getLayoutId() {
@@ -94,6 +100,10 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
         mMsgDetailRecycler.setAdapter(adapter);
         mToolbarTitle.setText(R.string.msg_detail);
         adapter.setOnLoadMoreListener(this,mMsgDetailRecycler);
+
+        mRefreshLayout.setLoadMoreModel(LoadModel.NONE);
+        mRefreshLayout.addEasyEvent(this);
+
         getDetailDemo();
     }
 
@@ -117,20 +127,30 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
                     }
                     mData.clear();
                     mData.addAll(result);
-                    adapter.notifyDataSetChanged();
+
+                    if (isRefresh) {
+                        adapter.setNewData(mData);
+                        mRefreshLayout.refreshComplete();
+                        isRefresh = false;
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
             }
 
             @Override
             public void getFailDataCallBack(int failIndex) {
-
+                if (isRefresh){
+                    isRefresh = false;
+                    mRefreshLayout.refreshComplete();
+                }
             }
         });
         httpUtils.getMsgDetail(keyId,null);
     }
 
     private void showNoMsgTip() {
-
     }
 
     private void initDemoData() {
@@ -193,7 +213,6 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
 
     @Override
     public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
-
     }
 
     @Override
@@ -223,4 +242,14 @@ public class MesDetailActivity extends KDBaseActivity implements View.OnClickLis
     }
 
 
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        isRefresh = true;
+        getDetailDemo();
+    }
 }
